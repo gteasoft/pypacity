@@ -1,2 +1,3 @@
 # PyPacity
-Python Package for Ampacity computation
+Python Package for Ampacity computation of overhead transmission lines
+
