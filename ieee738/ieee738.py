@@ -18,6 +18,11 @@ class IEEE738():
         
     
     def set_cable( self, Cable):
+        """_summary_
+
+        Args:
+            Cable (class Cable): XX
+        """
         self.Cable1 = Cable
         return
         

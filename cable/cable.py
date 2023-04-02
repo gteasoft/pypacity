@@ -29,7 +29,7 @@ class Cable():
         """_summary_
 
         Args:
-            NSELECT (_type_): _description_
+            NSELECT (int): Type of demo case
         """
         if  conductor == 'Demo case':
             self.Cstring = 'Demo case'
@@ -77,8 +77,17 @@ class Cable():
        
 
     def set_param( self, param, value):
+        """xxxx
+
+        Args:
+            param (string): Name of the parameter
+            value: value of the parameter
+        """
         if param == 'D':
             self.D = value
    
-    def print_ver( self):
+    def print_ver( self):        
+        """xxx
+
+        """
         print("Cable. 30/3/2023. 23:16") 
