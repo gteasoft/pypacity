@@ -26,10 +26,15 @@ class Cable():
         self.B1 = None
     
     def demo( self, NSELECT, conductor = 'Demo case' ):
-        """_summary_
+        """
+        Load a demo case.
 
-        Args:
-            NSELECT (int): Type of demo case
+        :param NSELECT: Type of computation
+        :type NSELECT: int
+        :param conductor: Conductor ID. Type of conductor. By default the function defines a demo case that is based on 400 mm2 DRAKE 26/7 ACSR
+        :type conductor: string
+        :return: None.
+        :rtype: -       
         """
         if  conductor == 'Demo case':
             self.Cstring = 'Demo case'
@@ -79,15 +84,19 @@ class Cable():
     def set_param( self, param, value):
         """xxxx
 
-        Args:
-            param (string): Name of the parameter
-            value: value of the parameter
+        :param kind: Optional "kind" of ingredients.
+        :type kind: list[str] or None
+        :return: The ingredients list.
+        :rtype: list[str]
         """
         if param == 'D':
             self.D = value
    
     def print_ver( self):        
-        """xxx
+        """Returns the current version of this module
+
+        :return: Current version of Cable module.
+        :rtype: string
 
         """
         print("Cable. 30/3/2023. 23:16") 

@@ -1,21 +1,8 @@
-"""""""""""""""""""""""""""""""""""""
-Definition of cable for DTR
-"""""""""""""""""""""""""""""""""""""
+cable module
+=============
 
-==========================
-Class Cable
-==========================
-
-    
-Cable defines a class
-
-.. autoclass:: cable.Cable
-
-Methods
--------------------
-
-.. autofunction:: cable.Cable.demo
-
-
-
+.. automodule:: cable.cable
+   :members:
+   :undoc-members:
+   :show-inheritance:
 

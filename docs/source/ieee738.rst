@@ -1,20 +1,8 @@
-"""""""""""""""""""""""""""""""""""""
-IEEE Std 738:2012
-"""""""""""""""""""""""""""""""""""""
+ieee738 module
+==============
 
-==========================
-Class IEEE738
-==========================
-
-IEEE738 defines a class
-
-.. autoclass:: ieee738.IEEE738
-
-
-Methods
--------------------
-
-.. autofunction:: ieee738.IEEE738.solar
-
-
+.. automodule:: ieee738.ieee738
+   :members:
+   :undoc-members:
+   :show-inheritance:
 

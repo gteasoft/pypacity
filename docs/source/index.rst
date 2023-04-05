@@ -1,29 +1,24 @@
-##########################
-Pypacity
-##########################
-    
-Pypacity is a Python library for **Dynamic Thermal Rating**.
+.. pypacity documentation master file, created by
+   sphinx-quickstart on Wed Apr  5 21:11:44 2023.
+   You can adapt this file completely to your liking, but it should at least
+   contain the root `toctree` directive.
 
-
-.. warning::
-    This project is under heavy development. Be carefull my friends!
-
-
-
-===================
-Installation
-===================
-
-To install the software:
-
-.. note::
-    $ pip install pypacity
-
+Welcome to pypacity's documentation!
+====================================
 
 .. toctree::
-    :maxdepth: 2
+   :maxdepth: 2
+   :caption: Contents:
 
-    about
-    cable
-    case
-    ieee738
+   
+   readme
+   cable
+   case
+   ieee738
+
+Indices and tables
+==================
+
+* :ref:`genindex`
+* :ref:`modindex`
+* :ref:`search`

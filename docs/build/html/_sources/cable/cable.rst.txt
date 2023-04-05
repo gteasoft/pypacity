@@ -3,6 +3,3 @@ cable module
 
 .. automodule:: cable.cable
    :members:
-   :undoc-members:
-   :show-inheritance:
-
