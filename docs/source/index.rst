@@ -15,6 +15,8 @@ Welcome to pypacity's documentation!
    cable
    case
    ieee738
+   cigre601
+   pvsystems 
 
 Indices and tables
 ==================

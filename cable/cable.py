@@ -1,19 +1,35 @@
 # -*- coding: utf-8 -*-
+import pandas as pd
+import os  
 
 class Cable():
     """
-    Definition of cable
+    Definition of cable XX
+    
+    Defines an object of the class Cable() including basic information about the cable:
     
     
-    
+    Attributes:
+        :Cstring (str): Conductor description.
+        :D (float): Conductor diameter (mm).
+        :TLO (float): Conductor minimum temperature for resistance computation (ºC). 
+        :THI (float): Conductor maximum temperature for resistance computation (ºC).
+        :TCDRMAX (float): Maximum conductor temperature (ºC).
+        :RLO (float): Conductor resistance at TLO (Ohms/m).
+        :RHI (float): Conductor resistance at THI (Ohms/m).
+        :EMISS (float): Coefficient of emission.
+        :ABSORP (float): Coefficient of solar absorption.
+        :HNH (int): Number of layers (aluminum)
+        :HEATOUT (float): Aluminum layer (W.s/m.ºC)
+        :HEATCORE (float): Steel core (W.s/m.ºC)
     """
     
     def __init__(self):
 
         self.Cstring = None        # Conductor description
         self.D = None              # Conductor diameter (mm)
-        self.TLO = None            # MIN CDR TEMP IN DEG C
-        self.THI = None            # MAX CDR TEMP IN DEG C
+        self.TLO = None            # MIN CDR TEMP IN DEG C for conductor resistance
+        self.THI = None            # MAX CDR TEMP IN DEG C for conductor resistance
         self.TCDRMAX = None        # TCDRMAX
         self.RLO = None            # MIN CDR RAC (OHMS/m)
         self.RHI = None            # MAX CDR RAC (OHMS/m)
@@ -24,6 +40,32 @@ class Cable():
         self.HEATCORE = None       # STEEL CORE (W-SEC/M-C)
         self.B = None
         self.B1 = None
+   
+   
+    def load_cable_db( self):
+        """Load cable database
+        
+            The cable database is a file with name 'cable_db.csv' that is located in the same folder of cable module.
+
+        :return cable_db, error: cable_db is a dataframe with the cable database. error is 1 if the database is empty. 0 is the load process is sucessful.
+        :rtype: dataframe, int               
+        """
+        filename = u'cable_db.csv'
+
+        package_dir = os.path.dirname(__file__)
+        data_file_path = os.path.join( package_dir, filename) 
+        
+        # print('ruta: ', data_file_path) # print the full path
+        
+        cable_db = pd.read_csv( data_file_path, decimal=',', sep=';')
+        
+        if len( cable_db) < 1:
+            error = 1
+        else:
+            error = 0
+   
+        return cable_db, error
+
     
     def demo( self, NSELECT, conductor = 'Demo case' ):
         """
@@ -82,12 +124,12 @@ class Cable():
        
 
     def set_param( self, param, value):
-        """xxxx
+        """Set the parameter <param> to value <value>
 
-        :param kind: Optional "kind" of ingredients.
-        :type kind: list[str] or None
-        :return: The ingredients list.
-        :rtype: list[str]
+        :param param: Parameter.
+        :type param: Depends on the parameter
+        :return: 1 if the update is successful and 0 if the update is wrong
+        :rtype: int
         """
         if param == 'D':
             self.D = value

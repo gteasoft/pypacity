@@ -34,10 +34,13 @@ sys.path.insert(0, os.path.abspath("../.."))
 # coming with Sphinx (named 'sphinx.ext.*') or your custom ones.
 #extensions = ['sphinx.ext.intersphinx', 'sphinx.ext.mathjax', 'sphinx.ext.autodoc', 
 #              'sphinx.ext.autosummary'] #sphinx.ext.mathjax and sphinx.ext.imgmath don't comply with each other anymore., pngmath will be replaced by imgmath in new sphinx version
-extensions = [ "sphinx.ext.napoleon"]
+extensions = [ 'sphinx.ext.napoleon', 'sphinx_rtd_size', ]
+
+sphinx_rtd_size_width = "90%"
 napoleon_google_docstring = False
 
-
+def setup(app):
+    app.add_css_file('custom.css')
 
 
 #extensions = [
@@ -52,9 +55,9 @@ exclude_patterns = []
 # -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
 
-html_theme = 'bizstyle' # 'alabaster'
-html_static_path = ['_static']
 
+html_static_path = ['_static']
+html_css_files = ['custom.css',]
 
 
 #numfig = True
@@ -70,7 +73,15 @@ html_static_path = ['_static']
 
 
 autosummary_generate = True
-html_theme = 'default'
+#html_theme = 'default'
 #source_suffix = ['.rst', '.txt']
 
 autodoc_typehints = "description"
+
+# Define the html theme
+# https://www.sphinx-doc.org/en/master/usage/theming.html
+html_theme = 'sphinx_rtd_theme' #'nature' #'sphinx_rtd_theme' # 'alabaster' #'bizstyle' # 'alabaster'
+
+
+    
+#sphinx_rtd_size_width = "90%"

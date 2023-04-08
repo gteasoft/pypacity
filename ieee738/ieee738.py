@@ -927,9 +927,9 @@ class IEEE738():
                 print("Heat capacity = ", self.Cable1.HEATCAP," W.s/mºC")    
             elif self.Cable1.HNH == 2:
                 #6610 PRINT USING " CORE HEAT CAPACITY = ####.# WATTS-SEC/M-C"; HEATCORE
-                print("Core heat capacity = ", self.Cable1.HEATCORE," W.s/mºC")    
+                print("Core heat capacity = ", self.Cable1.HEATCORE," W.s/m.ºC")    
                 #6620 PRINT USING " OUTER STRAND LAYERS HEAT CAPACITY = ####.# WATTS-SEC/M-C"; HEATOUT
-                print("Outer strand layers heat capacity = ", self.Cable1.HEATOUT," W.s/mºC")    
+                print("Outer strand layers heat capacity = ", self.Cable1.HEATOUT," W.s/m.ºC")    
         
     
             #6640 PRINT "THE TOTAL TIME OF INTEREST AFTER THE CURRENT"

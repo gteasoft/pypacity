@@ -1,71 +1,154 @@
-
 <!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
-
-    <title>cable module &#8212; pypacity 1.0 documentation</title>
-    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="_static/classic.css" />
-    
-    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-    <script src="_static/doctools.js"></script>
-    <script src="_static/sphinx_highlight.js"></script>
-    
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>cable module &mdash; pypacity 1.0 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/sphinx_rtd_size.css" type="text/css" />
+      <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+      <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+    <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="case module" href="case.html" />
-    <link rel="prev" title="Pypacity" href="readme.html" /> 
-  </head><body>
-    <div class="related" role="navigation" aria-label="related navigation">
-      <h3>Navigation</h3>
-      <ul>
-        <li class="right" style="margin-right: 10px">
-          <a href="genindex.html" title="General Index"
-             accesskey="I">index</a></li>
-        <li class="right" >
-          <a href="py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
-        <li class="right" >
-          <a href="case.html" title="case module"
-             accesskey="N">next</a> |</li>
-        <li class="right" >
-          <a href="readme.html" title="Pypacity"
-             accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">pypacity 1.0 documentation</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href="">cable module</a></li> 
-      </ul>
-    </div>  
+    <link rel="prev" title="pypacity" href="readme.html" /> 
+</head>
 
-    <div class="document">
-      <div class="documentwrapper">
-        <div class="bodywrapper">
-          <div class="body" role="main">
-            
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> pypacity
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="readme.html">pypacity</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">cable module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#cable.cable.Cable"><code class="docutils literal notranslate"><span class="pre">Cable</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#cable.cable.Cable.demo"><code class="docutils literal notranslate"><span class="pre">Cable.demo()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#cable.cable.Cable.load_cable_db"><code class="docutils literal notranslate"><span class="pre">Cable.load_cable_db()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#cable.cable.Cable.print_ver"><code class="docutils literal notranslate"><span class="pre">Cable.print_ver()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#cable.cable.Cable.set_param"><code class="docutils literal notranslate"><span class="pre">Cable.set_param()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="case.html">case module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ieee738.html">ieee738 module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cigre601.html">cigre601 module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pvsystems.html">pvsystems module</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">pypacity</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a></li>
+      <li class="breadcrumb-item active">cable module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/cable.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
   <section id="module-cable.cable">
-<span id="cable-module"></span><h1>cable module<a class="headerlink" href="#module-cable.cable" title="Permalink to this heading">¶</a></h1>
+<span id="cable-module"></span><h1>cable module<a class="headerlink" href="#module-cable.cable" title="Permalink to this heading"></a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="cable.cable.Cable">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cable.cable.</span></span><span class="sig-name descname"><span class="pre">Cable</span></span><a class="headerlink" href="#cable.cable.Cable" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cable.cable.</span></span><span class="sig-name descname"><span class="pre">Cable</span></span><a class="headerlink" href="#cable.cable.Cable" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p>Definition of cable</p>
+<p>Definition of cable XX</p>
+<p>Defines an object of the class Cable() including basic information about the cable:</p>
+<dl class="simple">
+<dt>Attributes:</dt><dd><dl class="field-list simple">
+<dt class="field-odd">Cstring (str)</dt>
+<dd class="field-odd"><p>Conductor description.</p>
+</dd>
+<dt class="field-even">D (float)</dt>
+<dd class="field-even"><p>Conductor diameter (mm).</p>
+</dd>
+<dt class="field-odd">TLO (float)</dt>
+<dd class="field-odd"><p>Conductor minimum temperature for resistance computation (ºC).</p>
+</dd>
+<dt class="field-even">THI (float)</dt>
+<dd class="field-even"><p>Conductor maximum temperature for resistance computation (ºC).</p>
+</dd>
+<dt class="field-odd">TCDRMAX (float)</dt>
+<dd class="field-odd"><p>Maximum conductor temperature (ºC).</p>
+</dd>
+<dt class="field-even">RLO (float)</dt>
+<dd class="field-even"><p>Conductor resistance at TLO (Ohms/m).</p>
+</dd>
+<dt class="field-odd">RHI (float)</dt>
+<dd class="field-odd"><p>Conductor resistance at THI (Ohms/m).</p>
+</dd>
+<dt class="field-even">EMISS (float)</dt>
+<dd class="field-even"><p>Coefficient of emission.</p>
+</dd>
+<dt class="field-odd">ABSORP (float)</dt>
+<dd class="field-odd"><p>Coefficient of solar absorption.</p>
+</dd>
+<dt class="field-even">HNH (int)</dt>
+<dd class="field-even"><p>Number of layers (aluminum)</p>
+</dd>
+<dt class="field-odd">HEATOUT (float)</dt>
+<dd class="field-odd"><p>Aluminum layer (W.s/m.ºC)</p>
+</dd>
+<dt class="field-even">HEATCORE (float)</dt>
+<dd class="field-even"><p>Steel core (W.s/m.ºC)</p>
+</dd>
+</dl>
+</dd>
+</dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="cable.cable.Cable.demo">
-<span class="sig-name descname"><span class="pre">demo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">NSELECT</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">conductor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Demo</span> <span class="pre">case'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cable.cable.Cable.demo" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">demo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">NSELECT</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">conductor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Demo</span> <span class="pre">case'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cable.cable.Cable.demo" title="Permalink to this definition"></a></dt>
 <dd><p>Load a demo case.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>NSELECT</strong> (<em>int</em>) – Type of computation</p></li>
 <li><p><strong>conductor</strong> (<em>string</em>) – Conductor ID. Type of conductor. By default the function defines a demo case that is based on 400 mm2 DRAKE 26/7 ACSR</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dt class="field-even">Returns</dt>
 <dd class="field-even"><p>None.</p>
 </dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p><ul class="simple">
 <li></li>
 </ul>
@@ -75,14 +158,31 @@
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="cable.cable.Cable.load_cable_db">
+<span class="sig-name descname"><span class="pre">load_cable_db</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cable.cable.Cable.load_cable_db" title="Permalink to this definition"></a></dt>
+<dd><p>Load cable database</p>
+<blockquote>
+<div><p>The cable database is a file with name ‘cable_db.csv’ that is located in the same folder of cable module.</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Return cable_db, error</dt>
+<dd class="field-odd"><p>cable_db is a dataframe with the cable database. error is 1 if the database is empty. 0 is the load process is sucessful.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>dataframe, int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="cable.cable.Cable.print_ver">
-<span class="sig-name descname"><span class="pre">print_ver</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cable.cable.Cable.print_ver" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">print_ver</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cable.cable.Cable.print_ver" title="Permalink to this definition"></a></dt>
 <dd><p>Returns the current version of this module</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p>Current version of Cable module.</p>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dt class="field-even">Return type</dt>
 <dd class="field-even"><p>string</p>
 </dd>
 </dl>
@@ -90,17 +190,17 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="cable.cable.Cable.set_param">
-<span class="sig-name descname"><span class="pre">set_param</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">param</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cable.cable.Cable.set_param" title="Permalink to this definition">¶</a></dt>
-<dd><p>xxxx</p>
+<span class="sig-name descname"><span class="pre">set_param</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">param</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cable.cable.Cable.set_param" title="Permalink to this definition"></a></dt>
+<dd><p>Set the parameter &lt;param&gt; to value &lt;value&gt;</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>kind</strong> (<em>list</em><em>[</em><em>str</em><em>] or </em><em>None</em>) – Optional “kind” of ingredients.</p>
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>param</strong> (<em>Depends on the parameter</em>) – Parameter.</p>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The ingredients list.</p>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>1 if the update is successful and 0 if the update is wrong</p>
 </dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>list[str]</p>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>int</p>
 </dd>
 </dl>
 </dd></dl>
@@ -110,80 +210,34 @@
 </section>
 
 
-            <div class="clearer"></div>
+           </div>
           </div>
-        </div>
-      </div>
-      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper">
-  <div>
-    <h3><a href="index.html">Table of Contents</a></h3>
-    <ul>
-<li><a class="reference internal" href="#">cable module</a><ul>
-<li><a class="reference internal" href="#cable.cable.Cable"><code class="docutils literal notranslate"><span class="pre">Cable</span></code></a><ul>
-<li><a class="reference internal" href="#cable.cable.Cable.demo"><code class="docutils literal notranslate"><span class="pre">Cable.demo()</span></code></a></li>
-<li><a class="reference internal" href="#cable.cable.Cable.print_ver"><code class="docutils literal notranslate"><span class="pre">Cable.print_ver()</span></code></a></li>
-<li><a class="reference internal" href="#cable.cable.Cable.set_param"><code class="docutils literal notranslate"><span class="pre">Cable.set_param()</span></code></a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="readme.html" class="btn btn-neutral float-left" title="pypacity" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="case.html" class="btn btn-neutral float-right" title="case module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
 
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Mario Mañana.</p>
   </div>
-  <div>
-    <h4>Previous topic</h4>
-    <p class="topless"><a href="readme.html"
-                          title="previous chapter">Pypacity</a></p>
-  </div>
-  <div>
-    <h4>Next topic</h4>
-    <p class="topless"><a href="case.html"
-                          title="next chapter">case module</a></p>
-  </div>
-  <div role="note" aria-label="source link">
-    <h3>This Page</h3>
-    <ul class="this-page-menu">
-      <li><a href="_sources/cable.rst.txt"
-            rel="nofollow">Show Source</a></li>
-    </ul>
-   </div>
-<div id="searchbox" style="display: none" role="search">
-  <h3 id="searchlabel">Quick search</h3>
-    <div class="searchformwrapper">
-    <form class="search" action="search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
-      <input type="submit" value="Go" />
-    </form>
-    </div>
-</div>
-<script>document.getElementById('searchbox').style.display = "block"</script>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
         </div>
       </div>
-      <div class="clearer"></div>
-    </div>
-    <div class="related" role="navigation" aria-label="related navigation">
-      <h3>Navigation</h3>
-      <ul>
-        <li class="right" style="margin-right: 10px">
-          <a href="genindex.html" title="General Index"
-             >index</a></li>
-        <li class="right" >
-          <a href="py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
-        <li class="right" >
-          <a href="case.html" title="case module"
-             >next</a> |</li>
-        <li class="right" >
-          <a href="readme.html" title="Pypacity"
-             >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">pypacity 1.0 documentation</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href="">cable module</a></li> 
-      </ul>
-    </div>
-    <div class="footer" role="contentinfo">
-        &#169; Copyright 2023, Mario Mañana.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 6.1.3.
-    </div>
-  </body>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
 </html>

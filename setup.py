@@ -7,5 +7,5 @@ setup(name='pypacity',
       author='Mario Manana',
       author_email='mananam@unican.es',
       license='GNU',
-      packages=['cable', 'case', 'ieee738'],
+      packages=['cable', 'case', 'ieee738', 'cigre601', 'pvsystems'],
       zip_safe=False)

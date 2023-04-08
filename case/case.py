@@ -1,7 +1,33 @@
 # -*- coding: utf-8 -*-
 
 class Case():
-    """Case"""
+    """Class Case()
+    
+    Define the specific charasteristics of an ampacity case.
+    
+    Attributes:
+        :NSELECT (int): Analysis mode.
+        
+            1.- Steady-state conductor temperature. Given the constant current and the weather conditions the function returns the conductor temperature. The current value is provided by <XIPRELOAD> and the steady-state temperature is returned by <TCDRPRELOAD>.
+            
+            2.- Steady-state conductor current. Given the constant steady-state conductor temperature the function returns the conductor current.  The conductor temperature is provided by <TCDRPRELOAD> and the steady-state current is returned by <TR>.      
+            
+            3.- Transient conductor temperature. Transient conductor temperature when the conductor current steps from an initial value <XIPRELOAD> to a final value <XISTEP>. Total duration of the simulation is <TT> (if <SORM> is 0 then <TT> is defined in seconds. If <SORM> is 1 then <TT> is defined in minutes.) The time resolution of the simulation is <DELTIME>.
+            
+            4.- Transient conductor thermal rating. Transient current thermal rating <XISTEP> to reach  the maximum allowable conductor temperature <TCDRMAX> in <TT> minutes when the initial conductor temperature is <TCDRPRELOAD>.
+            
+        :TT (int): Simulation time (seconds).
+        :SORM (int): Unit of time for output print. 0: seconds; 1: minutes.     
+        :DELTIME (int): Simulation Delta time in seconds.
+        :TCDRPRELOAD (float): Steady-state initial conductor temperature.
+        :XIPRELOAD (float): Initial current (A).
+        :XISTEP (float): Final current (A).
+        :TAMB (float): Ambient temperature (ºC).
+        :VWIND (float): Wind speed (m/s).
+        :WINDANG_DEG (float): Angle between wind and conductor main axis in DEG (Degrees).
+        :CDR_ELEV (float): Conductor elevation above sea level in meters (m).
+        
+    """
     
     def __init__(self):
         self.NSELECT = None        # Analysis Mode
@@ -82,6 +108,11 @@ class Case():
 
 
     def demo( self, NSELECT):
+        """Define a demo case (**see** the definition of atribute <NSELECT>)
+
+        :param NSELECT: select a demo case [1, 2, 3 or 4]
+        :type NSELECT: int
+        """
         self.NSELECT = NSELECT   
         self.IORTPRELOAD = 1    
         self.SORM = 0
@@ -118,7 +149,7 @@ class Case():
             self.HNH = 2
         elif NSELECT == 4:
             self.IORTPRELOAD = 2
-            self.ITCDRPRELOAD = 40
+            self.TCDRPRELOAD = 40
             self.TCDRMAX = 150
             self.SORM = 1
             self.TT = 1800
@@ -133,4 +164,9 @@ class Case():
 
  
     def print_ver( self):
-        print("Case. 30/3/2023. 23:15") 
+        """Returns the current version of this module
+
+        :return: Current version of Cable module.
+        :rtype: string
+        """        
+        print("Case. 7/4/2023. 17:52") 

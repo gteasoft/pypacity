@@ -18,6 +18,9 @@ The **pypacity** is a Python library for ampacity computation.
 
 The library provides methods for the computation of IEEE 738 and CIGRE TB 601.
 
+.. math::
+    q_c + q_r = q_s + I^2 R(T_{avg})
+
 Requirements
 ------------
 

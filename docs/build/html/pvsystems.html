@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>pvsystems module &mdash; pypacity 1.0 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/sphinx_rtd_size.css" type="text/css" />
+      <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+      <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="cigre601 module" href="cigre601.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> pypacity
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="readme.html">pypacity</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cable.html">cable module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="case.html">case module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ieee738.html">ieee738 module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cigre601.html">cigre601 module</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">pvsystems module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#pvsystems.pvsystems.PVSystems"><code class="docutils literal notranslate"><span class="pre">PVSystems</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#pvsystems.pvsystems.PVSystems.Azimuth"><code class="docutils literal notranslate"><span class="pre">PVSystems.Azimuth()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pvsystems.pvsystems.PVSystems.DayOfYear"><code class="docutils literal notranslate"><span class="pre">PVSystems.DayOfYear()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pvsystems.pvsystems.PVSystems.Declination"><code class="docutils literal notranslate"><span class="pre">PVSystems.Declination()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pvsystems.pvsystems.PVSystems.ET"><code class="docutils literal notranslate"><span class="pre">PVSystems.ET()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pvsystems.pvsystems.PVSystems.GetLatitude"><code class="docutils literal notranslate"><span class="pre">PVSystems.GetLatitude()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pvsystems.pvsystems.PVSystems.GetLocation"><code class="docutils literal notranslate"><span class="pre">PVSystems.GetLocation()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pvsystems.pvsystems.PVSystems.GetLongitude"><code class="docutils literal notranslate"><span class="pre">PVSystems.GetLongitude()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pvsystems.pvsystems.PVSystems.Gon"><code class="docutils literal notranslate"><span class="pre">PVSystems.Gon()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pvsystems.pvsystems.PVSystems.HMtoStandardTime"><code class="docutils literal notranslate"><span class="pre">PVSystems.HMtoStandardTime()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pvsystems.pvsystems.PVSystems.HourAngletoSolarTime"><code class="docutils literal notranslate"><span class="pre">PVSystems.HourAngletoSolarTime()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pvsystems.pvsystems.PVSystems.LongStd"><code class="docutils literal notranslate"><span class="pre">PVSystems.LongStd()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pvsystems.pvsystems.PVSystems.SolarTimetoHourAngle"><code class="docutils literal notranslate"><span class="pre">PVSystems.SolarTimetoHourAngle()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pvsystems.pvsystems.PVSystems.SolarTimetoStandardTime"><code class="docutils literal notranslate"><span class="pre">PVSystems.SolarTimetoStandardTime()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pvsystems.pvsystems.PVSystems.StandardTimetoHM"><code class="docutils literal notranslate"><span class="pre">PVSystems.StandardTimetoHM()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pvsystems.pvsystems.PVSystems.StandardTimetoSolarTime"><code class="docutils literal notranslate"><span class="pre">PVSystems.StandardTimetoSolarTime()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pvsystems.pvsystems.PVSystems.SunsetHourAngle"><code class="docutils literal notranslate"><span class="pre">PVSystems.SunsetHourAngle()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pvsystems.pvsystems.PVSystems.Theta"><code class="docutils literal notranslate"><span class="pre">PVSystems.Theta()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pvsystems.pvsystems.PVSystems.print_ver"><code class="docutils literal notranslate"><span class="pre">PVSystems.print_ver()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">pypacity</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a></li>
+      <li class="breadcrumb-item active">pvsystems module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/pvsystems.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-pvsystems.pvsystems">
+<span id="pvsystems-module"></span><h1>pvsystems module<a class="headerlink" href="#module-pvsystems.pvsystems" title="Permalink to this heading"></a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="pvsystems.pvsystems.PVSystems">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pvsystems.pvsystems.</span></span><span class="sig-name descname"><span class="pre">PVSystems</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">Location</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Santander'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Country</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Spain'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Latitude</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">43.46</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Longitude</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-3.8</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pvsystems.pvsystems.PVSystems" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Class PVSystems.</p>
+<p>Implement several tools for solar computation.</p>
+<dl class="simple">
+<dt>Attributes:</dt><dd><dl class="field-list simple">
+<dt class="field-odd">version (str)</dt>
+<dd class="field-odd"><p>Version of the PVSystems module.</p>
+</dd>
+<dt class="field-even">vdate (str)</dt>
+<dd class="field-even"><p>Date of current version.</p>
+</dd>
+<dt class="field-odd">Gsc (float)</dt>
+<dd class="field-odd"><p>The solar constant (Gsc) is a flux density measuring mean solar electromagnetic radiation (total solar irradiance) per unit area. Value adopted by Duffie-Beckman [SOLAR ENG. of THERMAL PROCESSES. pg. 10].</p>
+</dd>
+<dt class="field-even">SolarDistance (float)</dt>
+<dd class="field-even"><p>1.495e11 m. Distance between the Sun and the Earth [meters].</p>
+</dd>
+<dt class="field-odd">EarthDiameter (float)</dt>
+<dd class="field-odd"><p>1.27e7 m. Return: Earth diameter [meters].</p>
+</dd>
+<dt class="field-even">SunDiameter (float)</dt>
+<dd class="field-even"><p>1.39e9 m. Return: Sun diameter [meters].</p>
+</dd>
+<dt class="field-odd">Location (str)</dt>
+<dd class="field-odd"><p>Description of the location.</p>
+</dd>
+<dt class="field-even">Country (str)</dt>
+<dd class="field-even"><p>Country.</p>
+</dd>
+<dt class="field-odd">Lat (float)</dt>
+<dd class="field-odd"><p>Latitude.</p>
+</dd>
+<dt class="field-even">Lon (float)</dt>
+<dd class="field-even"><p>Longitude.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="pvsystems.pvsystems.PVSystems.Azimuth">
+<span class="sig-name descname"><span class="pre">Azimuth</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">day</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">month</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hour</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">minutes</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pvsystems.pvsystems.PVSystems.Azimuth" title="Permalink to this definition"></a></dt>
+<dd><p>Return de solar azimuth</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>day</strong> (<em>int</em>) – Day of the month [1, 31].</p></li>
+<li><p><strong>month</strong> (<em>int</em>) – Month of the year [1, 12]</p></li>
+<li><p><strong>hour</strong> (<em>int</em>) – Hour solar time [0, 23]</p></li>
+<li><p><strong>minutes</strong> (<em>int</em>) – Minutes solar time [0, 59]</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>azimuth angle in degrees</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pvsystems.pvsystems.PVSystems.DayOfYear">
+<span class="sig-name descname"><span class="pre">DayOfYear</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">day</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">month</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pvsystems.pvsystems.PVSystems.DayOfYear" title="Permalink to this definition"></a></dt>
+<dd><p>Computes the day of the year with the month and the day of the month.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>day</strong> (<em>int</em>) – day of the month [1, 31].</p></li>
+<li><p><strong>month</strong> (<em>int</em>) – month of the year [1, 12].</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Day of the year [1 365]</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pvsystems.pvsystems.PVSystems.Declination">
+<span class="sig-name descname"><span class="pre">Declination</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">day</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pvsystems.pvsystems.PVSystems.Declination" title="Permalink to this definition"></a></dt>
+<dd><p>Computes the declination of the Earth (degree).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>day</strong> (<em>int</em>) – Day of the year [1, 365]</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Declination of the Earth (degrees).</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pvsystems.pvsystems.PVSystems.ET">
+<span class="sig-name descname"><span class="pre">ET</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dayofyear</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pvsystems.pvsystems.PVSystems.ET" title="Permalink to this definition"></a></dt>
+<dd><p>Computes de time difference between solar and sideral time in minutes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>dayofyear</strong> (<em>int</em>) – Day of the year [1, 365]</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Time diference between solar and sideral time in minutes.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pvsystems.pvsystems.PVSystems.GetLatitude">
+<span class="sig-name descname"><span class="pre">GetLatitude</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pvsystems.pvsystems.PVSystems.GetLatitude" title="Permalink to this definition"></a></dt>
+<dd><p>Return de Latitude in degrees.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Latitude in degrees.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pvsystems.pvsystems.PVSystems.GetLocation">
+<span class="sig-name descname"><span class="pre">GetLocation</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pvsystems.pvsystems.PVSystems.GetLocation" title="Permalink to this definition"></a></dt>
+<dd><p>Return de Location.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Location.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pvsystems.pvsystems.PVSystems.GetLongitude">
+<span class="sig-name descname"><span class="pre">GetLongitude</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pvsystems.pvsystems.PVSystems.GetLongitude" title="Permalink to this definition"></a></dt>
+<dd><p>Return the Longitude in degrees.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Longitude in degrees.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pvsystems.pvsystems.PVSystems.Gon">
+<span class="sig-name descname"><span class="pre">Gon</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">day</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pvsystems.pvsystems.PVSystems.Gon" title="Permalink to this definition"></a></dt>
+<dd><p>Computes the solar radiation for a specific &lt;day&gt;.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>day</strong> (<em>int.</em>) – Day of the year [1 365].</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Extraterrestrial radiation [W/m^2].</p>
+</dd>
+<dt class="field-odd">Rtype float</dt>
+<dd class="field-odd"><p>float.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pvsystems.pvsystems.PVSystems.HMtoStandardTime">
+<span class="sig-name descname"><span class="pre">HMtoStandardTime</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">day</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">month</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hour</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">minutes</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pvsystems.pvsystems.PVSystems.HMtoStandardTime" title="Permalink to this definition"></a></dt>
+<dd><p>Computes the standard time in minutes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>day</strong> (<em>int</em>) – Day of the month [1, 31].</p></li>
+<li><p><strong>month</strong> (<em>int</em>) – Month of the year [1, 12].</p></li>
+<li><p><strong>hour</strong> (<em>int</em>) – hour of the day [0, 23]</p></li>
+<li><p><strong>minutes</strong> (<em>int</em>) – Minutes of the hour [0, 59]</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pvsystems.pvsystems.PVSystems.HourAngletoSolarTime">
+<span class="sig-name descname"><span class="pre">HourAngletoSolarTime</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">HourAngle</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pvsystems.pvsystems.PVSystems.HourAngletoSolarTime" title="Permalink to this definition"></a></dt>
+<dd><p>Computes the solar time in minutes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>HourAngle</strong> (<em>float</em>) – Hour Angle in degrees.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Solar time in minutes.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pvsystems.pvsystems.PVSystems.LongStd">
+<span class="sig-name descname"><span class="pre">LongStd</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pvsystems.pvsystems.PVSystems.LongStd" title="Permalink to this definition"></a></dt>
+<dd><p>Computes de normalized Longitude using the self parameter &lt;Lon&gt;. The input value is defined in degrees and the output is 15n with n in {1,2,3,…}.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Longitude of the close [ceil aprox.] 15n with n {1,2,3,…}.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pvsystems.pvsystems.PVSystems.SolarTimetoHourAngle">
+<span class="sig-name descname"><span class="pre">SolarTimetoHourAngle</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">SolarTime</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pvsystems.pvsystems.PVSystems.SolarTimetoHourAngle" title="Permalink to this definition"></a></dt>
+<dd><p>Computes the hour angle in degrees.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>SolarTime</strong> (<em>float</em>) – Solar time in minutes past midnight.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Omega in degrees.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pvsystems.pvsystems.PVSystems.SolarTimetoStandardTime">
+<span class="sig-name descname"><span class="pre">SolarTimetoStandardTime</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">day</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">month</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">solartime</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pvsystems.pvsystems.PVSystems.SolarTimetoStandardTime" title="Permalink to this definition"></a></dt>
+<dd><p>Computes the standard time.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>day</strong> (<em>int</em>) – Day of the month [1, 31].</p></li>
+<li><p><strong>month</strong> (<em>int</em>) – Month of the year [1, 12].</p></li>
+<li><p><strong>solartime</strong> (<em>float</em>) – Solartime [minutes].</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Standard time in minutes.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pvsystems.pvsystems.PVSystems.StandardTimetoHM">
+<span class="sig-name descname"><span class="pre">StandardTimetoHM</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">standardtime</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">day</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">month</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pvsystems.pvsystems.PVSystems.StandardTimetoHM" title="Permalink to this definition"></a></dt>
+<dd><p>Computes de hour and minutes of the day from the standard time in minutes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>standardtime</strong> (<em>float</em>) – Standard time in minutes.</p></li>
+<li><p><strong>day</strong> (<em>int</em>) – Day of the month [1, 31].</p></li>
+<li><p><strong>month</strong> (<em>int</em>) – Month of the year [1, 12].</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Array of two elements:
+H[0].- Hour.
+H[1].- Minutes.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>array of int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pvsystems.pvsystems.PVSystems.StandardTimetoSolarTime">
+<span class="sig-name descname"><span class="pre">StandardTimetoSolarTime</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">day</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">month</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hour</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">minutes</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pvsystems.pvsystems.PVSystems.StandardTimetoSolarTime" title="Permalink to this definition"></a></dt>
+<dd><p>Computes the solar time in minutes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>day</strong> (<em>int</em>) – Day of the month [1, 31].</p></li>
+<li><p><strong>month</strong> (<em>int</em>) – Month of the year [1, 12].</p></li>
+<li><p><strong>hour</strong> (<em>int</em>) – Hour standard time [0, 23].</p></li>
+<li><p><strong>minutes</strong> (<em>int</em>) – Minutes standard time [0, 59].</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Solar time in minutes.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pvsystems.pvsystems.PVSystems.SunsetHourAngle">
+<span class="sig-name descname"><span class="pre">SunsetHourAngle</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">declination</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pvsystems.pvsystems.PVSystems.SunsetHourAngle" title="Permalink to this definition"></a></dt>
+<dd><p>Computes the sunset hour angle in degrees</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>declination</strong> (<em>float</em>) – Declination angle in degrees.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Sunset hour angle in degrees.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pvsystems.pvsystems.PVSystems.Theta">
+<span class="sig-name descname"><span class="pre">Theta</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">day</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">month</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hour</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">minutes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Azimuth</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">beta</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pvsystems.pvsystems.PVSystems.Theta" title="Permalink to this definition"></a></dt>
+<dd><p>Computes the solar angle.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>day</strong> (<em>int</em>) – Day of the month [1, 31].</p></li>
+<li><p><strong>month</strong> (<em>int</em>) – Month of the year [1, 12].</p></li>
+<li><p><strong>hour</strong> (<em>int</em>) – Hour solar time [0, 23].</p></li>
+<li><p><strong>minutes</strong> (<em>int</em>) – Minutes of the hour [0, 59].</p></li>
+<li><p><strong>Azimuth</strong> (<em>float</em>) – Azimuth of solar panel in degrees.</p></li>
+<li><p><strong>beta</strong> (<em>float</em>) – slope of the PV panel in degrees.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Solar angle theta in degrees.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pvsystems.pvsystems.PVSystems.print_ver">
+<span class="sig-name descname"><span class="pre">print_ver</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pvsystems.pvsystems.PVSystems.print_ver" title="Permalink to this definition"></a></dt>
+<dd><p>Print module version</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>module version</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="cigre601.html" class="btn btn-neutral float-left" title="cigre601 module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Mario Mañana.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
