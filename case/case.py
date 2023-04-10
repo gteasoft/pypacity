@@ -3,7 +3,7 @@
 class Case():
     """Class Case()
     
-    Define the specific charasteristics of an ampacity case.
+    Define the specific charasteristics of an ampacity case
     
     Attributes:
         :NSELECT (int): Analysis mode.
@@ -28,7 +28,11 @@ class Case():
         :CDR_ELEV (float): Conductor elevation above sea level in meters (m).
         :ALBEDO (float): Albedo (CIGRE TB601. Pg. 20). Water.- 0.05; Forest.- 0.15; Urban Areas.- 0.2; Soil, grass and crops.- 0.2
             Sand.- 0.3; Ice.- 0.4 to 0.6; Snow.- 0.6 to 0.8            
-            
+        :SOLAR (int): 0.- Computed solar heating based on location and suntime; 1.- Measured solar radiation.
+        :NDAY (int): Day of the year [1, 365]
+        :Ns (float): Clearness ratio. 1 for standard atmosphere; 0.8 to 1.2 for clear skies with decreasing amounts of dust and aerosols; 0.5 for industrial atmosphere and less than 0.5 for a cloudy or overcast sky;  0 for thick cloud.
+        :CDR_LAT_DEG (float): Conductor latitude in degrees.  
+                     
         
     """
     
@@ -52,12 +56,14 @@ class Case():
         self.SUN_TIME = None       # SOLAR HOUR 14 = 2PM OR 99(NO SUN)
         self.NDAY = None           # DAY OF THE YEAR
         self.A3 = None             # AIR CLARITY - CLEAR(0), INDUST(1)
+        self.Ns = 1.0 # clearness ratio (TB601, Pag. 19)
         self.SolarRadiation = None # Solar Radiation in W/m^2
         self.ATCDR = []          # Inicialization
         self.TIME = []           # Inicialization
         self.TCDR = 50 # EXPECTED CONDUCTOR TEMPERATURE IN CELSIUS
         self.T3 = None  # EXPECTED CONDUCTOR TEMPERATURE IN KELVIN
-        self.ALBEDO = 0.2 # Soil, grass and/or crops. 
+        self.ALBEDO = 0.0 # Soil, grass and/or crops. 
+        self.SOLAR = 1 # 1.- computed; 0.- measured
         self.B = None
         self.B1 = None
         self.NFLAG = 0

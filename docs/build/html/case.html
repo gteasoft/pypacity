@@ -90,7 +90,7 @@
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">case.case.</span></span><span class="sig-name descname"><span class="pre">Case</span></span><a class="headerlink" href="#case.case.Case" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Class Case()</p>
-<p>Define the specific charasteristics of an ampacity case.</p>
+<p>Define the specific charasteristics of an ampacity case</p>
 <dl>
 <dt>Attributes:</dt><dd><dl class="field-list">
 <dt class="field-odd">NSELECT (int)</dt>
@@ -133,6 +133,15 @@
 <dt class="field-even">ALBEDO (float)</dt>
 <dd class="field-even"><p>Albedo (CIGRE TB601. Pg. 20). Water.- 0.05; Forest.- 0.15; Urban Areas.- 0.2; Soil, grass and crops.- 0.2
 Sand.- 0.3; Ice.- 0.4 to 0.6; Snow.- 0.6 to 0.8</p>
+</dd>
+<dt class="field-odd">SOLAR (int)</dt>
+<dd class="field-odd"><p>0.- Computed solar heating based on location and suntime; 1.- Measured solar radiation.</p>
+</dd>
+<dt class="field-even">NDAY (int)</dt>
+<dd class="field-even"><p>Day of the year [1, 365]</p>
+</dd>
+<dt class="field-odd">Ns (float)</dt>
+<dd class="field-odd"><p>Clearness ratio. 1 for standard atmosphere; 0.8 to 1.2 for clear skies with decreasing amounts of dust and aerosols; 0.5 for industrial atmosphere and less than 0.5 for a cloudy or overcast sky;  0 for thick cloud.</p>
 </dd>
 </dl>
 </dd>

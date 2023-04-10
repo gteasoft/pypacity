@@ -339,7 +339,7 @@ class IEEE738():
         """
         xx
         
-        :return: xx
+        :return: xx.
         """
         #9030 REM **********************************************************
         #9040 REM * SETUP LINEAR CONDUCTOR RESISTANCE EQ AS FUNCTION OF TEMP
@@ -828,6 +828,7 @@ class IEEE738():
         #6070 PRINT
         #6080 PRINT X$
         print("*******************************************************************")
+        print("*******************************************************************")
         #6090 PRINT " IEEE STD 738-2006 METHOD OF CALCULATION"
         print("IEEE STD 738-2013 METHOD OF CALCULATION")
         #6100 PRINT
@@ -1035,6 +1036,11 @@ class IEEE738():
                 print("the maximum of = ", self.Cable1.TCDRMAX," ºC in ", self.Case1.TT/60," minutes")    
             else:
                 print("the maximum of = ", self.Cable1.TCDRMAX," ºC in ", self.Case1.TT," seconds")            
+
+
+
+        print("*******************************************************************")
+        print("*******************************************************************")
 
         return 
 
