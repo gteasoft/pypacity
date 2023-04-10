@@ -2,6 +2,7 @@
 import pandas as pd
 import os  
 
+
 class Cable():
     """
     Definition of cable XX
@@ -40,6 +41,11 @@ class Cable():
         self.HEATCORE = None       # STEEL CORE (W-SEC/M-C)
         self.B = None
         self.B1 = None
+        self.Stranded = None
+        self.CrossSection = None
+        self.MASSCORE = None # Mass per unit length steel (kg/m)
+        self.MASSOUT = None # Mass per unit length aluminum (kg/m)
+        
    
    
     def load_cable_db( self):

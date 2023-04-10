@@ -26,6 +26,9 @@ class Case():
         :VWIND (float): Wind speed (m/s).
         :WINDANG_DEG (float): Angle between wind and conductor main axis in DEG (Degrees).
         :CDR_ELEV (float): Conductor elevation above sea level in meters (m).
+        :ALBEDO (float): Albedo (CIGRE TB601. Pg. 20). Water.- 0.05; Forest.- 0.15; Urban Areas.- 0.2; Soil, grass and crops.- 0.2
+            Sand.- 0.3; Ice.- 0.4 to 0.6; Snow.- 0.6 to 0.8            
+            
         
     """
     
@@ -49,11 +52,12 @@ class Case():
         self.SUN_TIME = None       # SOLAR HOUR 14 = 2PM OR 99(NO SUN)
         self.NDAY = None           # DAY OF THE YEAR
         self.A3 = None             # AIR CLARITY - CLEAR(0), INDUST(1)
-        self.SolarRadiation = None # Solar Radiation
+        self.SolarRadiation = None # Solar Radiation in W/m^2
         self.ATCDR = []          # Inicialization
         self.TIME = []           # Inicialization
         self.TCDR = 50 # EXPECTED CONDUCTOR TEMPERATURE IN CELSIUS
         self.T3 = None  # EXPECTED CONDUCTOR TEMPERATURE IN KELVIN
+        self.ALBEDO = 0.2 # Soil, grass and/or crops. 
         self.B = None
         self.B1 = None
         self.NFLAG = 0
@@ -127,7 +131,7 @@ class Case():
         self.CDR_ELEV = 0.0
         self.Z1_DEG = 45.0
         self.CDR_LAT_DEG = 43.0
-        self.SUN_TIME = 12
+        self.SUN_TIME = 99
         self.NDAY = 161
         self.A3 = 0
         self.SolarRadiation = 708.6

@@ -309,7 +309,7 @@ class IEEE738():
     
         #Set QS if solar measurement available
         if ( self.Case1.SUN_TIME >= 24) or (self.Case1.SUN_TIME == 99):
-            Q3 = self.Cable1.SolarRadiation
+            Q3 = self.Case1.SolarRadiation
     
         #5400 REM * CALCULATE SOLAR AZIMUTH IN DEGREES, Z4.DEG
         Z4_DEG = CAZ + np.arctan(CHI)
