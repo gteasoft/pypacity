@@ -29,6 +29,7 @@ class Cable():
 
         self.Cstring = None        # Conductor description
         self.D = None              # Conductor diameter (mm)
+        self.d = None              # Diameter of the wires in the outermost layer
         self.TLO = None            # MIN CDR TEMP IN DEG C for conductor resistance
         self.THI = None            # MAX CDR TEMP IN DEG C for conductor resistance
         self.TCDRMAX = None        # TCDRMAX
@@ -41,7 +42,7 @@ class Cable():
         self.HEATCORE = None       # STEEL CORE (W-SEC/M-C)
         self.B = None
         self.B1 = None
-        self.Stranded = None
+        self.Stranded = 1  # 1.- Stranted conductor; 0.- Smooth conductor
         self.CrossSection = None
         self.MASSCORE = None # Mass per unit length steel (kg/m)
         self.MASSOUT = None # Mass per unit length aluminum (kg/m)
@@ -87,6 +88,7 @@ class Cable():
         if  conductor == 'Demo case':
             self.Cstring = 'Demo case'
             self.D = 28.12
+            self.d = 4.44
             self.TLO = 25.0
             self.THI = 75.0
             self.TCDRMAX = 101.0
@@ -100,6 +102,7 @@ class Cable():
         elif conductor == '400 mm2 DRAKE 26/7 ACSR':
             self.Cstring = '400 mm2 DRAKE 26/7 ACSR'
             self.D = 28.12
+            self.d = 4.44
             self.TLO = 25.0
             self.THI = 75.0
             self.TCDRMAX = 101.0

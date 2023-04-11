@@ -65,7 +65,7 @@ class CIGRE601():
                 print("Measured solar heating: " + str(Psm) + " W/m")
     
         # Z Hour angle of the Sun
-        Z = 15*(12-self.Case1.SUN_TIME)
+        Z = -15*(12-self.Case1.SUN_TIME)
        
         # Declination
         deltas = 23.3*np.sin((2*np.pi*(284+self.Case1.NDAY))/365)
@@ -94,7 +94,7 @@ class CIGRE601():
         eta = RAD_TO_DEG*np.arccos(self.cosd(Hs)*self.cosd(gammas - self.Case1.Z1_DEG))
         
         # Computed solar heating. Pag. 18. Eq (9)
-        Psc = -self.Cable1.ABSORP*(self.Cable1.D/1000)*(IBy*(self.sind(eta) + (np.pi/2)*self.Case1.ALBEDO*self.sind(Hs)) + Id*(1+(np.pi/2*self.Case1.ALBEDO)))
+        Psc = self.Cable1.ABSORP*(self.Cable1.D/1000)*(IBy*(self.sind(eta) + (np.pi/2)*self.Case1.ALBEDO*self.sind(Hs)) + Id*(1+(np.pi/2*self.Case1.ALBEDO)))
         if self.Debug == 1:
             print("Computed solar heating: " + str(Psc) + " W/m")
            
@@ -105,7 +105,7 @@ class CIGRE601():
 
 
     def radiation( self):
-        """ 
+        """. 
         
         """
         # Pr Pag. 30. Eq (27)
@@ -118,6 +118,132 @@ class CIGRE601():
             
         return Pr
         
+
+    def natural_convection( self):
+        """ 
+        
+        """
+        print('Natural Convection')
+        
+        # Film temperature
+        Tf = 0.5*(self.Case1.TCDR + self.Case1.TAMB)
+        
+        # Specific ¿air? heat capacity   [J/kg.K]      
+        cf = 1006 
+        # Thermal conductivity of the air. Pag. 24. Eq (18) [W/k.m]
+        lambdaf = 2.368e-2 + 7.23e-5*Tf - 2.763e-8*(Tf**2)
+        # Dynamic viscosity [kg/m.s]
+        muf = (17.239 + 4.635e-2*Tf - 2.03e-5*(Tf**2))*1e-6
+        # Prandtl number, Pr = cf . muf / lambdaf   W/m
+        Pr = cf*muf/lambdaf        
+        if self.Debug == 1:
+            print('Prandtl: ' + str(Pr)) 
+            
+
+        # Air density
+        gamma = (1.293 - 1.525e-4*self.Case1.CDR_ELEV + 6.379e-9*(self.Case1.CDR_ELEV**2))/(1 + 0.00367*Tf)
+        # Kinematic viscosity
+        vf = muf / gamma 
+        # Grashof number
+        Gr = ((self.Cable1.D/1000)**3)*(self.Case1.TCDR - self.Case1.TAMB)*9.81/((Tf+273)*vf**2)
+        if self.Debug == 1:
+            print('Grashof: ' + str(Gr))
+        
+        # Table 5. Pg. 28
+        GrPr = Gr*Pr
+        if  GrPr < 1e2:
+            A = 1.02
+            m = 0.148
+        elif (GrPr >= 1e2) and (GrPr < 1e4):
+            A = 0.85
+            m = 0.188
+        elif (GrPr >= 1e4) and (GrPr < 1e7):
+            A = 0.48
+            m = 0.25
+        elif GrPr >=1e7:
+            A = 0.125
+            m = 0.333
+
+        Nunat = A*(GrPr)**m 
+       
+        if self.Cable1.Stranded == 1: # stranted conductor
+            Nubeta = Nunat*(1 - 1.76e-6*(self.Case1.beta**2.5))
+        else: # smooth conductor
+            Nubeta = Nunat*(1 - 1.58e-4*(self.Case1.beta**1.5))
+        
+        Pcnat = np.pi*lambdaf*(self.Case1.TCDR - self.Case1.TAMB)*Nunat
+        if self.Debug == 1:
+            print('Pc,nat: ' + str(Pcnat) + ' W/m')
+        
+        
+
+    def forced_convection( self):
+        """ 
+        
+        """
+        print('Forced convection')
+
+        # Film temperature
+        Tf = 0.5*(self.Case1.TCDR + self.Case1.TAMB)
+        
+        # Specific ¿air? heat capacity   [J/kg.K]      
+        cf = 1006 
+        # Thermal conductivity of the air. Pag. 24. Eq (18) [W/k.m]
+        lambdaf = 2.368e-2 + 7.23e-5*Tf - 2.763e-8*(Tf**2)
+        # Dynamic viscosity [kg/m.s]
+        muf = (17.239 + 4.635e-2*Tf - 2.03e-5*(Tf**2))*1e-6        
+        # Air density
+        gamma = (1.293 - 1.525e-4*self.Case1.CDR_ELEV + 6.379e-9*(self.Case1.CDR_ELEV**2))/(1 + 0.00367*Tf)
+        # Kinematic viscosity
+        vf = muf / gamma 
+        
+        # Reynolds number. Pag. 25
+        Rey = self.Case1.VWIND*(self.Cable1.D/1000)/vf
+        
+        # Roughness of the conductor        
+        Rs = self.Cable1.d/(2*(self.Cable1.D - self.Cable1.d))
+        
+        if self.Cable1.Stranded == 1: # Stranded conductor
+            if Rs <= 0.05:
+                if Rey < 2650:
+                    B = 0.641
+                    n = 0.471
+                else:
+                    B = 0.178
+                    n = 0.633
+            else:
+                if Rey < 2650:
+                    B = 0.641
+                    n = 0.471
+                else:
+                    B = 0.048
+                    n = 0.8
+        else: # Smooth conductor
+            if Rey < 5000:
+                B = 0.583
+                n = 0.471
+            elif (Rey >= 5000) and (Rey < 50000):
+                B = 0.148
+                n = 0.633
+            else:
+                B = 0.0208
+                n = 0.814
+        
+        
+        Nu90 = B*(Rey**n)
+        
+        if self.Cable1.Stranded == 1:
+            if self.Case1.WINDANG_DEG <= 24:
+                Nudelta = Nu90*(0.42 + 0.68*( self.sind(self.Case1.WINDANG_DEG)**1.08)) 
+            else:
+                Nudelta = Nu90*(0.42 + 0.58*( self.sind(self.Case1.WINDANG_DEG)**0.90)) 
+        else:
+            Nudelta = Nu90*(self.sind(self.Case1.WINDANG_DEG)**2 + 0.0169*self.cosd(self.Case1.WINDANG_DEG)**2)**0.225
+
+        Pcfor = np.pi*lambdaf*(self.Case1.TCDR - self.Case1.TAMB)*Nudelta
+        if self.Debug == 1:
+            print("Pc forced: " + str(Pcfor) + " W/m")
+
    
     def cigre601( self):
         """Implementation of CIGRE TB601.
