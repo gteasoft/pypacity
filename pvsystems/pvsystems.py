@@ -53,7 +53,7 @@ class PVSystems:
         :type day: int.
         
         :return: Extraterrestrial radiation [W/m^2].
-        :rtype float: float..
+        :rtype float: float...
         """
         # input: day .- Day of the year [1, 365]
         # return: Gon .- Extraterrestrial radiation [W/m^2]

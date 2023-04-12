@@ -88,6 +88,7 @@ class Cable():
         if  conductor == 'Demo case':
             self.Cstring = 'Demo case'
             self.D = 28.12
+            self.C = 10.4
             self.d = 4.44
             self.TLO = 25.0
             self.THI = 75.0
@@ -102,6 +103,7 @@ class Cable():
         elif conductor == '400 mm2 DRAKE 26/7 ACSR':
             self.Cstring = '400 mm2 DRAKE 26/7 ACSR'
             self.D = 28.12
+            self.C = 10.4
             self.d = 4.44
             self.TLO = 25.0
             self.THI = 75.0
@@ -118,7 +120,7 @@ class Cable():
     
         if NSELECT == 2:
             self.TCDRPRELOAD = 101.1
-            self.TCDRMAX = 1000.0
+            #self.TCDRMAX = 1000.0
         elif NSELECT == 3:
             self.HEATOUT = 1066
             self.HEATCORE = 243

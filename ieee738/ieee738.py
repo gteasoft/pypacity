@@ -9,13 +9,15 @@ reload( case)
 
 class IEEE738():
     """Implementation of the IEEE 738:2012."""
-    DEG_TO_RAD = np.pi/180
+    #DEG_TO_RAD = np.pi/180
      
     
     def __init__(self):
         self.Cable1 = cable.Cable()
         self.Case1 = case.Case()
-        
+        self.Debug = 1 # 1 print intermediate values
+        self.Debug_Dec = 3 # number of decimal value for printing debug info
+
     
     def set_cable( self, Cable):
         """_summary_
@@ -627,7 +629,7 @@ class IEEE738():
     #15030 REM /////////////////////////////////////////////////////////////////
     #15040 REM PRINT USING "TRYING A TCDR OF ####.### DEG C"; TCDR
     def thermal_rating( self):
-        """
+        """.
         
         """
         #print('thermal_rating()')
@@ -1043,6 +1045,29 @@ class IEEE738():
         print("*******************************************************************")
 
         return 
+
+
+    def str_round( self, valuex):
+        """ 
+        
+        """
+        return str( round( valuex, self.Debug_Dec))
+
+    def outputs( self):
+        """Print a summary of intermediate results
+            
+        """
+        print("*******************************************************************")
+        print("*******************************************************************")
+        print("IEEE 738")
+        print("*******************************************************************") 
+        
+        print("Solar heating:  ", self.str_round( self.Case1.QS), " W/m")
+        print("Radiation cooling: ", self.str_round( self.Case1.QR), " W/m")
+        print("Convection cooling: ", self.str_round( self.Case1.QC), " W/m")
+        
+        if self.Case1.NSELECT == 2:
+            print("Steady-state current: ", self.str_round( self.Case1.TR), " A" )
 
 
     def ampacidad( self):
