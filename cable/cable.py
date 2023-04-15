@@ -76,7 +76,7 @@ class Cable():
     
     def demo( self, NSELECT, conductor = 'Demo case' ):
         """
-        Load a demo case.
+        Load a demo case..
 
         :param NSELECT: Type of computation
         :type NSELECT: int

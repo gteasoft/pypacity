@@ -1,0 +1,14 @@
+Parameter , Description , Example
+ , ,
+, CIGRE TB601  ,
+Case.QS , Solar heat gain [W/m] , 27.23
+Case.QR , Radiative heat loss [W/m] , 40.02
+Case.QC , Convective heat loss [W/m] , 79.12
+Case.TR , Thermal Rating Current [A] , 987
+ , ,
+ , IEEE 738 ,
+Case.QS , Solar heat gain [W/m] , 23.11
+Case.QR , Radiative heat loss [W/m] , 39.99
+Case.QC , Convective heat loss [W/m] , 76.55
+Case.TR , Thermal Rating Current [A] , 995
+ 

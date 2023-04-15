@@ -31,9 +31,9 @@ class Case():
         :SOLAR (int): 0.- Computed solar heating based on location and suntime; 1.- Measured solar radiation.
         :NDAY (int): Day of the year [1, 365]
         :Ns (float): Clearness ratio. 1 for standard atmosphere; 0.8 to 1.2 for clear skies with decreasing amounts of dust and aerosols; 0.5 for industrial atmosphere and less than 0.5 for a cloudy or overcast sky;  0 for thick cloud.
-        :CDR_LAT_DEG (float): Conductor latitude in degrees.  
+        :CDR_LAT_DEG (float): Conductor latitude in degrees.. 
                      
-        
+       
     """
     
     def __init__(self):
@@ -112,7 +112,7 @@ class Case():
         self.R5 = None
         self.K = None
         self.KTIMEMAX = None 
-        
+        self.RAC = None
     
 
         

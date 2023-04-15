@@ -37,36 +37,95 @@ Install from Github
     cd pypacity
     pip install .
 
-Examples
---------
+
+Quick Start
+--------------
+
+
+Thermal Rating. I_CDR = f(T_CDR)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Calculate the steady-state current (Case.TR) given the steady-state conductor temperature (Case.TCDR)
+
+**Input Parameters**
+
+.. tabularcolumns:: |p{4cm}|p{10cm}|p{10cm}|
+
+.. csv-table:: 
+    :file: files/thermal_rating_input.csv
+    :header-rows: 1
+    :class: longtable
+    :widths: 1 1 1
+
+
+
+**Output Parameters**
+
+.. tabularcolumns:: |p{4cm}|p{10cm}|p{10cm}|
+
+.. csv-table::
+    :file: files/thermal_rating_output.csv
+    :header-rows: 1
+    :class: longtable
+    :widths: 1 1 1
+
+
+**Example**
+
 
 .. code-block:: python
 
     from cable import cable
     from case import case
     from ieee738 import ieee738
+    from cigre601 import cigre601
+    from pvsystems import pvsystems
     import matplotlib.pyplot as plt 
 
-    from importlib import reload
-    reload(  cable)
-    reload(  case)
-    reload( ieee738)
-
-    NSELECT = 3
+    NSELECT = 2 
     Cable1 = cable.Cable()
+    c_db, error = Cable1.load_cable_db()
     Cable1.demo( NSELECT, conductor = '400 mm2 DRAKE 26/7 ACSR')
-    #Cable1.print_ver()
+    Cable1.EMISS = 0.8
+    Cable1.ABSORP = 0.8
 
+    PV1 = pvsystems.PVSystems()
     Case1 = case.Case()
     Case1.demo( NSELECT)
-    #Case1.print_ver()
+    # Ambient conditions
+    Case1.TAMB = 40.0
+    Case1.CDR_LAT_DEG = 30
+    Case1.ALBEDO = 0.1
+    Case1.beta = 0
+    Case1.CDR_ELEV = 0
+    Case1.TCDR = 100.0
+    Case1.WINDANG_DEG = 60
+    Case1.Z1_DEG = 90
+    Case1.Ns = 1.0
+    Case1.SUN_TIME = 11
+    Case1.NDAY = PV1.DayOfYear( 10, 6) # 10th June
+    print("NDAY: " + str(Case1.NDAY))
 
+    # IEEE 738
     X1 = ieee738.IEEE738()
+    X1.Debug = 0
     X1.set_cable( Cable1)
     X1.set_case( Case1)
-    X1.ieee_738_2013()
+    X1.Case1.ITCDRPRELOAD = 40
+    #X1.Case1.TCDRMAX = 150
+    X1.Case1.TT = 60*15
+    X1.Case1.SORM = 1
 
-    if NSELECT == 3:
-        plt.plot( X1.Case1.TIME, X1.Case1.ATCDR)
+    X1.ieee_738_2013()
+    X1.outputs()
+
+    # CIGRE TB601
+    X2 = cigre601.CIGRE601()
+    X2.Debug = 0
+    X2.set_cable( Cable1)
+    X2.set_case( Case1)
+
+    X2.cigre601()
+    X2.outputs()
 
 

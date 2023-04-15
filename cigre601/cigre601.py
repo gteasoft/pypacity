@@ -15,6 +15,8 @@ class CIGRE601():
         self.Case1 = case.Case()
         self.Debug = 1 # 1 print intermediate values
         self.Debug_Dec = 3 # number of decimal value for printing debug info
+        self.Tolerance = 1 # Tolerance for temperature estimation
+        self.MaxIterations = 400 # Maximum number of iteration
 
 
     def set_cable( self, Cable):
@@ -57,8 +59,8 @@ class CIGRE601():
         
         """
 
-        print("****************************************")
         if self.Debug == 1:
+            print("****************************************")
             print("Solar heating")
         
         DEG_TO_RAD = np.pi/180.0
@@ -139,7 +141,7 @@ class CIGRE601():
         """. 
         
         """
-        # Pr Pag. 30. Eq (27)
+        # Pr Pag. 30. Eq (27).
         # sigmaB. Stefan-Boltzmann constant        
         sigmaB = 5.6697e-8 # W.m^(-2).K^(-4)
         
@@ -323,8 +325,70 @@ class CIGRE601():
         return Rac
 
 
-   
+
     def cigre601( self):
+        """ 
+        
+        """
+
+        if self.Case1.NSELECT == 1:
+            #print("NSELECT == 1")
+            self.conductor_temperature() 
+        elif self.Case1.NSELECT == 2:
+            self.Case1.TCDR = self.Case1.TCDRPRELOAD
+            self.thermal_rating()
+        elif self.Case1.NSELECT == 3:
+            pass
+        elif self.Case1.NSELECT == 4:
+            pass
+
+        return
+    
+
+    def conductor_temperature( self):
+        """ 
+        
+        """
+        
+        TCDR = self.Cable1.TCDRMAX + 20
+        balance = 1000.0
+        Niterations = 0
+        deltaI = 1
+        
+        
+        # abs(balance) > self.Tolerance) 
+        while (deltaI > 0) and (Niterations < self.MaxIterations):
+            self.Case1.TCDRPRELOAD = TCDR 
+            self.Case1.TCDR = self.Case1.TCDRPRELOAD         
+            #TCDRold = TCDR 
+            self.thermal_rating()
+            #balance = self.Case1.QS + self.Case1.RAC*(self.Case1.XIPRELOAD**2) - self.Case1.QC - self.Case1.QR
+            
+            deltaI = self.Case1.TR - self.Case1.XIPRELOAD 
+
+            if self.Debug == 1:
+                print("Iteration: ", Niterations, "; DeltaI: ", deltaI, "; TCDR: ", TCDR, " ;Current: ", self.Case1.TR)
+
+            if  deltaI > 0:
+               TCDRold = TCDR
+               TRold = self.Case1.TR
+               TCDR -= 0.5
+            else:
+                TCDRx = TCDR + ((TCDRold - TCDR)/(TRold - self.Case1.TR))*(self.Case1.XIPRELOAD - self.Case1.TR)
+                if self.Debug == 1:
+                    print("Current: ", self.Case1.XIPRELOAD, " ; TCDR: ", TCDRx)
+                 
+            Niterations += 1
+            
+        
+        self.Case1.TCDRPRELOAD = TCDRx   
+            
+    
+        
+
+
+   
+    def thermal_rating( self):
         """Implementation of CIGRE TB601.
         
 
@@ -344,6 +408,7 @@ class CIGRE601():
         
         # Rac
         Rac = self.Rac()
+        self.Case1.RAC = Rac
         
         I = np.sqrt((Pr + Pc - Ps)/(Rac))
         self.Case1.TR = I
@@ -368,15 +433,19 @@ class CIGRE601():
         print("*******************************************************************")
         print("CIGRE TB601 ")
         print("*******************************************************************") 
-        
-        print("Solar heating: ", self.str_round( self.Case1.QS), " W/m")
-        print("Radiation cooling: ", self.str_round( self.Case1.QR), " W/m")
-        print("Convection cooling: ", self.str_round( self.Case1.QC), " W/m")
             
-        if self.Case1.NSELECT == 2:
-            print("Steady-state current: ", self.str_round( self.Case1.TR), " A" )        
 
-   
+        if self.Case1.NSELECT == 1:
+            print("INPUT -> Steady-state current: ", self.Case1.XIPRELOAD, " A")
+            print("OUTPUT -> Steady-state temperature: ", self.str_round( self.Case1.TCDRPRELOAD), " ºC")    
+        
+        elif self.Case1.NSELECT == 2:
+            print("INPUT -> Steady-state temperature: ", self.Case1.TCDRPRELOAD, " ºC")
+            print("OUTPUT -> Steady-state current: ", self.str_round( self.Case1.TR), " A" )
+
+        print("Solar heating:  ", self.str_round( self.Case1.QS), " W/m")
+        print("Radiation cooling: ", self.str_round( self.Case1.QR), " W/m")
+        print("Convection cooling: ", self.str_round( self.Case1.QC), " W/m")   
    
    
    

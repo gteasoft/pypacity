@@ -1048,7 +1048,7 @@ class IEEE738():
 
 
     def str_round( self, valuex):
-        """ 
+        """.
         
         """
         return str( round( valuex, self.Debug_Dec))
@@ -1062,12 +1062,19 @@ class IEEE738():
         print("IEEE 738")
         print("*******************************************************************") 
         
+    
+        if self.Case1.NSELECT == 1:
+            print("INPUT -> Steady-state current: ", self.Case1.XIPRELOAD, " A")
+            print("OUTPUT -> Steady-state temperature: ", self.str_round( self.Case1.TCDRPRELOAD), " ºC")    
+        
+        elif self.Case1.NSELECT == 2:
+            print("INPUT -> Steady-state temperature: ", self.Case1.TCDRPRELOAD, " ºC")
+            print("OUTPUT -> Steady-state current: ", self.str_round( self.Case1.TR), " A" )
+
         print("Solar heating:  ", self.str_round( self.Case1.QS), " W/m")
         print("Radiation cooling: ", self.str_round( self.Case1.QR), " W/m")
         print("Convection cooling: ", self.str_round( self.Case1.QC), " W/m")
-        
-        if self.Case1.NSELECT == 2:
-            print("Steady-state current: ", self.str_round( self.Case1.TR), " A" )
+
 
 
     def ampacidad( self):
