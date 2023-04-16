@@ -113,6 +113,9 @@ class Case():
         self.K = None
         self.KTIMEMAX = None 
         self.RAC = None
+        self.QJ = None # Joule heating [W/m]
+        self.TTfromST = 1 # Transient conductor temperature (NSELECT == 3) starting from steady-state conductor temperature; 0 starting from <TCDRinitial>
+        self.TCDRinitial = None # Initial conductor temperature when <TTfromST ==
     
 
         

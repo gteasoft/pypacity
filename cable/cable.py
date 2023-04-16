@@ -100,6 +100,13 @@ class Cable():
             self.HNH = 3
             self.HEATOUT = 1139.5
             self.HEATCORE = 351.7
+            self.TotalS = 486.6
+            self.CSteel20 = 481
+            self.CAlum20 = 897
+            self.BetaSteel20 = 1.00e-4
+            self.BetaAlum20 = 3.80e-4
+            self.mSteel = 0.5119
+            self.mAlum = 1.116
         elif conductor == '400 mm2 DRAKE 26/7 ACSR':
             self.Cstring = '400 mm2 DRAKE 26/7 ACSR'
             self.D = 28.12
@@ -115,7 +122,13 @@ class Cable():
             self.HNH = 3
             self.HEATOUT = 1139.5
             self.HEATCORE = 351.7
-            
+            self.TotalS = 486.6
+            self.CSteel20 = 481
+            self.CAlum20 = 897
+            self.BetaSteel20 = 1.00e-4
+            self.BetaAlum20 = 3.80e-4
+            self.mSteel = 0.5119
+            self.mAlum = 1.116            
   
     
         if NSELECT == 2:

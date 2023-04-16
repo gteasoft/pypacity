@@ -153,6 +153,28 @@ class CIGRE601():
         return Pr
         
 
+    def joule( self):
+        """ 
+        
+        """
+        Rac = self.Rac()
+        
+        if self.Case1.NSELECT == 1:
+            I = self.Case1.XIPRELOAD
+        elif self.Case1.NSELECT == 2:
+            I = self.Case1.TR 
+        elif self.Case1.NSELECT == 3:
+            I = self.Case1.XISTEP
+        elif self.Case1.NSELECT == 4:
+            I = self.Case1.XISTEP 
+        
+        
+        PJ =(Rac)*(I**2)
+        self.Case1.QJ = PJ
+        return PJ
+
+
+
     def convection( self):
         """ 
         
@@ -338,7 +360,7 @@ class CIGRE601():
             self.Case1.TCDR = self.Case1.TCDRPRELOAD
             self.thermal_rating()
         elif self.Case1.NSELECT == 3:
-            pass
+            self.TCDR_vs_time() 
         elif self.Case1.NSELECT == 4:
             pass
 
@@ -350,8 +372,7 @@ class CIGRE601():
         
         """
         
-        TCDR = self.Cable1.TCDRMAX + 20
-        balance = 1000.0
+        TCDR = self.Cable1.TCDRMAX + 100
         Niterations = 0
         deltaI = 1
         
@@ -384,6 +405,78 @@ class CIGRE601():
         self.Case1.TCDRPRELOAD = TCDRx   
             
     
+
+
+    def TCDR_vs_time( self):
+        """ 
+        """        
+        t = 0
+        Tc = 0
+        time = []
+        temp = []
+        # starting point I = self.Case1.XIPRELOAD
+        
+        if self.Case1.TTfromST == 0:
+            Tc = self.Case1.TCDRinitial
+        elif self.Case1.TTfromST == 1:
+            self.conductor_temperature()
+            Tc = self.Case1.TCDRPRELOAD
+       
+        
+        if self.Debug == 1:
+            print("Starting point")
+            print("Initial current: ", self.Case1.XIPRELOAD, " ; Initial temperature: ", self.Case1.TCDRPRELOAD)
+            
+        
+        time.append(t)
+        temp.append( Tc)
+        
+        
+        # ma.ca
+        maca = self.Cable1.mAlum*self.Cable1.CAlum20*(1+self.Cable1.BetaAlum20*(self.Case1.TCDRPRELOAD - 20.0))
+        
+        # mscs
+        mscs = self.Cable1.mSteel*self.Cable1.CSteel20*(1+self.Cable1.BetaSteel20*(self.Case1.TCDRPRELOAD - 20.0))
+        
+        # mc
+        mc = maca + mscs
+        
+        # Rac
+        Rac = self.Rac()
+        
+        # PJ
+        PJ = (Rac)*(self.Case1.XIPRELOAD**2)
+        self.Case1.QJ = PJ
+        
+        # DeltaTime (update to use loaded values from IEEE case)
+        deltaTime = 60.0
+        # DeltaTemperature CIGRE601 Pag 86
+        deltaT = (self.Case1.QJ + self.Case1.QS - self.Case1.QR - self.Case1.QC)*deltaTime/(mc)
+        
+        if self.Case1.SORM == 1:
+            tend = self.Case1.TT*60
+        else:
+            tend = self.Case1.TT
+            
+        steps = int(tend/self.Case1.DELTIME)
+        print("steps: ", steps)
+        for i in range(steps):
+            print("Tinitial: ", Tc, " ; dT: ", deltaT) 
+            t += deltaTime
+            Tc += deltaT
+            time.append( t)
+            temp.append( Tc)
+            self.Case1.TCDR = Tc
+            Pj = self.joule() 
+            Ps = self.solar()
+            Pr = self.radiation()
+            Pc = self.convection()
+            deltaT = (Pj + Ps - Pr - Pc)*deltaTime/(mc)
+            
+            
+        self.Case1.TIME = time
+        self.Case1.ATCDR = temp              
+        
         
 
 
