@@ -4,32 +4,16 @@
    contain the root `toctree` directive.
 
 
-.. image:: _images/50UC_RGB_title_iberdrola.svg   
+.. image:: _images/50UC_RGB_title.svg   
     :width: 400px
-
-
-.. raw::html
-
-   <div style="margin-top: 10px;"></div>  
-
-
-.. raw::html
-
-   <br>
-
-
-
-.
-
-
-Python Ampacity (pypacity) is a library devoted to the analysis of ampacity in Overhead Transmission Lines. The development of pypacity is partially funded by Iberdrola.
-
 
 .. raw:: html
 
    <br>
 
+.. raw:: html
 
+   <br>
 
 .. toctree::
    :maxdepth: 2

@@ -12,7 +12,7 @@ import sys
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
 project = 'pypacity'
-copyright = '2023, Mario Mañana'
+copyright = '2023, Universidad de Cantabria. DIEE. GTEA'
 author = 'Mario Mañana'
 release = '1.0'
 
@@ -38,6 +38,10 @@ extensions = [ 'sphinx.ext.napoleon', 'sphinx_rtd_size', ]
 
 sphinx_rtd_size_width = "90%"
 napoleon_google_docstring = False
+
+
+
+
 
 def setup(app):
     app.add_css_file('custom.css')

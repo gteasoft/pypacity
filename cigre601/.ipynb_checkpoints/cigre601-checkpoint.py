@@ -57,7 +57,7 @@ class CIGRE601():
         Args:
             angle (float): angle in deg.
         """
-        DEG_TO_RAD = np.pi/180
+        cos = np.pi/180
         return ( np.sin(DEG_TO_RAD*angle))
     
     def cosd( self, angle):

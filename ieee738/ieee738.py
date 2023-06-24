@@ -8,7 +8,10 @@ reload( cable)
 reload( case)
 
 class IEEE738():
-    """Implementation of the IEEE 738:2012."""
+    """Implementation of the IEEE 738:2012.
+    
+    
+    """
     #DEG_TO_RAD = np.pi/180
      
     
@@ -20,16 +23,21 @@ class IEEE738():
 
     
     def set_cable( self, Cable):
-        """_summary_
+        """Set the cable characteristics for a specific IEEE 738 analysis.
 
         Args:
-            Cable (class Cable): XX
+            Cable (class Cable): Object of type Cable with information about the cable.
         """
         self.Cable1 = Cable
         return
         
 
     def set_case( self, Case):
+        """Set the case characteristics for a specific IEEE 738 analysis.
+        
+        Args:
+            Case (class Case): Object of type Case with information about the environmental and other physical conditions to consider in the dynamic operation of the cable.
+        """
         self.Case1 = Case
 
         if type(self.Case1.CDR_LAT_DEG) == None:
@@ -75,7 +83,7 @@ class IEEE738():
     # 398 REM * - THIS PROGRAM AND EQUATIONS USE SI UNITS
     # 400 REM **************************************************************
     def ieee_738_2013( self, out = False):
-        """
+        """Implementation of IEEE 738:2013.
         
         
         """
@@ -245,10 +253,9 @@ class IEEE738():
     # 5020 REM /////////////////////////////////////////////////////////
     ########################################################################
     def solar( self):
-        """
-        Compute the conductor solar heat gain (QS)
+        """Compute the conductor solar heat gain (QS).
         
-        :return: Value of solar heat gain QS in W/m^2
+        :return: Value of solar heat gain QS in W/m.
         """
         DEG_TO_RAD = np.pi/180
         #self.CDR_LAT_RAD = self.Case1.CDR_LAT_DEG*self.DEG_TO_RAD
@@ -338,10 +345,8 @@ class IEEE738():
     #9020 REM //////////////////////////////////////////////////////////////
     ########################################################################
     def thermal( self):
-        """
-        xx
+        """Compute thermal Coefficient of RAC, HeatCap and Wind Correction.
         
-        :return: xx.
         """
         #9030 REM **********************************************************
         #9040 REM * SETUP LINEAR CONDUCTOR RESISTANCE EQ AS FUNCTION OF TEMP
@@ -374,9 +379,8 @@ class IEEE738():
     #13050 REM / AND COMPARING THE CALCULATED TCDR TO TCDRMAX. ROUTINE SUPPLIED /
     #13060 REM / COURTESY OF BILL HOWINGTON. /
     def mueller( self):
-        """
+        """Function that implements an iteration method that selects a current which just raises self.Case1.TCDR to its maximum value in the time TT.
        
-        :return: X
         """
    
         #13070 REM ///////////////////////////////////////////////////////////////////
@@ -559,7 +563,7 @@ class IEEE738():
     #14020 REM ////////////////////////////////////////////////////////////
     ########################################################################
     def initial_bounds( self):
-        """_summary_
+        """Computes initial bounds for iteration.
         """
         if self.Case1.NFLAG == 0:
             self.Case1.XLO = self.Case1.TAMB
@@ -605,7 +609,10 @@ class IEEE738():
     #12020 REM / GIVEN THE CONDUCTOR CURRENT
     #12030 REM ////////////////////////////////////////////////////
     def find_TCDR( self):
-        """
+        """Obtain conductor temperature given the conductor current.
+        
+        :return: The computed value is returned in 
+            self.Case1.TEMP (float): Conductor temperature in [DEG C].
         """
         if self.Case1.NFLAG == 0:
             self.Case1.TCDR = self.Case1.X
@@ -629,9 +636,16 @@ class IEEE738():
     #15030 REM /////////////////////////////////////////////////////////////////
     #15040 REM PRINT USING "TRYING A TCDR OF ####.### DEG C"; TCDR
     def thermal_rating( self):
-        """.
+        """Computes the thermal rating of the cable given a conductor temperature.
         
-        """
+        :Args:
+            self.Case1.TCDR (float): conductor temperature [DEG C].
+            
+        :return:
+            self.Case1.TR (float): ampacity [A]
+                
+        
+        """ 
         #print('thermal_rating()')
         #15050 REM *********************************************************
         #15060 REM * CALC CONDUCTOR HEAT LOSS (QR) BY RADIATION (WATTS/M)
@@ -709,7 +723,7 @@ class IEEE738():
     #11010 REM / SUBROUTINE CALCS CDR TEMP VS TIME FOR STEP CHANGE CURRENT
     #11020 REM ///////////////////////////////////////////////////////////
     def  TCDR_vs_TIME( self):
-        """
+        """Computes the transient evolution of conductor temperature.
 
         """
         
@@ -798,6 +812,9 @@ class IEEE738():
     #10030 REM ///////////////////////////////////////////////////////////////
     #10040 TCDR = (TCDRMAX + TAMB) / 2
     def starting_ci( self):
+        """Compute the starting value for current iteration by assuming adiabatic heating during transient.
+        
+        """
   
         self.Case1.TCDR = (self.Cable1.TCDRMAX + self.Case1.TAMB) / 2
     
@@ -827,6 +844,9 @@ class IEEE738():
   
   
     def output( self):
+        """Print detailed results.
+        
+        """
         #6070 PRINT
         #6080 PRINT X$
         print("*******************************************************************")
@@ -1048,13 +1068,16 @@ class IEEE738():
 
 
     def str_round( self, valuex):
-        """.
+        """Obtain the rounded value of <valuex> acording the variable <self.Debug_Dec>.
+
+        :Args:
+            valuex (float): value to be rounded according the number of decimal values defined by <self.Debug_Dec>.
         
         """
         return str( round( valuex, self.Debug_Dec))
 
     def outputs( self):
-        """Print a summary of intermediate results
+        """Print a summary of intermediate results.
             
         """
         print("*******************************************************************")
@@ -1078,7 +1101,7 @@ class IEEE738():
 
 
     def ampacidad( self):
-        """
+        """Not yet implemented.
     
         """      
         #Analysis choice (variable data['NSELECT'])
@@ -1101,4 +1124,7 @@ class IEEE738():
     
     
     def print_ver( self):
+        """Print current version.
+        """
+        
         print("IEEE738. 30/3/2023. 23:15") 

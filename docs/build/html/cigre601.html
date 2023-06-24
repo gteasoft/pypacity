@@ -107,12 +107,14 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="cigre601.cigre601.CIGRE601.Rac">
 <span class="sig-name descname"><span class="pre">Rac</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cigre601.cigre601.CIGRE601.Rac" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Computes the equivalente conductor resistance [ohm/m] at operation temperature.</p>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="cigre601.cigre601.CIGRE601.TCDR_vs_time">
 <span class="sig-name descname"><span class="pre">TCDR_vs_time</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cigre601.cigre601.CIGRE601.TCDR_vs_time" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Computes the transient evolution of conductor temperature.</p>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="cigre601.cigre601.CIGRE601.cigre601">
@@ -122,22 +124,30 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="cigre601.cigre601.CIGRE601.conductor_temperature">
 <span class="sig-name descname"><span class="pre">conductor_temperature</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cigre601.cigre601.CIGRE601.conductor_temperature" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Computes the conductor temperature</p>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="cigre601.cigre601.CIGRE601.convection">
 <span class="sig-name descname"><span class="pre">convection</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cigre601.cigre601.CIGRE601.convection" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Computes de convective cooling of conductor in W/m.</p>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="cigre601.cigre601.CIGRE601.cosd">
 <span class="sig-name descname"><span class="pre">cosd</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">angle</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cigre601.cigre601.CIGRE601.cosd" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Computes the cos of angle [deg].</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>angle (float): angle in deg.</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="cigre601.cigre601.CIGRE601.joule">
 <span class="sig-name descname"><span class="pre">joule</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cigre601.cigre601.CIGRE601.joule" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Computes the Joule heating of conductor in W/m.</p>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="cigre601.cigre601.CIGRE601.outputs">
@@ -154,15 +164,15 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="cigre601.cigre601.CIGRE601.radiation">
 <span class="sig-name descname"><span class="pre">radiation</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cigre601.cigre601.CIGRE601.radiation" title="Permalink to this definition"></a></dt>
-<dd><p>.</p>
+<dd><p>Computes the radiative cooling of conductor in W/m.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="cigre601.cigre601.CIGRE601.set_cable">
 <span class="sig-name descname"><span class="pre">set_cable</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">Cable</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cigre601.cigre601.CIGRE601.set_cable" title="Permalink to this definition"></a></dt>
-<dd><p>_summary_</p>
+<dd><p>Set the cable characteristics for a specific CIGRE TB601 analysis.</p>
 <dl class="simple">
-<dt>Args:</dt><dd><p>Cable (class Cable): XX</p>
+<dt>Args:</dt><dd><p>Cable (class Cable): Object of type Cable with information about the cable.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -170,12 +180,22 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="cigre601.cigre601.CIGRE601.set_case">
 <span class="sig-name descname"><span class="pre">set_case</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">Case</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cigre601.cigre601.CIGRE601.set_case" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Set the case characteristics for a specific CIGRE TB601 analysis.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>Case (class Case): Object of type Case with information about the environmental and other physical conditions to consider in the dynamic operation of the cable.</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="cigre601.cigre601.CIGRE601.sind">
 <span class="sig-name descname"><span class="pre">sind</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">angle</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cigre601.cigre601.CIGRE601.sind" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Computes the sin of angle [deg].</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>angle (float): angle in deg.</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="cigre601.cigre601.CIGRE601.solar">
@@ -186,7 +206,12 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="cigre601.cigre601.CIGRE601.str_round">
 <span class="sig-name descname"><span class="pre">str_round</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">valuex</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cigre601.cigre601.CIGRE601.str_round" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Obtain the rounded value of &lt;valuex&gt; acording the variable &lt;self.Debug_Dec&gt;.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>valuex (float): value to be rounded according the number of decimal values defined by &lt;self.Debug_Dec&gt;.</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="cigre601.cigre601.CIGRE601.thermal_rating">
@@ -209,7 +234,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2023, Mario Mañana.</p>
+    <p>&#169; Copyright 2023, Universidad de Cantabria. DIEE. GTEA.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

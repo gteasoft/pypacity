@@ -1,10 +1,8 @@
 pypacity 
 ##########################
 
-
-.. raw:: html
-    .. image:: _images/50UC_RGB.svg   
-        :width: 200px
+.. image:: _images/50UC_RGB.svg   
+    :width: 200px
 
 .. raw:: html
 

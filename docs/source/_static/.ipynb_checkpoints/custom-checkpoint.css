@@ -1,0 +1,16 @@
+h1 {
+    color: red;
+}
+
+p {
+    font-size: 16px;
+}
+
+dl.attribute-list dd {
+    margin-bottom: 1em;
+}
+
+
+.wy-nav-content {
+    max-width: 75% !important;
+}
