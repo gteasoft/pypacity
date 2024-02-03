@@ -48,9 +48,9 @@
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">cable module</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#cable.cable.Cable"><code class="docutils literal notranslate"><span class="pre">Cable</span></code></a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#cable.cable.Cable.demo"><code class="docutils literal notranslate"><span class="pre">Cable.demo()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#cable.cable.Cable.load_cable_db"><code class="docutils literal notranslate"><span class="pre">Cable.load_cable_db()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#cable.cable.Cable.print_ver"><code class="docutils literal notranslate"><span class="pre">Cable.print_ver()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#cable.cable.Cable.set_cable"><code class="docutils literal notranslate"><span class="pre">Cable.set_cable()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#cable.cable.Cable.set_param"><code class="docutils literal notranslate"><span class="pre">Cable.set_param()</span></code></a></li>
 </ul>
 </li>
@@ -136,29 +136,6 @@
 </dd>
 </dl>
 <dl class="py method">
-<dt class="sig sig-object py" id="cable.cable.Cable.demo">
-<span class="sig-name descname"><span class="pre">demo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">NSELECT</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">conductor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Demo</span> <span class="pre">case'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cable.cable.Cable.demo" title="Permalink to this definition"></a></dt>
-<dd><p>Load a demo case.. Ejemplo para Alberto</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>NSELECT</strong> (<em>int</em>) – Type of computation</p></li>
-<li><p><strong>conductor</strong> (<em>string</em>) – Conductor ID. Type of conductor. By default the function defines a demo case that is based on 400 mm2 DRAKE 26/7 ACSR</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>None.</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><ul class="simple">
-<li></li>
-</ul>
-</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
 <dt class="sig sig-object py" id="cable.cable.Cable.load_cable_db">
 <span class="sig-name descname"><span class="pre">load_cable_db</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cable.cable.Cable.load_cable_db" title="Permalink to this definition"></a></dt>
 <dd><p>Load cable database</p>
@@ -185,6 +162,29 @@
 </dd>
 <dt class="field-even">Return type</dt>
 <dd class="field-even"><p>string</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cable.cable.Cable.set_cable">
+<span class="sig-name descname"><span class="pre">set_cable</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">NSELECT</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">conductor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Demo</span> <span class="pre">case'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cable.cable.Cable.set_cable" title="Permalink to this definition"></a></dt>
+<dd><p>Load a demo case.. Ejemplo para Alberto</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>NSELECT</strong> (<em>int</em>) – Type of computation</p></li>
+<li><p><strong>conductor</strong> (<em>string</em>) – Conductor ID. Type of conductor. By default the function defines a demo case that is based on 400 mm2 DRAKE 26/7 ACSR</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>None.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><ul class="simple">
+<li></li>
+</ul>
+</p>
 </dd>
 </dl>
 </dd></dl>

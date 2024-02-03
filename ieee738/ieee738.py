@@ -1,4 +1,10 @@
 # -*- coding: utf-8 -*-
+
+#########################################################################
+# CIGRE IEEE 738
+#
+# 
+
 import numpy as np
 import sys
 from cable import cable

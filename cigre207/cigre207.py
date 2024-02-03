@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 #########################################################################
-# CIGRE TB 601
+# CIGRE TB 207
 #
 # 
 
@@ -14,8 +14,8 @@ from importlib import reload
 reload( cable)
 reload( case)
 
-class CIGRE601():
-    """Implementation of CIGRE TB601"""
+class CIGRE207():
+    """Implementation of CIGRE TB207"""
     
     def __init__(self):
         self.Cable1 = cable.Cable()
@@ -39,7 +39,7 @@ class CIGRE601():
     
 
     def set_cable( self, Cable):
-        """Set the cable characteristics for a specific CIGRE TB601 analysis.
+        """Set the cable characteristics for a specific CIGRE TB207 analysis.
 
         Args:
             Cable (class Cable): Object of type Cable with information about the cable.
@@ -49,7 +49,7 @@ class CIGRE601():
         
 
     def set_case( self, Case):
-        """Set the case characteristics for a specific CIGRE TB601 analysis.
+        """Set the case characteristics for a specific CIGRE TB207 analysis.
         
         Args:
             Case (class Case): Object of type Case with information about the environmental and other physical conditions to consider in the dynamic operation of the cable.
@@ -348,10 +348,30 @@ class CIGRE601():
         else:
             Nudelta = Nu90*(self.sind(self.Case1.WINDANG_DEG)**2 + 0.0169*self.cosd(self.Case1.WINDANG_DEG)**2)**0.225
 
+
+        # TB 207. pg 12.
+        if self.Case1.VWIND < 0.5:
+            # 3.1.3 case a
+            Nudelta_a = Nu90*(0.42 + 0.58*( self.sind(45.0)**0.90)) 
+            Pcfor_a = np.pi*lambdaf*(self.Case1.TCDR - self.Case1.TAMB)*Nudelta_a 
+            
+            # 3.1.3. case b
+            Nudelta_b = Nu90*0.55
+            Pcfor_b = np.pi*lambdaf*(self.Case1.TCDR - self.Case1.TAMB)*Nudelta_b
+            
+        
+
         if self.Debug == 1:
             print("Nudelta: " + self.str_round(Nudelta))
 
         Pcfor = np.pi*lambdaf*(self.Case1.TCDR - self.Case1.TAMB)*Nudelta
+        
+        # TB 207. pg 12.
+        if self.Case1.VWIND < 0.5:
+            Pcfor = max( Pcfor_a, Pcfor_b)
+            
+        
+        
         if self.Debug == 1:
             print("Pc forced: " + self.str_round(Pcfor) + " W/m")
 
@@ -382,7 +402,7 @@ class CIGRE601():
 
 
 
-    def cigre601( self):
+    def cigre207( self):
         """ 
         
         """
@@ -517,7 +537,7 @@ class CIGRE601():
 
    
     def thermal_rating( self):
-        """Implementation of CIGRE TB601.
+        """Implementation of CIGRE TB207.
         
 
         """ 
@@ -569,7 +589,7 @@ class CIGRE601():
         print(" ")
         print("*******************************************************************")
         print("*******************************************************************")
-        print("CIGRE TB601 ")
+        print("CIGRE TB207 ")
         print("*******************************************************************") 
             
 
@@ -589,7 +609,7 @@ class CIGRE601():
    
     
     def print_ver( self):
-        """Print version of cigre601 module.
+        """Print version of cigre207 module.
         
         """
-        print("CIGRE TB601. 12/4/2023. 19:12") 
+        print("CIGRE TB207. 3/2/2024. 18:46") 
