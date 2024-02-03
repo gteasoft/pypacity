@@ -17,7 +17,19 @@ class CIGRE601():
         self.Debug_Dec = 3 # number of decimal value for printing debug info
         self.Tolerance = 1 # Tolerance for temperature estimation
         self.MaxIterations = 400 # Maximum number of iteration
+        self.error = 0 # 0 no error
 
+
+    def set_error( self, error):
+        """Set error value"""
+        self.error = error
+        return
+    
+    
+    def get_error( self):
+        """Get error value"""
+        return( self.error)
+    
 
     def set_cable( self, Cable):
         """Set the cable characteristics for a specific CIGRE TB601 analysis.
@@ -519,7 +531,13 @@ class CIGRE601():
         Rac = self.Rac()
         self.Case1.RAC = Rac
         
-        I = np.sqrt((Pr + Pc - Ps)/(Rac))
+        interm = Pr + Pc - Ps
+        if interm < 0:
+            self.error = 100 # no thermal balance
+            interm *= (-1)
+            print('CIGRE inconsistency -> Ps: %.2f; Pr:%.2f; Pc:%.2f' %(Ps, Pr, Pc))
+            print('VWIND: %.2f; WINDANG_DEG: %.2f; SolarRadiation: %.2f' %(self.Case1.VWIND, self.Case1.WINDANG_DEG, self.Case1.SolarRadiation))
+        I = np.sqrt((interm)/(Rac))
         self.Case1.TR = I
         if self.Debug == 1:
             print("Dynamic Current Rating: " + self.str_round(I) + " A")
@@ -536,10 +554,12 @@ class CIGRE601():
         return str( round( valuex, self.Debug_Dec))
 
     
-    def outputs( self):
+    def output( self):
         """Print a summary of intermediate results
             
         """
+        print(" ")
+        print(" ")
         print("*******************************************************************")
         print("*******************************************************************")
         print("CIGRE TB601 ")

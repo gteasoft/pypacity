@@ -12,7 +12,7 @@ class Cable():
     
     Attributes:
         :Cstring (str): Conductor description.
-        :D (float): Conductor diameter (mm).
+        :D (float): Outside diameter of conductor (mm).
         :TLO (float): Conductor minimum temperature for resistance computation (ºC). 
         :THI (float): Conductor maximum temperature for resistance computation (ºC).
         :TCDRMAX (float): Maximum conductor temperature (ºC).
@@ -28,7 +28,7 @@ class Cable():
     def __init__(self):
 
         self.Cstring = None        # Conductor description
-        self.D = None              # Conductor diameter (mm)
+        self.D = None              # Outside diameter of conductor  (mm)
         self.d = None              # Diameter of the wires in the outermost layer
         self.TLO = None            # MIN CDR TEMP IN DEG C for conductor resistance
         self.THI = None            # MAX CDR TEMP IN DEG C for conductor resistance
@@ -74,7 +74,7 @@ class Cable():
         return cable_db, error
 
     
-    def demo( self, NSELECT, conductor = 'Demo case' ):
+    def set_cable( self, NSELECT, conductor = 'Demo case' ):
         """
         Load a demo case.. Ejemplo para Alberto
 
@@ -128,7 +128,53 @@ class Cable():
             self.BetaSteel20 = 1.00e-4
             self.BetaAlum20 = 3.80e-4
             self.mSteel = 0.5119
+            self.mAlum = 1.116
+        elif conductor == 'LA-180':
+            self.Cstring = 'LA-180'
+            self.D = 17.50
+            self.C = 10.4
+            self.d = 2.50
+            self.TLO = 5.0
+            self.THI = 85.0
+            self.TCDRMAX = 101.0
+            self.RLO = 0.21993/1000.0
+            self.RHI = 0.25197/1000.0
+            self.EMISS = 0.5
+            self.ABSORP = 0.5
+            self.HNH = 2
+            self.HEATOUT = 379.81
+            self.HEATCORE = 128.16
+            self.TotalS = 486.6
+            self.CSteel20 = 481
+            self.CAlum20 = 897
+            self.BetaSteel20 = 1.00e-4
+            self.BetaAlum20 = 3.80e-4
+            self.mSteel = 0.5119
+            self.mAlum = 1.116
+        elif conductor == 'LA-280':
+            self.Cstring = 'LA-280'
+            self.D = 21.80
+            self.C = 10.4
+            self.d = 3.44
+            self.TLO = 5.0
+            self.THI = 85.0
+            self.TCDRMAX = 101.0
+            self.RLO = 0.13384/1000.0
+            self.RHI = 0.15707/1000.0
+            self.EMISS = 0.5
+            self.ABSORP = 0.5
+            self.HNH = 2
+            self.HEATOUT = 379.81
+            self.HEATCORE = 128.16
+            self.TotalS = 486.6
+            self.CSteel20 = 481
+            self.CAlum20 = 897
+            self.BetaSteel20 = 1.00e-4
+            self.BetaAlum20 = 3.80e-4
+            self.mSteel = 0.5119
             self.mAlum = 1.116            
+            
+                                   
   
     
         if NSELECT == 2:

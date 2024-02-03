@@ -63,7 +63,7 @@ class Case():
         self.TCDR = 50 # EXPECTED CONDUCTOR TEMPERATURE IN CELSIUS
         self.T3 = None  # EXPECTED CONDUCTOR TEMPERATURE IN KELVIN
         self.ALBEDO = 0.0 # Soil, grass and/or crops. 
-        self.SOLAR = 1 # 1.- computed; 0.- measured
+        self.SOLAR = 0 # 1.- computed; 0.- measured
         self.beta = 0 # Inclination of conductor to the horizontal
         self.B = None
         self.B1 = None
