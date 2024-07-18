@@ -37,6 +37,7 @@ class Case():
     """
     
     def __init__(self):
+        self.NCIRCUITS = 1 # Number of circuits
         self.NSELECT = None        # Analysis Mode
         self.IORTPRELOAD = None    #
         self.SORM = None           # Unit of time for output print. 0: seconds; 1: minutes
