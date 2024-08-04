@@ -88,7 +88,96 @@ class CIGRE601():
         DEG_TO_RAD = np.pi/180
         return( np.cos(DEG_TO_RAD*angle))    
   
+  
+   ########################################################################
     def solar( self):
+        """Compute the conductor solar heat gain (QS).
+        
+        :return: Value of solar heat gain QS in W/m.
+        """
+        DEG_TO_RAD = np.pi/180
+        #self.CDR_LAT_RAD = self.Case1.CDR_LAT_DEG*self.DEG_TO_RAD
+        CDR_LAT_RAD = self.Case1.CDR_LAT_DEG*DEG_TO_RAD # Conductor latitude in radians
+   
+    
+        #5060 REM * SOLAR DECLINATION
+        #data['DECL_DEG'] = 23.4583*np.sin(((284 + data['NDAY'])/365)*2*np.pi)
+        #data['DECL_RAD'] = data['DECL_DEG']*data['DEG_TO_RAD']
+        DECL_DEG = 23.4583*np.sin(((284 + self.Case1.NDAY)/365)*2*np.pi)
+        DECL_RAD = DECL_DEG*DEG_TO_RAD     
+        
+    
+        #5090 REM * SOLAR ANGLE RELATIVE TO NOON
+        #data['HOUR_ANG_DEG'] = (data['SUN_TIME']-12)*15
+        #data['HOUR_ANG_RAD'] = data['HOUR_ANG_DEG']*data['DEG_TO_RAD']
+        HOUR_ANG_DEG = (self.Case1.SUN_TIME-12)*15
+        HOUR_ANG_RAD = HOUR_ANG_DEG*DEG_TO_RAD
+    
+        #5120 REM * FIND SOLAR ALTITUDE - H3
+        #data['H3ARG'] = (np.cos(data['CDR_LAT_RAD'])*np.cos(data['DECL_RAD'])*np.cos(data['HOUR_ANG_RAD'])
+        #                +np.sin(data['CDR_LAT_RAD'])*np.sin(data['DECL_RAD']))
+        #data['H3_RAD'] = np.arctan(data['H3ARG']/np.sqrt(1-data['H3ARG']**2))
+        #data['H3_DEG'] = data['H3_RAD']/data['DEG_TO_RAD']
+        H3ARG = (np.cos(CDR_LAT_RAD)*np.cos(DECL_RAD)*np.cos(HOUR_ANG_RAD) \
+                     +np.sin(CDR_LAT_RAD)*np.sin(DECL_RAD))
+        
+        H3_RAD = np.arctan(H3ARG/np.sqrt(1-(H3ARG)**2))
+        H3_DEG = H3_RAD/DEG_TO_RAD
+  
+        if self.Case1.A3 == 1:
+        #5260 REM *****************************************************************
+        #5270 REM * SOLAR HEAT (Q3) AT EARTH SURFACE (W/M2) IN INDUSTRIAL AIR (P6)
+        #5280 REM *****************************************************************
+            Q3 = 53.1821 + 14.211*H3_DEG + 0.66138*(H3_DEG)**2 
+            Q3 += -0.031658*(H3_DEG)**3 + 5.4654E-04*(H3_DEG)**4
+            Q3 += -4.3446E-06*(H3_DEG)**5 + 1.3236E-08*(H3_DEG)**6
+            self.Bstring = 'INDUSTRIAL'
+        elif self.Case1.A3 == 0:
+        #5180 REM ***************************************************************
+        #5190 REM * SOLAR HEATING (Q3) AT EARTH SURFACE (W/M2) IN CLEAR AIR (P6)
+        #5200 REM ***************************************************************
+            Q3 = -42.2391 + 63.8044*H3_DEG - 1.922*(H3_DEG)**2
+            Q3 += 0.034692*(H3_DEG)**3 - 3.6112E-04*(H3_DEG)**4
+            Q3 += 1.9432E-06*(H3_DEG)**5 - 4.0761E-09*(H3_DEG)**6
+            self.Bstring = 'CLEAR'
+    
+        #5330 REM * CALCULATE SOLAR AZIMUTH VARIABLE, CHI
+        auxi1 = (np.sin(CDR_LAT_RAD)*np.cos(HOUR_ANG_RAD) \
+              - np.cos(CDR_LAT_RAD)*np.tan(DECL_RAD))
+        CHI = np.sin(HOUR_ANG_RAD)/auxi1
+    
+        #5360 REM * CALCULATE SOLAR AZIMUTH CONSTANT, CAZ
+        if (HOUR_ANG_DEG < 0) and (CHI >= 0):
+            CAZ = 0
+        elif (HOUR_ANG_DEG >= 0) and (CHI < 0):
+            CAZ = 360
+        else:
+            CAZ = 180
+    
+        #Set QS if solar measurement available
+        if ( self.Case1.SUN_TIME >= 24) or (self.Case1.SUN_TIME == 99):
+            Q3 = self.Case1.SolarRadiation
+    
+        #5400 REM * CALCULATE SOLAR AZIMUTH IN DEGREES, Z4.DEG
+        Z4_DEG = CAZ + np.arctan(CHI)
+        Z4_RAD = Z4_DEG*DEG_TO_RAD
+        Z1_RAD = self.Case1.Z1_DEG*DEG_TO_RAD
+        E1 = np.cos(H3_RAD)*np.cos(Z4_RAD-Z1_RAD)
+        E2_RAD = np.arctan(np.sqrt(1/(E1)**2 - 1))
+        QS = (self.Cable1.ABSORP*Q3*np.sin(E2_RAD)*self.Cable1.D/1000*(1 \
+            + 0.0001148*self.Case1.CDR_ELEV-1.108E-08*(self.Case1.CDR_ELEV)**2))
+    
+        if QS < 0:
+            QS = 0.0
+    
+        self.Case1.QS = QS
+        #print("Solar Radiation QS: ", self.Case1.QS, " W/m")
+        return QS
+   #End Function ieee_738_2013_solar  
+  
+  
+  
+    def solarx( self):
         """Solar heating. Section 3.3 TB601. Pag. 18..
         
         """
@@ -169,6 +258,7 @@ class CIGRE601():
             print("Ps: " + self.str_round(Ps) + " W/m")
         
         return Ps
+
 
 
     def radiation( self):
@@ -339,6 +429,16 @@ class CIGRE601():
         Nu90 = B*(Rey**n)
         if self.Debug == 1:
             print("Nu90: " + self.str_round(Nu90))
+        
+        
+        alpha = abs( self.Case1.DWIND_DEG - self.Case1.Z1_DEG )
+        if alpha < 180:
+            self.Case1.WINDANG_DEG = min( alpha, 180 - alpha)
+        else: # >= 180
+            alphap = alpha - 180.0
+            self.Case1.WINDANG_DEG = min( alphap, 180 - alphap)
+        
+      
         
         if self.Cable1.Stranded == 1:
             if self.Case1.WINDANG_DEG <= 24:
@@ -523,7 +623,7 @@ class CIGRE601():
         """ 
 
         # Solar heating
-        Ps = self.solar()
+        Ps = self.solar()  
         self.Case1.QS = Ps
        
         # Radiation cooling 
@@ -571,7 +671,9 @@ class CIGRE601():
         print("*******************************************************************")
         print("CIGRE TB601 ")
         print("*******************************************************************") 
-            
+        
+        print("The angle between wind and conductor is = ", self.Case1.WINDANG_DEG, " DEG")
+     
 
         if self.Case1.NSELECT == 1:
             print("INPUT -> Steady-state current: ", self.Case1.XIPRELOAD, " A")

@@ -49,6 +49,7 @@ class Case():
         self.TAMB = None           # Ambient temperature in DEG C
         self.T4 = None # Ambient temperature in KELVIN
         self.VWIND = None          # Wind speed (m/s)
+        self.DWIND_DEG = None          # Wind direction in DEG
         self.WINDANG_DEG = None    # Angle between wind & conductor axis in DEG
         self.WINDANG_RAD = None  # Angle between wind & conductor axis in RAD
         self.CDR_ELEV = None       # CDR ELEV ABOVE SEA LEVEL IN METERS
@@ -138,9 +139,10 @@ class Case():
         self.XISTEP = 1000
         self.TAMB = 40
         self.VWIND = 0.61
+        self.DWIND_DEG = 90.0
         self.WINDANG_DEG = 90.0
         self.CDR_ELEV = 0.0
-        self.Z1_DEG = 45.0
+        self.Z1_DEG = 0.0
         self.CDR_LAT_DEG = 43.0
         self.SUN_TIME = 99
         self.NDAY = 161

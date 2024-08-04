@@ -368,7 +368,17 @@ class IEEE738():
         #9120 REM * CORRECTION FACTOR (YC) FOR NON-PERPENDICULAR WIND
         #9130 REM ***************************************************
         PIANG = np.pi/180;
-        self.Case1.WINDANG_RAD = 1.570796 - self.Case1.WINDANG_DEG * PIANG;
+        #self.Case1.WINDANG_RAD = 1.570796 - self.Case1.WINDANG_DEG * PIANG;
+        
+        alpha = abs( self.Case1.DWIND_DEG - self.Case1.Z1_DEG )
+        if alpha < 180:
+            self.Case1.WINDANG_DEG = min( alpha, 180 - alpha)
+        else: # >= 180
+            alphap = alpha - 180.0
+            self.Case1.WINDANG_DEG = min( alphap, 180 - alphap)
+        
+        self.Case1.WINDANG_RAD = self.Case1.WINDANG_DEG * PIANG
+        
         self.Case1.YC = (1.194 - np.sin(self.Case1.WINDANG_RAD) - 0.194*np.cos(2.0*self.Case1.WINDANG_RAD) \
             + 0.368*np.sin(2.0*self.Case1.WINDANG_RAD))
         return     
@@ -1092,7 +1102,7 @@ class IEEE738():
         print("*******************************************************************")
         print("IEEE 738")
         print("*******************************************************************") 
-        
+        print("The angle between wind and conductor is = ", self.Case1.WINDANG_DEG, " DEG") 
     
         if self.Case1.NSELECT == 1:
             print("INPUT -> Steady-state current: ", self.Case1.XIPRELOAD, " A")
