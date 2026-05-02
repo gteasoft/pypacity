@@ -20,7 +20,7 @@ class CIGRE601():
     def __init__(self):
         self.Cable1 = cable.Cable()
         self.Case1 = case.Case()
-        self.Debug = 1 # 1 print intermediate values
+        self.Debug = 0 # 1 print intermediate values
         self.Debug_Dec = 3 # number of decimal value for printing debug info
         self.Tolerance = 1 # Tolerance for temperature estimation
         self.MaxIterations = 400 # Maximum number of iteration

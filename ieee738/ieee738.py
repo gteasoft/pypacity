@@ -24,7 +24,7 @@ class IEEE738():
     def __init__(self):
         self.Cable1 = cable.Cable()
         self.Case1 = case.Case()
-        self.Debug = 1 # 1 print intermediate values
+        self.Debug = 0 # 1 print intermediate values
         self.Debug_Dec = 3 # number of decimal value for printing debug info
 
     
@@ -274,6 +274,10 @@ class IEEE738():
         DECL_DEG = 23.4583*np.sin(((284 + self.Case1.NDAY)/365)*2*np.pi)
         DECL_RAD = DECL_DEG*DEG_TO_RAD     
         
+        if self.Debug == 1:
+            print(f"Declination: {self.str_round( DECL_DEG)} deg")
+        
+        
     
         #5090 REM * SOLAR ANGLE RELATIVE TO NOON
         #data['HOUR_ANG_DEG'] = (data['SUN_TIME']-12)*15
@@ -286,11 +290,16 @@ class IEEE738():
         #                +np.sin(data['CDR_LAT_RAD'])*np.sin(data['DECL_RAD']))
         #data['H3_RAD'] = np.arctan(data['H3ARG']/np.sqrt(1-data['H3ARG']**2))
         #data['H3_DEG'] = data['H3_RAD']/data['DEG_TO_RAD']
-        H3ARG = (np.cos(CDR_LAT_RAD)*np.cos(DECL_RAD)*np.cos(HOUR_ANG_RAD) \
-                     +np.sin(CDR_LAT_RAD)*np.sin(DECL_RAD))
+        H3ARG = (np.cos(CDR_LAT_RAD)*np.cos(DECL_RAD)*np.cos(HOUR_ANG_RAD)+np.sin(CDR_LAT_RAD)*np.sin(DECL_RAD))
         
-        H3_RAD = np.arctan(H3ARG/np.sqrt(1-(H3ARG)**2))
+        H3_RAD = np.arcsin(H3ARG)  #np.arctan(H3ARG/np.sqrt(1-(H3ARG)**2))
         H3_DEG = H3_RAD/DEG_TO_RAD
+  
+        if self.Debug == 1:
+            print(f"Latitude: {self.str_round(self.Case1.CDR_LAT_DEG)} deg")
+            print(f"Hour angle: {self.str_round(HOUR_ANG_DEG)} deg")
+            print(f"Solar altitude: {self.str_round(H3_DEG)} deg")
+  
   
         if self.Case1.A3 == 1:
         #5260 REM *****************************************************************
@@ -310,8 +319,7 @@ class IEEE738():
             self.Bstring = 'CLEAR'
     
         #5330 REM * CALCULATE SOLAR AZIMUTH VARIABLE, CHI
-        auxi1 = (np.sin(CDR_LAT_RAD)*np.cos(HOUR_ANG_RAD) \
-              - np.cos(CDR_LAT_RAD)*np.tan(DECL_RAD))
+        auxi1 = (np.sin(CDR_LAT_RAD)*np.cos(HOUR_ANG_RAD) - np.cos(CDR_LAT_RAD)*np.tan(DECL_RAD))
         CHI = np.sin(HOUR_ANG_RAD)/auxi1
     
         #5360 REM * CALCULATE SOLAR AZIMUTH CONSTANT, CAZ
@@ -327,7 +335,7 @@ class IEEE738():
             Q3 = self.Case1.SolarRadiation
     
         #5400 REM * CALCULATE SOLAR AZIMUTH IN DEGREES, Z4.DEG
-        Z4_DEG = CAZ + np.arctan(CHI)
+        Z4_DEG = CAZ + np.arctan(CHI)/DEG_TO_RAD
         Z4_RAD = Z4_DEG*DEG_TO_RAD
         Z1_RAD = self.Case1.Z1_DEG*DEG_TO_RAD
         E1 = np.cos(H3_RAD)*np.cos(Z4_RAD-Z1_RAD)
@@ -378,9 +386,10 @@ class IEEE738():
             self.Case1.WINDANG_DEG = min( alphap, 180 - alphap)
         
         self.Case1.WINDANG_RAD = self.Case1.WINDANG_DEG * PIANG
+        if self.Debug == 1:
+            print(f"Wind angle: {self.str_round(self.Case1.WINDANG_DEG)} DEG")
         
-        self.Case1.YC = (1.194 - np.sin(self.Case1.WINDANG_RAD) - 0.194*np.cos(2.0*self.Case1.WINDANG_RAD) \
-            + 0.368*np.sin(2.0*self.Case1.WINDANG_RAD))
+        self.Case1.YC = 1.194 - np.cos(self.Case1.WINDANG_RAD) + 0.194*np.cos(2.0*self.Case1.WINDANG_RAD) + 0.368*np.sin(2.0*self.Case1.WINDANG_RAD)
         return     
 
 
@@ -689,7 +698,16 @@ class IEEE738():
         if (self.Case1.TCDR - self.Case1.TAMB) < 0:
             self.Case1.TCDR = self.Case1.TAMB + 0.1
     
+        #self.Case1.QC = 0.0205*(self.Case1.P1**0.5)*(self.Cable1.D**0.75)*( self.Case1.TCDR - self.Case1.TAMB)**1.25
         self.Case1.QC = 0.0205*(self.Case1.P1**0.5)*(self.Cable1.D**0.75)*( self.Case1.TCDR - self.Case1.TAMB)**1.25
+        if self.Debug == 1:
+            print(f"rho: {self.str_round(self.Case1.P1)} kg/m3")
+            print(f"D: {self.str_round(self.Cable1.D)} m")
+            print(f"TCDR: {self.str_round(self.Case1.TCDR)} DEG C")
+            print(f"TAMB: {self.str_round(self.Case1.TAMB)} DEG C")
+            print(f"Natural convection QC: {self.str_round(self.Case1.QC)} W/m")    
+    
+    
     
         if self.Case1.VWIND != 0:
             #15194 REM *****************************************************************
@@ -705,6 +723,15 @@ class IEEE738():
                 self.Case1.QCF = self.Case1.Q2
        
             self.Case1.QCF = self.Case1.QCF * self.Case1.YC
+            if self.Debug == 1:
+                print(f"Forced convection QCF: {self.str_round(self.Case1.QCF)} W/m")
+                print(f"NRe: {self.str_round(self.Cable1.Z/1000)}")
+                print(f"Qc1: {self.str_round(self.Case1.Q1)} W/m")
+                print(f"Qc2: {self.str_round(self.Case1.Q2)} W/m")
+                print(f"wind angle: {self.str_round(self.Case1.WINDANG_DEG)} DEG ") 
+                print(f"Kangle: {self.str_round(self.Case1.YC)} ")
+            
+            
     
             #15370 REM ***********************************************************
             #15380 REM * SELECT LARGER OF CONVECTIVE HEAT LOSSES (QC VERSUS QCF)
@@ -1098,7 +1125,7 @@ class IEEE738():
             
         """
         print(" ")
-        print("****************************************************************")
+        print("******************************************************************")
         print("*******************************************************************")
         print("IEEE 738")
         print("*******************************************************************") 
