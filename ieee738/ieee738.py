@@ -859,7 +859,7 @@ class IEEE738():
         return
   
   
-    def output( self):
+    def outputs( self):
         """Print detailed results.
         
         """
@@ -1093,7 +1093,7 @@ class IEEE738():
         """
         return str( round( valuex, self.Debug_Dec))
 
-    def outputs( self):
+    def output( self):
         """Print a summary of intermediate results.
             
         """

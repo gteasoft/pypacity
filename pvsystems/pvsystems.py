@@ -429,4 +429,88 @@ class PVSystems:
         return ( ver)
         
         
-        print("PVSystems. 8/4/2023. 18:30") 
+        print("PVSystems. 2/5/2026. 0:45") 
+        
+        
+    def DatetimetoDayOfYear(self, dt):
+        """
+        Computes the day of the year from a datetime object.
+
+        :param dt: Date and time.
+        :type dt: datetime.datetime
+
+        :return: Day of the year [1, 365/366].
+        :rtype: int
+        """
+        # input: dt .- datetime object
+        # return: DoY .- Day of the year [1,365/366]
+        DoY=dt.timetuple().tm_yday
+        return DoY
+
+
+    def DatetimetoSolarTime(self, dt):
+        """
+        Computes the solar time in minutes from a datetime object.
+
+        :param dt: Date and time in official local time.
+        :type dt: datetime.datetime
+
+        :return: Solar time in minutes past midnight.
+        :rtype: float
+        """
+        # input: dt .- datetime object in official local time
+        # return: Solar time [minutes]
+        day=dt.day
+        month=dt.month
+        hour=dt.hour
+        minutes=dt.minute+dt.second/60.0+dt.microsecond/(60.0*1e6)
+
+        STime=self.StandardTimetoSolarTime(day, month, hour, minutes)
+
+        return STime
+
+
+    def DatetimetoSolarHour(self, dt):
+        """
+        Computes the solar time in decimal hours from a datetime object.
+
+        :param dt: Date and time in official local time.
+        :type dt: datetime.datetime
+
+        :return: Solar time in decimal hours [0, 24).
+        :rtype: float
+        """
+        # input: dt .- datetime object in official local time
+        # return: Solar time [hours]
+        STime=self.DatetimetoSolarTime(dt)
+
+        SolarHour=(STime/60.0)%24.0
+
+        return SolarHour
+        
+    def DatetimetoDayOfYear(self, dt):
+        """
+        Computes the day of the year from a datetime object.
+
+        :param dt: Date and time.
+        :type dt: datetime.datetime
+
+        :return: Day of the year [1, 365/366].
+        :rtype: int
+        """
+        # input: dt .- datetime object
+        # return: DoY .- Day of the year [1,365/366]
+        offset=[0,0,31,59,90,120,151,181,212,243,273,304,334]
+
+        year=dt.year
+        month=dt.month
+        day=dt.day
+
+        DoY=offset[month]+day
+
+        # leap year correction
+        if ( (year%4==0 and year%100!=0) or (year%400==0) ):
+            if month>2:
+                DoY=DoY+1
+
+        return DoY

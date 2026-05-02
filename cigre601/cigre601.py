@@ -96,6 +96,7 @@ class CIGRE601():
         :return: Value of solar heat gain QS in W/m.
         """
         DEG_TO_RAD = np.pi/180
+        RAD_TO_DEG = 180/np.pi
         #self.CDR_LAT_RAD = self.Case1.CDR_LAT_DEG*self.DEG_TO_RAD
         CDR_LAT_RAD = self.Case1.CDR_LAT_DEG*DEG_TO_RAD # Conductor latitude in radians
    
@@ -110,7 +111,7 @@ class CIGRE601():
         #5090 REM * SOLAR ANGLE RELATIVE TO NOON
         #data['HOUR_ANG_DEG'] = (data['SUN_TIME']-12)*15
         #data['HOUR_ANG_RAD'] = data['HOUR_ANG_DEG']*data['DEG_TO_RAD']
-        HOUR_ANG_DEG = (self.Case1.SUN_TIME-12)*15
+        HOUR_ANG_DEG = (12 - self.Case1.SUN_TIME)*15
         HOUR_ANG_RAD = HOUR_ANG_DEG*DEG_TO_RAD
     
         #5120 REM * FIND SOLAR ALTITUDE - H3
@@ -121,8 +122,9 @@ class CIGRE601():
         H3ARG = (np.cos(CDR_LAT_RAD)*np.cos(DECL_RAD)*np.cos(HOUR_ANG_RAD) \
                      +np.sin(CDR_LAT_RAD)*np.sin(DECL_RAD))
         
-        H3_RAD = np.arctan(H3ARG/np.sqrt(1-(H3ARG)**2))
-        H3_DEG = H3_RAD/DEG_TO_RAD
+        #H3_RAD = np.arctan(H3ARG/np.sqrt(1-(H3ARG)**2))
+        H3_RAD = np.arcsin(H3ARG)
+        H3_DEG = H3_RAD*RAD_TO_DEG
   
         if self.Case1.A3 == 1:
         #5260 REM *****************************************************************
@@ -196,7 +198,7 @@ class CIGRE601():
                 print("Measured solar heating: " + self.str_round(Psm) + " W/m")
     
         # Z Hour angle of the Sun
-        Z = -15*(12-self.Case1.SUN_TIME)
+        Z = 15*(12-self.Case1.SUN_TIME)
         if self.Debug == 1:
             print("Hour angle Z: " + self.str_round(Z) + " deg")
        
@@ -228,6 +230,7 @@ class CIGRE601():
         # IB(y) Pag. 19. Eq (11)
         IBy = IB0*(1 + 1.4e-4*self.Case1.CDR_ELEV*((1367/IB0)-1))
         if self.Debug == 1:
+            print("CDR_ELEV: " + self.str_round(self.Case1.CDR_ELEV) + " m")
             print("IBy: " + self.str_round(IBy) + " W/m^2")
         
         # Id Difuse solar radiation Pag. 20. Eq (13)
@@ -438,7 +441,8 @@ class CIGRE601():
             alphap = alpha - 180.0
             self.Case1.WINDANG_DEG = min( alphap, 180 - alphap)
         
-      
+        if self.Debug == 1:
+            print("Wind angle delta WINDANG_DEG: " + self.str_round(self.Case1.WINDANG_DEG) + " deg")
         
         if self.Cable1.Stranded == 1:
             if self.Case1.WINDANG_DEG <= 24:
@@ -623,7 +627,7 @@ class CIGRE601():
         """ 
 
         # Solar heating
-        Ps = self.solar()  
+        Ps = self.solarx()  
         self.Case1.QS = Ps
        
         # Radiation cooling 
@@ -646,8 +650,14 @@ class CIGRE601():
             print('VWIND: %.2f; WINDANG_DEG: %.2f; SolarRadiation: %.2f' %(self.Case1.VWIND, self.Case1.WINDANG_DEG, self.Case1.SolarRadiation))
         I = np.sqrt((interm)/(Rac))
         self.Case1.TR = I
+
+        # Radial temperature difference between conductor surface and core
+        self.deltaTcTs_value = self.deltaTcTs()
+
         if self.Debug == 1:
             print("Dynamic Current Rating: " + self.str_round(I) + " A")
+            print(f"Tc-Ts: {self.str_round(self.deltaTcTs_value)} ºC")
+
     
         return I       
 
@@ -686,6 +696,7 @@ class CIGRE601():
         print("Solar heating:  ", self.str_round( self.Case1.QS), " W/m")
         print("Radiation cooling: ", self.str_round( self.Case1.QR), " W/m")
         print("Convection cooling: ", self.str_round( self.Case1.QC), " W/m")   
+        print(f"Temperature difference between conductor surface and core: {self.str_round(self.deltaTcTs_value)} ºC")
    
    
    
@@ -694,4 +705,25 @@ class CIGRE601():
         """Print version of cigre601 module.
         
         """
-        print("CIGRE TB601. 12/4/2023. 19:12") 
+        print("CIGRE TB601. 2/5/2026. 15:35")
+        
+    
+    def deltaTcTs( self):
+        """Compute the temperature difference between conductor surface and core.
+        
+        """
+        D1 = self.Cable1.D1
+        D = self.Cable1.D
+        I = self.Case1.TR
+        Rac = self.Rac()
+        lambda_ertc = self.Cable1.lambda_ertc
+          
+        if self.Debug == 1:
+            print("****************************************")
+            print("Temperature difference between conductor surface and core")
+            print("D1: ", D1, " mm; D: ", D, " mm; I: ", I, " A; Rac: ", Rac, " ohm/m; lambda_ertc: ", lambda_ertc, " W/m.K")
+        
+        deltaT = ((I*I*Rac)/(2*np.pi*lambda_ertc))*(0.5 - ((D1*D1)/(D*D - D1*D1))*(np.log(D/D1)))        
+        self.deltaTcTs_value = deltaT   
+        
+        return deltaT

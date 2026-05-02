@@ -13,6 +13,8 @@ class Cable():
     Attributes:
         :Cstring (str): Conductor description.
         :D (float): Outside diameter of conductor (mm).
+        :D1 (float): Diameter of a tubular conductor of the steel core (mm).
+        :d (float): Diameter of the wires in the outermost layer (mm).
         :TLO (float): Conductor minimum temperature for resistance computation (ºC). 
         :THI (float): Conductor maximum temperature for resistance computation (ºC).
         :TCDRMAX (float): Maximum conductor temperature (ºC).
@@ -29,6 +31,7 @@ class Cable():
 
         self.Cstring = None        # Conductor description
         self.D = None              # Outside diameter of conductor  (mm)
+        self.D1 = None             # Diameter of a tubular conductor of the steel core (mm)
         self.d = None              # Diameter of the wires in the outermost layer
         self.TLO = None            # MIN CDR TEMP IN DEG C for conductor resistance
         self.THI = None            # MAX CDR TEMP IN DEG C for conductor resistance
@@ -46,25 +49,27 @@ class Cable():
         self.CrossSection = None
         self.MASSCORE = None # Mass per unit length steel (kg/m)
         self.MASSOUT = None # Mass per unit length aluminum (kg/m)
+        self.deltaTcTs_value = None # Temperature difference between core and surface
+        self.lambda_ertc = None # Effective radial thermal conductivity (W/m-K)   
         
    
    
     def load_cable_db( self):
         """Load cable database
         
-            The cable database is a file with name 'cable_db.csv' that is located in the same folder of cable module.
+            The cable database is a file with name 'cable_db.xlsx' that is located in the same folder of cable module.
 
         :return cable_db, error: cable_db is a dataframe with the cable database. error is 1 if the database is empty. 0 is the load process is sucessful.
         :rtype: dataframe, int               
         """
-        filename = u'cable_db.csv'
+        filename = u'cable_db.xlsx'
 
         package_dir = os.path.dirname(__file__)
         data_file_path = os.path.join( package_dir, filename) 
         
         # print('ruta: ', data_file_path) # print the full path
         
-        cable_db = pd.read_csv( data_file_path, decimal=',', sep=';')
+        cable_db = pd.read_excel( data_file_path)
         
         if len( cable_db) < 1:
             error = 1
@@ -88,7 +93,7 @@ class Cable():
         if  conductor == 'Demo case':
             self.Cstring = 'Demo case'
             self.D = 28.12
-            self.C = 10.4
+            self.D1 = 10.4
             self.d = 4.44
             self.TLO = 25.0
             self.THI = 75.0
@@ -107,10 +112,11 @@ class Cable():
             self.BetaAlum20 = 3.80e-4
             self.mSteel = 0.5119
             self.mAlum = 1.116
+            self.lambda_ertc = 0.7
         elif conductor == '400 mm2 DRAKE 26/7 ACSR':
             self.Cstring = '400 mm2 DRAKE 26/7 ACSR'
             self.D = 28.12
-            self.C = 10.4
+            self.D1 = 10.4
             self.d = 4.44
             self.TLO = 25.0
             self.THI = 75.0
@@ -129,10 +135,11 @@ class Cable():
             self.BetaAlum20 = 3.80e-4
             self.mSteel = 0.5119
             self.mAlum = 1.116
+            self.lambda_ertc = 0.7
         elif conductor == 'LA-180':
             self.Cstring = 'LA-180'
             self.D = 17.50
-            self.C = 10.4
+            self.D1 = 10.4
             self.d = 2.50
             self.TLO = 5.0
             self.THI = 85.0
@@ -151,10 +158,11 @@ class Cable():
             self.BetaAlum20 = 3.80e-4
             self.mSteel = 0.5119
             self.mAlum = 1.116
+            self.lambda_ertc = 0.7
         elif conductor == 'LA-280':
             self.Cstring = 'LA-280'
             self.D = 21.80
-            self.C = 10.4
+            self.D1 = 10.4
             self.d = 3.44
             self.TLO = 5.0
             self.THI = 85.0
@@ -172,7 +180,8 @@ class Cable():
             self.BetaSteel20 = 1.00e-4
             self.BetaAlum20 = 3.80e-4
             self.mSteel = 0.5119
-            self.mAlum = 1.116            
+            self.mAlum = 1.116   
+            self.lambda_ertc = 0.7         
             
                                    
   
