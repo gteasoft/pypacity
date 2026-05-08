@@ -181,7 +181,30 @@ class Cable():
             self.BetaAlum20 = 3.80e-4
             self.mSteel = 0.5119
             self.mAlum = 1.116   
-            self.lambda_ertc = 0.7         
+            self.lambda_ertc = 0.7 
+        elif conductor == 'HERON':
+            self.Cstring = 'HERON'
+            self.D = 22.96
+            self.D1 = 8.61
+            self.d = 3.60
+            self.TLO = 5.0
+            self.THI = 85.0
+            self.TCDRMAX = 100.0
+            self.RLO = 0.1122/1000.0
+            self.RHI = 0.1507/1000.0
+            self.EMISS = 0.5
+            self.ABSORP = 0.5
+            self.HNH = 3
+            self.HEATOUT = 623.0
+            self.HEATCORE = 147.0
+            self.TotalS = 486.6
+            self.CSteel20 = 481
+            self.CAlum20 = 897
+            self.BetaSteel20 = 1.00e-4
+            self.BetaAlum20 = 3.80e-4
+            self.mSteel = 0.5119
+            self.mAlum = 1.116
+            self.lambda_ertc = 0.7                    
             
                                    
   
