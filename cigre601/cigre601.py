@@ -15,7 +15,7 @@ reload( cable)
 reload( case)
 
 class CIGRE601():
-    """Implementation of CIGRE TB601"""
+    """Implementation of CIGRE TB601."""
     
     def __init__(self):
         self.Cable1 = cable.Cable()

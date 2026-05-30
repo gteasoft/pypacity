@@ -1,25 +1,24 @@
+
+
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en" data-content_root="./">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>case module &mdash; pypacity 1.0 documentation</title>
-      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="_static/css/sphinx_rtd_size.css" type="text/css" />
-      <link rel="stylesheet" href="_static/custom.css" type="text/css" />
-      <link rel="stylesheet" href="_static/custom.css" type="text/css" />
-  <!--[if lt IE 9]>
-    <script src="_static/js/html5shiv.min.js"></script>
-  <![endif]-->
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/css/sphinx_rtd_size.css?v=3b072d6b" />
+      <link rel="stylesheet" type="text/css" href="_static/custom.css?v=77884f9e" />
+      <link rel="stylesheet" type="text/css" href="_static/custom.css?v=77884f9e" />
+
   
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-        <script src="_static/jquery.js"></script>
-        <script src="_static/underscore.js"></script>
-        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script src="_static/doctools.js"></script>
-        <script src="_static/sphinx_highlight.js"></script>
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=f2a433a1"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -32,11 +31,15 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="index.html" class="icon icon-home"> pypacity
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            pypacity
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -56,6 +59,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="ieee738.html">ieee738 module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cigre207.html">cigre207 module</a></li>
 <li class="toctree-l1"><a class="reference internal" href="cigre601.html">cigre601 module</a></li>
 <li class="toctree-l1"><a class="reference internal" href="pvsystems.html">pvsystems module</a></li>
 </ul>
@@ -73,7 +77,7 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="index.html" class="icon icon-home"></a></li>
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
       <li class="breadcrumb-item active">case module</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/case.rst.txt" rel="nofollow"> View page source</a>
@@ -85,66 +89,66 @@
            <div itemprop="articleBody">
              
   <section id="module-case.case">
-<span id="case-module"></span><h1>case module<a class="headerlink" href="#module-case.case" title="Permalink to this heading"></a></h1>
+<span id="case-module"></span><h1>case module<a class="headerlink" href="#module-case.case" title="Link to this heading"></a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="case.case.Case">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">case.case.</span></span><span class="sig-name descname"><span class="pre">Case</span></span><a class="headerlink" href="#case.case.Case" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">case.case.</span></span><span class="sig-name descname"><span class="pre">Case</span></span><a class="headerlink" href="#case.case.Case" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Class Case()</p>
 <p>Define the specific charasteristics of an ampacity case</p>
 <dl>
 <dt>Attributes:</dt><dd><dl class="field-list">
-<dt class="field-odd">NSELECT (int)</dt>
+<dt class="field-odd">NSELECT (int)<span class="colon">:</span></dt>
 <dd class="field-odd"><p>Analysis mode.</p>
 <p>1.- Steady-state conductor temperature. Given the constant current and the weather conditions the function returns the conductor temperature. The current value is provided by &lt;XIPRELOAD&gt; and the steady-state temperature is returned by &lt;TCDRPRELOAD&gt;.</p>
 <p>2.- Steady-state conductor current. Given the constant steady-state conductor temperature the function returns the conductor current.  The conductor temperature is provided by &lt;TCDRPRELOAD&gt; and the steady-state current is returned by &lt;TR&gt;.</p>
 <p>3.- Transient conductor temperature. Transient conductor temperature when the conductor current steps from an initial value &lt;XIPRELOAD&gt; to a final value &lt;XISTEP&gt;. Total duration of the simulation is &lt;TT&gt; (if &lt;SORM&gt; is 0 then &lt;TT&gt; is defined in seconds. If &lt;SORM&gt; is 1 then &lt;TT&gt; is defined in minutes.) The time resolution of the simulation is &lt;DELTIME&gt;.</p>
 <p>4.- Transient conductor thermal rating. Transient current thermal rating &lt;XISTEP&gt; to reach  the maximum allowable conductor temperature &lt;TCDRMAX&gt; in &lt;TT&gt; minutes when the initial conductor temperature is &lt;TCDRPRELOAD&gt;.</p>
 </dd>
-<dt class="field-even">TT (int)</dt>
+<dt class="field-even">TT (int)<span class="colon">:</span></dt>
 <dd class="field-even"><p>Simulation time (seconds).</p>
 </dd>
-<dt class="field-odd">SORM (int)</dt>
+<dt class="field-odd">SORM (int)<span class="colon">:</span></dt>
 <dd class="field-odd"><p>Unit of time for output print. 0: seconds; 1: minutes.</p>
 </dd>
-<dt class="field-even">DELTIME (int)</dt>
+<dt class="field-even">DELTIME (int)<span class="colon">:</span></dt>
 <dd class="field-even"><p>Simulation Delta time in seconds.</p>
 </dd>
-<dt class="field-odd">TCDRPRELOAD (float)</dt>
+<dt class="field-odd">TCDRPRELOAD (float)<span class="colon">:</span></dt>
 <dd class="field-odd"><p>Steady-state initial conductor temperature.</p>
 </dd>
-<dt class="field-even">XIPRELOAD (float)</dt>
+<dt class="field-even">XIPRELOAD (float)<span class="colon">:</span></dt>
 <dd class="field-even"><p>Initial current (A).</p>
 </dd>
-<dt class="field-odd">XISTEP (float)</dt>
+<dt class="field-odd">XISTEP (float)<span class="colon">:</span></dt>
 <dd class="field-odd"><p>Final current (A).</p>
 </dd>
-<dt class="field-even">TAMB (float)</dt>
+<dt class="field-even">TAMB (float)<span class="colon">:</span></dt>
 <dd class="field-even"><p>Ambient temperature (ºC).</p>
 </dd>
-<dt class="field-odd">VWIND (float)</dt>
+<dt class="field-odd">VWIND (float)<span class="colon">:</span></dt>
 <dd class="field-odd"><p>Wind speed (m/s).</p>
 </dd>
-<dt class="field-even">WINDANG_DEG (float)</dt>
+<dt class="field-even">WINDANG_DEG (float)<span class="colon">:</span></dt>
 <dd class="field-even"><p>Angle between wind and conductor main axis in DEG (Degrees).</p>
 </dd>
-<dt class="field-odd">CDR_ELEV (float)</dt>
+<dt class="field-odd">CDR_ELEV (float)<span class="colon">:</span></dt>
 <dd class="field-odd"><p>Conductor elevation above sea level in meters (m).</p>
 </dd>
-<dt class="field-even">ALBEDO (float)</dt>
+<dt class="field-even">ALBEDO (float)<span class="colon">:</span></dt>
 <dd class="field-even"><p>Albedo (CIGRE TB601. Pg. 20). Water.- 0.05; Forest.- 0.15; Urban Areas.- 0.2; Soil, grass and crops.- 0.2
 Sand.- 0.3; Ice.- 0.4 to 0.6; Snow.- 0.6 to 0.8</p>
 </dd>
-<dt class="field-odd">SOLAR (int)</dt>
+<dt class="field-odd">SOLAR (int)<span class="colon">:</span></dt>
 <dd class="field-odd"><p>0.- Computed solar heating based on location and suntime; 1.- Measured solar radiation.</p>
 </dd>
-<dt class="field-even">NDAY (int)</dt>
+<dt class="field-even">NDAY (int)<span class="colon">:</span></dt>
 <dd class="field-even"><p>Day of the year [1, 365]</p>
 </dd>
-<dt class="field-odd">Ns (float)</dt>
+<dt class="field-odd">Ns (float)<span class="colon">:</span></dt>
 <dd class="field-odd"><p>Clearness ratio. 1 for standard atmosphere; 0.8 to 1.2 for clear skies with decreasing amounts of dust and aerosols; 0.5 for industrial atmosphere and less than 0.5 for a cloudy or overcast sky;  0 for thick cloud.</p>
 </dd>
-<dt class="field-even">CDR_LAT_DEG (float)</dt>
+<dt class="field-even">CDR_LAT_DEG (float)<span class="colon">:</span></dt>
 <dd class="field-even"><p>Conductor latitude in degrees..</p>
 </dd>
 </dl>
@@ -152,10 +156,10 @@ Sand.- 0.3; Ice.- 0.4 to 0.6; Snow.- 0.6 to 0.8</p>
 </dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="case.case.Case.demo">
-<span class="sig-name descname"><span class="pre">demo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">NSELECT</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#case.case.Case.demo" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">demo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">NSELECT</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#case.case.Case.demo" title="Link to this definition"></a></dt>
 <dd><p>Define a demo case (<strong>see</strong> the definition of atribute &lt;NSELECT&gt;)</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>NSELECT</strong> (<em>int</em>) – select a demo case [1, 2, 3 or 4]</p>
 </dd>
 </dl>
@@ -163,13 +167,13 @@ Sand.- 0.3; Ice.- 0.4 to 0.6; Snow.- 0.6 to 0.8</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="case.case.Case.print_ver">
-<span class="sig-name descname"><span class="pre">print_ver</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#case.case.Case.print_ver" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">print_ver</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#case.case.Case.print_ver" title="Link to this definition"></a></dt>
 <dd><p>Returns the current version of this module</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>Current version of Cable module.</p>
 </dd>
-<dt class="field-even">Return type</dt>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p>string</p>
 </dd>
 </dl>
