@@ -529,10 +529,12 @@ class IEEE738():
 
         Uses the following attributes from ``Case1``:
             - ``XLO``, ``XHI``: initial lower and upper current bounds (A).
-            - ``TCDRMAX``: maximum allowable conductor temperature (°C).
             - ``TT``: simulation time (s).
             - ``EPS``: convergence tolerance (default: 0.049).
             - ``IEND``: maximum number of iterations (default: 20).
+
+        Uses the following attributes from ``Cable1``:
+            - ``TCDRMAX``: maximum allowable conductor temperature (°C).
 
         Sets the following attributes in ``Case1``:
             - ``X`` (float): converged current value (A).
