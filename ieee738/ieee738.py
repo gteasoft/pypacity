@@ -438,38 +438,33 @@ class IEEE738():
     #9020 REM //////////////////////////////////////////////////////////////
     ########################################################################
     def thermal( self):
-        """Compute the steady-state ampacity of the conductor at a given temperature.
+        """Compute the thermal resistance coefficient, heat capacity, and wind correction factor.
 
-        Calculates the maximum allowable current (ampacity) ``TR`` that produces
-        a steady-state conductor temperature equal to ``Case1.TCDR``, based on
-        the heat balance equation of IEEE 738-2012 (Section 4.3):
-
-            I² · R(Tc) = QR + QC - QS
-
-        where ``QR`` is the radiated heat loss, ``QC`` is the convective heat loss
-        (natural or forced, whichever is greater), and ``QS`` is the solar heat gain
-        computed by ``solar()``.
+        Calculates the linear resistance equation coefficients of the conductor as a
+        function of temperature, the effective wind angle relative to the conductor
+        axis, and the wind correction factor (YC) for non-perpendicular wind,
+        following Section 4.6 of IEEE 738-2012.
 
         .. note::
-            The result is stored in ``Case1.TR`` rather than returned.
-            If the heat balance is negative or zero (``R5 <= 0``), ``TR`` is set
-            to 0 and the function returns immediately.
+            All results are stored directly in ``Cable1`` and ``Case1`` attributes
+            rather than returned.
 
-        Uses the following attributes from ``Case1``:
-            - ``TCDR``: conductor temperature (°C).
-            - ``TAMB``: ambient temperature (°C).
-            - ``VWIND``: wind speed (m/s).
-            - ``CDR_ELEV``: conductor elevation above sea level (m).
-            - ``QS``: solar heat gain rate (W/m), set by ``solar()``.
-            - ``YC``: wind correction factor, set by ``thermal()``.
+        Sets the following attributes in ``Cable1``:
+            - ``B`` (float): Slope of the linear resistance equation (Ohm/m·°C).
+            - ``B1`` (float): Intercept of the linear resistance equation (Ohm/m).
+
+        Sets the following attributes in ``Case1``:
+            - ``WINDANG_DEG`` (float): Effective angle between wind direction and conductor axis (degrees).
+            - ``WINDANG_RAD`` (float): Effective angle between wind direction and conductor axis (radians).
+            - ``YC`` (float): Wind correction factor for non-perpendicular wind.
 
         Uses the following attributes from ``Cable1``:
-            - ``EMISS``: emissivity coefficient.
-            - ``D``: outside diameter of conductor (mm).
-            - ``B``, ``B1``: linear resistance coefficients (Ohm/m·°C, Ohm/m), set by ``thermal()``.
+            - ``RLO``, ``RHI``: conductor resistance at minimum and maximum temperature (Ohm/m).
+            - ``TLO``, ``THI``: minimum and maximum temperature for resistance computation (°C).
 
-        Sets:
-            - ``Case1.TR`` (float): steady-state ampacity (A).
+        Uses the following attributes from ``Case1``:
+            - ``DWIND_DEG``: wind direction (degrees).
+            - ``Z1_DEG``: conductor direction clockwise relative to north (degrees).
         """
         #9030 REM **********************************************************
         #9040 REM * SETUP LINEAR CONDUCTOR RESISTANCE EQ AS FUNCTION OF TEMP
