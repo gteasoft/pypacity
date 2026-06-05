@@ -438,8 +438,38 @@ class IEEE738():
     #9020 REM //////////////////////////////////////////////////////////////
     ########################################################################
     def thermal( self):
-        """Compute thermal Coefficient of RAC, HeatCap and Wind Correction.
-        
+        """Compute the steady-state ampacity of the conductor at a given temperature.
+
+        Calculates the maximum allowable current (ampacity) ``TR`` that produces
+        a steady-state conductor temperature equal to ``Case1.TCDR``, based on
+        the heat balance equation of IEEE 738-2012 (Section 4.3):
+
+            I² · R(Tc) = QR + QC - QS
+
+        where ``QR`` is the radiated heat loss, ``QC`` is the convective heat loss
+        (natural or forced, whichever is greater), and ``QS`` is the solar heat gain
+        computed by ``solar()``.
+
+        .. note::
+            The result is stored in ``Case1.TR`` rather than returned.
+            If the heat balance is negative or zero (``R5 <= 0``), ``TR`` is set
+            to 0 and the function returns immediately.
+
+        Uses the following attributes from ``Case1``:
+            - ``TCDR``: conductor temperature (°C).
+            - ``TAMB``: ambient temperature (°C).
+            - ``VWIND``: wind speed (m/s).
+            - ``CDR_ELEV``: conductor elevation above sea level (m).
+            - ``QS``: solar heat gain rate (W/m), set by ``solar()``.
+            - ``YC``: wind correction factor, set by ``thermal()``.
+
+        Uses the following attributes from ``Cable1``:
+            - ``EMISS``: emissivity coefficient.
+            - ``D``: outside diameter of conductor (mm).
+            - ``B``, ``B1``: linear resistance coefficients (Ohm/m·°C, Ohm/m), set by ``thermal()``.
+
+        Sets:
+            - ``Case1.TR`` (float): steady-state ampacity (A).
         """
         #9030 REM **********************************************************
         #9040 REM * SETUP LINEAR CONDUCTOR RESISTANCE EQ AS FUNCTION OF TEMP
