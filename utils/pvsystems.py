@@ -1,4 +1,33 @@
 # -*- coding: utf-8 -*-
+"""
+Module: pvsystems.py
+
+Description
+-----------
+
+
+
+Author
+------
+Mario Mañana
+
+Copyright
+---------
+Copyright (c) 2026 Mario Mañana
+
+License
+-------
+MIT License
+
+Notes
+-----
+This module is part of the PyPacity project.
+
+References
+----------
+- CIGRE Technical Brochure 601
+"""
+
 
 import math
 import numpy as np
