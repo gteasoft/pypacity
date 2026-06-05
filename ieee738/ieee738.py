@@ -1,9 +1,34 @@
 # -*- coding: utf-8 -*-
+"""
+Module: ieee738.py
 
-#########################################################################
-# CIGRE IEEE 738
-#
-# 
+Description
+-----------
+Thermal rating calculations for overhead transmission lines performed in accordance with the IEEE 
+Standard for Calculating the Current-Temperature Relationship of Bare Overhead Conductors.
+
+Author
+------
+Mario Mañana
+
+Copyright
+---------
+Copyright (c) 2026 Mario Mañana
+
+License
+-------
+GPL-3.0 License
+
+Notes
+-----
+This module is part of the PyPacity project.
+
+References
+----------
+- IEEE Standard for Calculating the Current-Temperature Relationship of Bare Overhead Conductors
+"""
+
+
 
 import numpy as np
 import sys
