@@ -1,75 +1,97 @@
 # -*- coding: utf-8 -*-
+"""
+Module: cable.py
+
+Description
+-----------
+Cable data structures and cable database loading helpers for PyPacity
+ampacity studies.
+
+Author
+------
+Mario Manana
+
+Copyright
+---------
+Copyright (c) 2026 Mario Manana
+
+License
+-------
+MIT License
+
+Notes
+-----
+This module is part of the PyPacity project.
+"""
+
+
 import pandas as pd
 import os  
 
 
 class Cable():
-    """
-    Definition of cable XX
-    
-    Defines an object of the class Cable() including basic information about the cable:
-    
-    
+    """Electrical and thermal data for an overhead conductor.
+
     Attributes:
-        :Cstring (str): Conductor description.
-        :D (float): Outside diameter of conductor (mm).
-        :D1 (float): Diameter of a tubular conductor of the steel core (mm).
-        :d (float): Diameter of the wires in the outermost layer (mm).
-        :TLO (float): Conductor minimum temperature for resistance computation (ºC). 
-        :THI (float): Conductor maximum temperature for resistance computation (ºC).
-        :TCDRMAX (float): Maximum conductor temperature (ºC).
-        :RLO (float): Conductor resistance at TLO (Ohms/m).
-        :RHI (float): Conductor resistance at THI (Ohms/m).
-        :EMISS (float): Coefficient of emission.
-        :ABSORP (float): Coefficient of solar absorption.
-        :HNH (int): Number of layers (aluminum)
-        :HEATOUT (float): Aluminum layer (W.s/m.ºC)
-        :HEATCORE (float): Steel core (W.s/m.ºC)
+        Cstring (str): Conductor description.
+        D (float): Outside conductor diameter in millimeters.
+        D1 (float): Equivalent steel-core tube diameter in millimeters.
+        d (float): Wire diameter in the outermost layer in millimeters.
+        TLO (float): Low reference temperature for resistance in deg C.
+        THI (float): High reference temperature for resistance in deg C.
+        TCDRMAX (float): Maximum allowable conductor temperature in deg C.
+        RLO (float): Conductor resistance at ``TLO`` in ohm/m.
+        RHI (float): Conductor resistance at ``THI`` in ohm/m.
+        EMISS (float): Surface emissivity coefficient.
+        ABSORP (float): Solar absorptivity coefficient.
+        HNH (int): Number of aluminum layers.
+        HEATOUT (float): Aluminum heat capacity contribution in W.s/(m.deg C).
+        HEATCORE (float): Steel-core heat capacity contribution in W.s/(m.deg C).
+        Stranded (int): 1 for stranded conductors, 0 for smooth conductors.
+        lambda_ertc (float): Effective radial thermal conductivity in W/(m.K).
     """
     
     def __init__(self):
-
-        self.Cstring = None        # Conductor description
-        self.D = None              # Outside diameter of conductor  (mm)
-        self.D1 = None             # Diameter of a tubular conductor of the steel core (mm)
-        self.d = None              # Diameter of the wires in the outermost layer
-        self.TLO = None            # MIN CDR TEMP IN DEG C for conductor resistance
-        self.THI = None            # MAX CDR TEMP IN DEG C for conductor resistance
-        self.TCDRMAX = None        # TCDRMAX
-        self.RLO = None            # MIN CDR RAC (OHMS/m)
-        self.RHI = None            # MAX CDR RAC (OHMS/m)
-        self.EMISS = None          # COEF OF EMISS
-        self.ABSORP = None         # COEF OF SOLAR ABSORP
-        self.HNH = None            # Number of layers (aluminum)
-        self.HEATOUT = None        # ALUMINUM LAYER (W-SEC/M-C)
-        self.HEATCORE = None       # STEEL CORE (W-SEC/M-C)
+        """Initialize an empty cable definition."""
+        self.Cstring = None          # Conductor description.
+        self.D = None                # Outside conductor diameter (mm).
+        self.D1 = None               # Equivalent steel-core tube diameter (mm).
+        self.d = None                # Wire diameter in the outermost layer (mm).
+        self.TLO = None              # Low reference temperature for resistance (deg C).
+        self.THI = None              # High reference temperature for resistance (deg C).
+        self.TCDRMAX = None          # Maximum allowable conductor temperature (deg C).
+        self.RLO = None              # Resistance at TLO (ohm/m).
+        self.RHI = None              # Resistance at THI (ohm/m).
+        self.EMISS = None            # Surface emissivity coefficient.
+        self.ABSORP = None           # Solar absorptivity coefficient.
+        self.HNH = None              # Number of aluminum layers.
+        self.HEATOUT = None          # Aluminum heat capacity contribution (W.s/(m.deg C)).
+        self.HEATCORE = None         # Steel-core heat capacity contribution (W.s/(m.deg C)).
         self.B = None
         self.B1 = None
-        self.Stranded = 1  # 1.- Stranted conductor; 0.- Smooth conductor
+        self.Stranded = 1            # 1 for stranded conductors, 0 for smooth conductors.
         self.CrossSection = None
-        self.MASSCORE = None # Mass per unit length steel (kg/m)
-        self.MASSOUT = None # Mass per unit length aluminum (kg/m)
-        self.deltaTcTs_value = None # Temperature difference between core and surface
-        self.lambda_ertc = None # Effective radial thermal conductivity (W/m-K)   
-        
+        self.MASSCORE = None         # Steel mass per unit length (kg/m).
+        self.MASSOUT = None          # Aluminum mass per unit length (kg/m).
+        self.deltaTcTs_value = None  # Temperature difference between core and surface.
+        self.lambda_ertc = None      # Effective radial thermal conductivity (W/(m.K)).
+      
    
    
     def load_cable_db( self):
-        """Load cable database
-        
-            The cable database is a file with name 'cable_db.xlsx' that is located in the same folder of cable module.
+        """Load the cable database distributed with this package.
 
-        :return cable_db, error: cable_db is a dataframe with the cable database. error is 1 if the database is empty. 0 is the load process is sucessful.
-        :rtype: dataframe, int               
+        Returns:
+            tuple: ``(cable_db, error)`` where ``cable_db`` is a pandas
+            dataframe and ``error`` is 0 when data is loaded or 1 when the
+            database is empty.
         """
-        filename = u'cable_db.xlsx'
+        filename = u'cable_db.csv'
 
         package_dir = os.path.dirname(__file__)
         data_file_path = os.path.join( package_dir, filename) 
-        
-        # print('ruta: ', data_file_path) # print the full path
-        
-        cable_db = pd.read_excel( data_file_path)
+             
+        cable_db = pd.read_csv( data_file_path, sep=';')
         
         if len( cable_db) < 1:
             error = 1
@@ -80,15 +102,12 @@ class Cable():
 
     
     def set_cable( self, NSELECT, conductor = 'Demo case' ):
-        """
-        Load a demo case.. Ejemplo para Alberto
+        """Load one of the built-in conductor definitions.
 
-        :param NSELECT: Type of computation
-        :type NSELECT: int
-        :param conductor: Conductor ID. Type of conductor. By default the function defines a demo case that is based on 400 mm2 DRAKE 26/7 ACSR
-        :type conductor: string
-        :return: None.
-        :rtype: -       
+        Args:
+            NSELECT (int): Analysis mode used by the ampacity solver.
+            conductor (str): Conductor ID. The default demo case is based on
+                the 400 mm2 DRAKE 26/7 ACSR conductor.
         """
         if  conductor == 'Demo case':
             self.Cstring = 'Demo case'
@@ -208,7 +227,7 @@ class Cable():
             
                                    
   
-    
+        # Analysis-mode overrides used by the built-in examples.
         if NSELECT == 2:
             self.TCDRPRELOAD = 101.1
             #self.TCDRMAX = 1000.0
@@ -226,21 +245,15 @@ class Cable():
        
 
     def set_param( self, param, value):
-        """Set the parameter <param> to value <value>
+        """Set a supported cable parameter.
 
-        :param param: Parameter.
-        :type param: Depends on the parameter
-        :return: 1 if the update is successful and 0 if the update is wrong
-        :rtype: int
+        Args:
+            param (str): Parameter name. Currently only ``D`` is supported.
+            value: Value assigned to the selected parameter.
         """
         if param == 'D':
             self.D = value
    
     def print_ver( self):        
-        """Returns the current version of this module
-
-        :return: Current version of Cable module.
-        :rtype: string
-
-        """
-        print("Cable. 30/3/2023. 23:16") 
+        """Print the current version of this module."""
+        print("Cable. 05/6/2026.") 

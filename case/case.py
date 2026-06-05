@@ -1,74 +1,101 @@
 # -*- coding: utf-8 -*-
+"""
+Module: case.py
+
+Description
+-----------
+Operating-case data model for PyPacity ampacity calculations.
+
+Author
+------
+Mario Manana
+
+Copyright
+---------
+Copyright (c) 2026 Mario Manana
+
+License
+-------
+MIT License
+
+Notes
+-----
+This module is part of the PyPacity project.
+"""
+
 
 class Case():
-    """Class Case()
-    
-    Define the specific charasteristics of an ampacity case
-    
+    """Environmental and operational inputs for an ampacity study.
+
     Attributes:
-        :NSELECT (int): Analysis mode.
-        
-            1.- Steady-state conductor temperature. Given the constant current and the weather conditions the function returns the conductor temperature. The current value is provided by <XIPRELOAD> and the steady-state temperature is returned by <TCDRPRELOAD>.
-            
-            2.- Steady-state conductor current. Given the constant steady-state conductor temperature the function returns the conductor current.  The conductor temperature is provided by <TCDRPRELOAD> and the steady-state current is returned by <TR>.      
-            
-            3.- Transient conductor temperature. Transient conductor temperature when the conductor current steps from an initial value <XIPRELOAD> to a final value <XISTEP>. Total duration of the simulation is <TT> (if <SORM> is 0 then <TT> is defined in seconds. If <SORM> is 1 then <TT> is defined in minutes.) The time resolution of the simulation is <DELTIME>.
-            
-            4.- Transient conductor thermal rating. Transient current thermal rating <XISTEP> to reach  the maximum allowable conductor temperature <TCDRMAX> in <TT> minutes when the initial conductor temperature is <TCDRPRELOAD>.
-            
-        :TT (int): Simulation time (seconds).
-        :SORM (int): Unit of time for output print. 0: seconds; 1: minutes.     
-        :DELTIME (int): Simulation Delta time in seconds.
-        :TCDRPRELOAD (float): Steady-state initial conductor temperature.
-        :XIPRELOAD (float): Initial current (A).
-        :XISTEP (float): Final current (A).
-        :TAMB (float): Ambient temperature (ºC).
-        :VWIND (float): Wind speed (m/s).
-        :WINDANG_DEG (float): Angle between wind and conductor main axis in DEG (Degrees).
-        :CDR_ELEV (float): Conductor elevation above sea level in meters (m).
-        :ALBEDO (float): Albedo (CIGRE TB601. Pg. 20). Water.- 0.05; Forest.- 0.15; Urban Areas.- 0.2; Soil, grass and crops.- 0.2
-            Sand.- 0.3; Ice.- 0.4 to 0.6; Snow.- 0.6 to 0.8            
-        :SOLAR (int): 0.- Computed solar heating based on location and suntime; 1.- Measured solar radiation.
-        :NDAY (int): Day of the year [1, 365]
-        :Ns (float): Clearness ratio. 1 for standard atmosphere; 0.8 to 1.2 for clear skies with decreasing amounts of dust and aerosols; 0.5 for industrial atmosphere and less than 0.5 for a cloudy or overcast sky;  0 for thick cloud.
-        :CDR_LAT_DEG (float): Conductor latitude in degrees.. 
-                     
-       
+        NSELECT (int): Analysis mode.
+
+            1. Steady-state conductor temperature. Given current and weather
+            conditions, the solver returns conductor temperature.
+            2. Steady-state conductor current. Given conductor temperature and
+            weather conditions, the solver returns current.
+            3. Transient conductor temperature after a current step.
+            4. Transient thermal rating to reach the maximum conductor
+            temperature in the requested time.
+
+        TT (int): Simulation time. Units are controlled by ``SORM``.
+        SORM (int): Time unit selector, 0 for seconds and 1 for minutes.
+        DELTIME (int): Simulation time step in seconds.
+        TCDRPRELOAD (float): Initial steady-state conductor temperature.
+        XIPRELOAD (float): Initial current in amperes.
+        XISTEP (float): Final step current in amperes.
+        TAMB (float): Ambient temperature in deg C.
+        VWIND (float): Wind speed in m/s.
+        DWIND_DEG (float): Wind direction in degrees.
+        WINDANG_DEG (float): Angle between wind and conductor axis in degrees.
+        CDR_ELEV (float): Conductor elevation above sea level in meters.
+        Z1_DEG (float): Conductor direction clockwise from north in degrees.
+        CDR_LAT_DEG (float): Conductor latitude in degrees.
+        SUN_TIME (float): Solar hour. Use 99 when sun is not considered.
+        NDAY (int): Day of year in the range 1 to 365.
+        A3 (int): Air clarity selector, 0 for clear air and 1 for industrial.
+        Ns (float): Clearness ratio from CIGRE TB601.
+        SolarRadiation (float): Measured solar radiation in W/m2.
+        ALBEDO (float): Ground reflectance coefficient.
+        SOLAR (int): Solar source selector, 0 for measured and 1 for computed.
     """
-    
+
     def __init__(self):
-        self.NCIRCUITS = 1 # Number of circuits
-        self.NSELECT = None        # Analysis Mode
-        self.IORTPRELOAD = None    #
-        self.SORM = None           # Unit of time for output print. 0: seconds; 1: minutes
-        self.TT = None             # Simulation time in seconds
-        self.DELTIME = None        # Delta t in seconds
-        self.TCDRPRELOAD = None    # Steady-state conductor temperature
-        self.XIPRELOAD = None      # Initial current
-        self.XISTEP = None         # Final current
-        self.TAMB = None           # Ambient temperature in DEG C
-        self.T4 = None # Ambient temperature in KELVIN
-        self.VWIND = None          # Wind speed (m/s)
-        self.DWIND_DEG = None          # Wind direction in DEG
-        self.WINDANG_DEG = None    # Angle between wind & conductor axis in DEG
-        self.WINDANG_RAD = None  # Angle between wind & conductor axis in RAD
-        self.CDR_ELEV = None       # CDR ELEV ABOVE SEA LEVEL IN METERS
-        self.Z1_DEG = None         # CDR DIRECTION CW RELATIVE TO NORTH
-        self.CDR_LAT_DEG = None    # CDR LATITUDE IN DEGREES
-        self.SUN_TIME = None       # SOLAR HOUR 14 = 2PM OR 99(NO SUN)
-        self.NDAY = None           # DAY OF THE YEAR
-        self.A3 = None             # AIR CLARITY - CLEAR(0), INDUST(1)
-        self.Ns = 1.0 # clearness ratio (TB601, Pag. 19)
-        self.SolarRadiation = None # Solar Radiation in W/m^2
-        self.ATCDR = []          # Inicialization
-        self.TIME = []           # Inicialization
-        self.TCDR = 50 # EXPECTED CONDUCTOR TEMPERATURE IN CELSIUS
-        self.T3 = None  # EXPECTED CONDUCTOR TEMPERATURE IN KELVIN
-        self.ALBEDO = 0.0 # Soil, grass and/or crops. 
-        self.SOLAR = 0 # 1.- computed; 0.- measured
-        self.beta = 0 # Inclination of conductor to the horizontal
+        """Initialize an empty ampacity case with default placeholders."""
+        self.NCIRCUITS = 1          # Number of electrical circuits.
+        self.NSELECT = None         # Analysis mode.
+        self.IORTPRELOAD = None
+        self.SORM = None            # Time unit selector: 0 seconds, 1 minutes.
+        self.TT = None              # Simulation time.
+        self.DELTIME = None         # Simulation time step (s).
+        self.TCDRPRELOAD = None     # Steady-state conductor temperature (deg C).
+        self.XIPRELOAD = None       # Initial current (A).
+        self.XISTEP = None          # Final current after a step (A).
+        self.TAMB = None            # Ambient temperature (deg C).
+        self.T4 = None              # Ambient temperature (K).
+        self.VWIND = None           # Wind speed (m/s).
+        self.DWIND_DEG = None       # Wind direction (deg).
+        self.WINDANG_DEG = None     # Angle between wind and conductor axis (deg).
+        self.WINDANG_RAD = None     # Angle between wind and conductor axis (rad).
+        self.CDR_ELEV = None        # Conductor elevation above sea level (m).
+        self.Z1_DEG = None          # Conductor direction clockwise from north (deg).
+        self.CDR_LAT_DEG = None     # Conductor latitude (deg).
+        self.SUN_TIME = None        # Solar hour, or 99 when sun is ignored.
+        self.NDAY = None            # Day of year.
+        self.A3 = None              # Air clarity: 0 clear, 1 industrial.
+        self.Ns = 1.0               # Clearness ratio, CIGRE TB601 page 19.
+        self.SolarRadiation = None  # Measured solar radiation (W/m2).
+        self.ATCDR = []             # Transient conductor temperature trace.
+        self.TIME = []              # Transient time trace.
+        self.TCDR = 50              # Expected conductor temperature (deg C).
+        self.T3 = None              # Expected conductor temperature (K).
+        self.ALBEDO = 0.0           # Ground reflectance coefficient.
+        self.SOLAR = 0              # 0 uses measured radiation, 1 computes it.
+        self.beta = 0               # Conductor inclination to the horizontal.
         self.B = None
         self.B1 = None
+
+        # Legacy solver state and intermediate values used by translated routines.
         self.NFLAG = 0
         self.XLO = None
         self.XHI = None
@@ -107,30 +134,26 @@ class Case():
         self.XM = None
         self.FM = None
         self.CHA = None
-        self.FO = None 
-        self.NUM = None 
+        self.FO = None
+        self.NUM = None
         self.FF = None
         self.W4 = None
         self.R5 = None
         self.K = None
-        self.KTIMEMAX = None 
+        self.KTIMEMAX = None
         self.RAC = None
-        self.QJ = None # Joule heating [W/m]
-        self.TTfromST = 1 # Transient conductor temperature (NSELECT == 3) starting from steady-state conductor temperature; 0 starting from <TCDRinitial>
-        self.TCDRinitial = None # Initial conductor temperature when <TTfromST ==
-    
+        self.QJ = None              # Joule heating (W/m).
+        self.TTfromST = 1           # 1 starts transient from steady-state temperature.
+        self.TCDRinitial = None     # Initial transient temperature when TTfromST is 0.
 
-        
+    def demo(self, NSELECT):
+        """Populate the case with built-in demo values.
 
-
-    def demo( self, NSELECT):
-        """Define a demo case (**see** the definition of atribute <NSELECT>)
-
-        :param NSELECT: select a demo case [1, 2, 3 or 4]
-        :type NSELECT: int
+        Args:
+            NSELECT (int): Demo analysis mode. Valid values are 1, 2, 3 and 4.
         """
-        self.NSELECT = NSELECT   
-        self.IORTPRELOAD = 1    
+        self.NSELECT = NSELECT
+        self.IORTPRELOAD = 1
         self.SORM = 0
         self.TT = 100*60
         self.DELTIME = 10
@@ -158,7 +181,7 @@ class Case():
         if NSELECT == 2:
             pass
         elif NSELECT == 3:
-            self.XIPRELOAD = 400     
+            self.XIPRELOAD = 400
             self.XISTEP = 1200
             self.SORM = 1
             self.TT = 7200
@@ -172,18 +195,12 @@ class Case():
             self.TT = 1800
             self.DELTIME = 60
             self.HNH = 2
-           
-       
+
         if self.A3 == 0:
             self.Bstring = "CLEAR"
         else:
             self.Bstring = "INDUSTRIAL"
 
- 
-    def print_ver( self):
-        """Returns the current version of this module
-
-        :return: Current version of Cable module.
-        :rtype: string
-        """        
-        print("Case. 7/4/2023. 17:52") 
+    def print_ver(self):
+        """Print the current version of this module."""
+        print("Case. 5/6/2026.")
