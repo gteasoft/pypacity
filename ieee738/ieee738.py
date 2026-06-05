@@ -25,7 +25,7 @@ This module is part of the PyPacity project.
 
 References
 ----------
-- IEEE Standard for Calculating the Current-Temperature Relationship of Bare Overhead Conductors
+- IEEE Std 738-2012, IEEE Standard for Calculating the Current-Temperature Relationship of Bare Overhead Conductors
 """
 
 
@@ -39,9 +39,17 @@ reload( cable)
 reload( case)
 
 class IEEE738():
-    """Implementation of the IEEE 738:2012.
-    
-    
+    """Implementation of the IEEE 738:2012 standard.
+
+    Implements the thermal rating calculations for bare overhead conductors
+    as defined in the IEEE Standard for Calculating the Current-Temperature
+    Relationship of Bare Overhead Conductors.
+
+    Attributes:
+        :Cable1 (Cable): Object of class Cable with the conductor parameters.
+        :Case1 (Case): Object of class Case with the environmental and physical conditions.
+        :Debug (int): Debug mode flag. Set to 1 to print intermediate calculation values.
+        :Debug_Dec (int): Number of decimal places used when printing debug information.
     """
     #DEG_TO_RAD = np.pi/180
      
@@ -54,20 +62,22 @@ class IEEE738():
 
     
     def set_cable( self, Cable):
-        """Set the cable characteristics for a specific IEEE 738 analysis.
+        """Set the conductor parameters for the IEEE 738 analysis.
 
-        Args:
-            Cable (class Cable): Object of type Cable with information about the cable.
+        :param Cable: Object of class Cable containing the conductor physical and 
+            electrical characteristics (diameter, resistance, emissivity, etc.).
+        :type Cable: Cable
         """
         self.Cable1 = Cable
         return
         
 
     def set_case( self, Case):
-        """Set the case characteristics for a specific IEEE 738 analysis.
-        
-        Args:
-            Case (class Case): Object of type Case with information about the environmental and other physical conditions to consider in the dynamic operation of the cable.
+        """Set the environmental and operational conditions for the IEEE 738 analysis.
+
+        :param Case: Object of class Case containing the analysis mode, weather 
+            conditions, simulation parameters, and geographic data.
+        :type Case: Case
         """
         self.Case1 = Case
 
@@ -114,9 +124,31 @@ class IEEE738():
     # 398 REM * - THIS PROGRAM AND EQUATIONS USE SI UNITS
     # 400 REM **************************************************************
     def ieee_738_2013( self, out = False):
-        """Implementation of IEEE 738:2013.
-        
-        
+        """Execute the IEEE 738-2013 thermal rating calculation.
+
+        Main entry point of the module. Computes the solar heat gain and the
+        thermal resistance coefficients, then performs the selected analysis
+        according to ``Case1.NSELECT``:
+
+            - ``NSELECT = 1``: steady-state conductor temperature for a given
+            current (``XIPRELOAD``). Result stored in ``Case1.TCDRPRELOAD``.
+            - ``NSELECT = 2``: steady-state ampacity for a given conductor
+            temperature (``TCDRPRELOAD``). Result stored in ``Case1.TR``.
+            - ``NSELECT = 3``: transient conductor temperature following a step
+            change in current from ``XIPRELOAD`` to ``XISTEP``. Results
+            stored in ``Case1.ATCDR`` and ``Case1.TIME``.
+            - ``NSELECT = 4``: transient thermal rating — the current ``XISTEP``
+            that raises the conductor to ``TCDRMAX`` in time ``TT``. Result
+            stored in ``Case1.XISTEP``.
+
+        :param out: If ``True``, prints a short summary of results by calling
+            ``output()`` at the end of the calculation. Defaults to ``False``.
+        :type out: bool
+
+        .. note::
+            Results are stored in ``Case1`` attributes rather than returned.
+            Requires ``Cable1`` and ``Case1`` to be set beforehand via
+            ``set_cable()`` and ``set_case()``.
         """
         # 590 REM *******************************
         # 600 REM * START REPEAT CALCULATION HERE
@@ -284,9 +316,31 @@ class IEEE738():
     # 5020 REM /////////////////////////////////////////////////////////
     ########################################################################
     def solar( self):
-        """Compute the conductor solar heat gain (QS).
-        
-        :return: Value of solar heat gain QS in W/m.
+        """Compute the solar heat gain rate of the conductor (QS).
+
+        Calculates the solar heat input per unit length of conductor based on
+        geographic location, time of day, day of the year, and atmospheric
+        conditions, following Section 4.4 of IEEE 738-2012.
+
+        .. note::
+            The result is stored in ``Case1.QS`` (float, W/m) rather than
+            returned directly.
+
+        Uses the following attributes from ``Cable1``:
+            - ``ABSORP``: solar absorptivity coefficient.
+            - ``D``: outside diameter of the conductor (mm).
+
+        Uses the following attributes from ``Case1``:
+            - ``CDR_LAT_DEG``: conductor latitude (degrees).
+            - ``NDAY``: day of the year [1, 365].
+            - ``SUN_TIME``: solar hour angle (e.g. 14 = 2 PM; 99 = no sun).
+            - ``CDR_ELEV``: conductor elevation above sea level (m).
+            - ``Z1_DEG``: conductor direction clockwise relative to north (degrees).
+            - ``A3``: atmospheric clarity. 0 for clear air; 1 for industrial atmosphere.
+            - ``SolarRadiation``: measured solar radiation (W/m²), used when ``SUN_TIME >= 24`` or ``SUN_TIME == 99``.
+
+        Sets:
+            - ``Case1.QS`` (float): solar heat gain rate per unit length (W/m).
         """
         DEG_TO_RAD = np.pi/180
         #self.CDR_LAT_RAD = self.Case1.CDR_LAT_DEG*self.DEG_TO_RAD
@@ -429,8 +483,35 @@ class IEEE738():
     #13050 REM / AND COMPARING THE CALCULATED TCDR TO TCDRMAX. ROUTINE SUPPLIED /
     #13060 REM / COURTESY OF BILL HOWINGTON. /
     def mueller( self):
-        """Function that implements an iteration method that selects a current which just raises self.Case1.TCDR to its maximum value in the time TT.
-       
+        """Find the conductor current using Mueller's iterative method.
+
+        Implements Mueller's root-finding algorithm (a combination of bisection
+        and inverse parabolic interpolation) to determine the current ``XISTEP``
+        that raises the conductor temperature to its maximum allowable value
+        ``TCDRMAX`` in the simulation time ``TT``.
+
+        The algorithm iterates by calling ``find_TCDR()`` repeatedly, comparing
+        the resulting conductor temperature against ``TCDRMAX``, and narrowing
+        the current search interval until convergence. The maximum number of
+        iterations is controlled by ``Case1.IEND`` (default: 20). If no
+        convergence is reached, the program halts with an error message.
+
+        .. note::
+            Results are stored in ``Case1`` attributes rather than returned.
+            The program will call ``sys.exit()`` if the solution does not
+            converge or if the temperature is out of range (``IER = 1`` or
+            ``IER = 2``).
+
+        Uses the following attributes from ``Case1``:
+            - ``XLO``, ``XHI``: initial lower and upper current bounds (A).
+            - ``TCDRMAX``: maximum allowable conductor temperature (°C).
+            - ``TT``: simulation time (s).
+            - ``EPS``: convergence tolerance (default: 0.049).
+            - ``IEND``: maximum number of iterations (default: 20).
+
+        Sets the following attributes in ``Case1``:
+            - ``X`` (float): converged current value (A).
+            - ``IER`` (int): convergence status code. 0 for success; 1 for no convergence; 2 for temperature out of range.
         """
    
         #13070 REM ///////////////////////////////////////////////////////////////////
@@ -613,7 +694,28 @@ class IEEE738():
     #14020 REM ////////////////////////////////////////////////////////////
     ########################################################################
     def initial_bounds( self):
-        """Computes initial bounds for iteration.
+        """Determine the initial search interval for Mueller's iteration.
+
+        Scans the search domain by dividing it into ``Case1.DIV`` equal
+        subintervals and evaluating ``find_TCDR()`` at each point until a
+        sign change is detected. The subinterval containing the sign change
+        becomes the initial bracket ``[XLI, XRI]`` passed to ``mueller()``.
+
+        The search domain depends on ``Case1.NFLAG``:
+            - ``NFLAG = 0``: searches for conductor temperature in the range
+            [``TAMB``, 1000] °C.
+            - ``NFLAG = 1``: searches for conductor current in the range
+            [0, 10 * ``AT``] A.
+
+        If no sign change is found, the full domain ``[XLO, XHI]`` is used
+        as the initial bracket.
+
+        .. note::
+            Results are stored in ``Case1`` attributes rather than returned.
+
+        Sets the following attributes in ``Case1``:
+            - ``XLI`` (float): lower bound of the initial search interval.
+            - ``XRI`` (float): upper bound of the initial search interval.
         """
         if self.Case1.NFLAG == 0:
             self.Case1.XLO = self.Case1.TAMB
@@ -659,10 +761,36 @@ class IEEE738():
     #12020 REM / GIVEN THE CONDUCTOR CURRENT
     #12030 REM ////////////////////////////////////////////////////
     def find_TCDR( self):
-        """Obtain conductor temperature given the conductor current.
-        
-        :return: The computed value is returned in 
-            self.Case1.TEMP (float): Conductor temperature in [DEG C].
+        """Evaluate the residual function for the current iteration step.
+
+        Computes the difference between the target value and the value obtained
+        for a trial input ``Case1.X``. The result is stored in ``Case1.TEMP``
+        and used by ``mueller()`` and ``initial_bounds()`` to detect sign
+        changes and drive the iteration toward convergence.
+
+        The behaviour depends on ``Case1.NFLAG``:
+            - ``NFLAG = 0``: ``Case1.X`` is a trial conductor temperature (°C).
+            Calls ``thermal_rating()`` and stores in ``Case1.TEMP`` the
+            difference between the target current ``XIDUMMY`` and the
+            computed steady-state current ``TR``.
+            - ``NFLAG = 1``: ``Case1.X`` is a trial conductor current (A).
+            Calls ``TCDR_vs_TIME()`` and stores in ``Case1.TEMP`` the
+            difference between the maximum allowable temperature ``TCDRMAX``
+            and the computed conductor temperature ``TCDR`` at time ``TT``.
+
+        .. note::
+            The result is stored in ``Case1.TEMP`` rather than returned.
+
+        Uses the following attributes from ``Case1``:
+            - ``NFLAG``: operation mode flag.
+            - ``X``: trial value (temperature in °C or current in A).
+            - ``XIDUMMY``: target current (A), used when ``NFLAG = 0``.
+
+        Uses the following attribute from ``Cable1``:
+            - ``TCDRMAX``: maximum allowable conductor temperature (°C), used when ``NFLAG = 1``.
+
+        Sets:
+            - ``Case1.TEMP`` (float): residual value for the current iteration step.
         """
         if self.Case1.NFLAG == 0:
             self.Case1.TCDR = self.Case1.X
@@ -686,15 +814,38 @@ class IEEE738():
     #15030 REM /////////////////////////////////////////////////////////////////
     #15040 REM PRINT USING "TRYING A TCDR OF ####.### DEG C"; TCDR
     def thermal_rating( self):
-        """Computes the thermal rating of the cable given a conductor temperature.
-        
-        :Args:
-            self.Case1.TCDR (float): conductor temperature [DEG C].
-            
-        :return:
-            self.Case1.TR (float): ampacity [A]
-                
-        
+        """Compute the steady-state ampacity of the conductor at a given temperature.
+
+        Calculates the maximum allowable current (ampacity) ``TR`` that produces
+        a steady-state conductor temperature equal to ``Case1.TCDR``, based on
+        the heat balance equation of IEEE 738-2012 (Section 4.3):
+
+            I² · R(Tc) = QR + QC - QS
+
+        where ``QR`` is the radiated heat loss, ``QC`` is the convective heat loss
+        (natural or forced, whichever is greater), and ``QS`` is the solar heat gain
+        computed by ``solar()``.
+
+        .. note::
+            The result is stored in ``Case1.TR`` rather than returned.
+            If the heat balance is negative or zero (``R5 <= 0``), ``TR`` is set
+            to 0 and the function returns immediately.
+
+        Uses the following attributes from ``Case1``:
+            - ``TCDR``: conductor temperature (°C).
+            - ``TAMB``: ambient temperature (°C).
+            - ``VWIND``: wind speed (m/s).
+            - ``CDR_ELEV``: conductor elevation above sea level (m).
+            - ``QS``: solar heat gain rate (W/m), set by ``solar()``.
+            - ``YC``: wind correction factor, set by ``thermal()``.
+
+        Uses the following attributes from ``Cable1``:
+            - ``EMISS``: emissivity coefficient.
+            - ``D``: outside diameter of conductor (mm).
+            - ``B``, ``B1``: linear resistance coefficients (Ohm/m·°C, Ohm/m), set by ``thermal()``.
+
+        Sets:
+            - ``Case1.TR`` (float): steady-state ampacity (A).
         """ 
         #print('thermal_rating()')
         #15050 REM *********************************************************
@@ -791,8 +942,45 @@ class IEEE738():
     #11010 REM / SUBROUTINE CALCS CDR TEMP VS TIME FOR STEP CHANGE CURRENT
     #11020 REM ///////////////////////////////////////////////////////////
     def  TCDR_vs_TIME( self):
-        """Computes the transient evolution of conductor temperature.
+        """Simulate the transient evolution of conductor temperature over time.
 
+        Computes the conductor temperature at each time step ``DELTIME`` following
+        a step change in current from ``XIPRELOAD`` to ``XISTEP``, using the
+        transient heat balance equation of IEEE 738-2012 (Section 4.5):
+
+            Tc(t + Δt) = Tc(t) + (I² · R(Tc) + QS - QR - QC) · Δt / mCp
+
+        where ``mCp`` (``HEATCAP``) is the total heat capacity of the conductor
+        per unit length. ``thermal_rating()`` is called at each step to update
+        the heat loss terms.
+
+        For short-duration fault currents (``TT < 60`` s), only the heat capacity
+        of the outer aluminium layer (``HEATOUT``) is used.
+
+        The simulation stops when the elapsed time reaches ``TT`` or, in
+        mode ``NSELECT = 3``, when ``TCDR`` exceeds ``TCDRMAX``. The maximum
+        number of time steps is 3000; the program halts with an error if exceeded.
+
+        .. note::
+            Results are stored in ``Case1`` attributes rather than returned.
+
+        Uses the following attributes from ``Case1``:
+            - ``TCDRPRELOAD``: initial conductor temperature (°C).
+            - ``XISTEP``: step current after the transient (A).
+            - ``DELTIME``: simulation time step (s).
+            - ``TT``: total simulation time (s).
+            - ``NSELECT``: analysis mode (3 = transient temperature, 4 = transient rating).
+            - ``QS``, ``QR``, ``QC``: heat gain and loss terms (W/m), updated each step.
+
+        Uses the following attributes from ``Cable1``:
+            - ``TCDRMAX``: maximum allowable conductor temperature (°C).
+            - ``HEATCAP``: total heat capacity per unit length (W·s/m·°C).
+            - ``HEATOUT``: heat capacity of the aluminium layer only (W·s/m·°C).
+
+        Sets:
+            - ``Case1.ATCDR`` (list): conductor temperature at each time step (°C).
+            - ``Case1.TIME`` (list): elapsed time at each time step (s).
+            - ``Case1.KTIMEMAX`` (int): total number of time steps computed.
         """
         
         if self.Case1.NSELECT == 4:
@@ -880,8 +1068,35 @@ class IEEE738():
     #10030 REM ///////////////////////////////////////////////////////////////
     #10040 TCDR = (TCDRMAX + TAMB) / 2
     def starting_ci( self):
-        """Compute the starting value for current iteration by assuming adiabatic heating during transient.
-        
+        """Compute the initial current estimate for the transient iteration.
+
+        Estimates a starting value for the current ``AT`` by assuming adiabatic
+        heating of the conductor during the simulation time ``TT``. This estimate
+        is used by ``initial_bounds()`` to define the search interval in
+        transient thermal rating calculations (``NSELECT = 4``).
+
+        For short-duration events (``TT < 60`` s), only the heat capacity of the
+        aluminium layer is used. Otherwise, the combined heat capacity of the
+        aluminium and steel core is used.
+
+        .. note::
+            Results are stored in ``Case1`` and ``Cable1`` attributes rather
+            than returned.
+
+        Uses the following attributes from ``Case1``:
+            - ``TAMB``: ambient temperature (°C).
+            - ``TT``: simulation time (s).
+            - ``TCDRPRELOAD``: initial conductor temperature (°C).
+
+        Uses the following attributes from ``Cable1``:
+            - ``TCDRMAX``: maximum allowable conductor temperature (°C).
+            - ``HEATOUT``: heat capacity of the aluminium layer (W·s/m·°C).
+            - ``HEATCORE``: heat capacity of the steel core (W·s/m·°C).
+
+        Sets:
+            - ``Cable1.HEATCAP`` (float): total heat capacity per unit length used in the simulation (W·s/m·°C).
+            - ``Case1.AT`` (float): adiabatic current estimate as starting point for iteration (A).
+            - ``Case1.NFLAG`` (int): set to 1 to indicate transient current iteration mode.
         """
   
         self.Case1.TCDR = (self.Cable1.TCDRMAX + self.Case1.TAMB) / 2
@@ -912,8 +1127,20 @@ class IEEE738():
   
   
     def outputs( self):
-        """Print detailed results.
-        
+        """Print a detailed report of the IEEE 738-2013 calculation results.
+
+        Prints to the console a full summary including conductor and environmental
+        parameters, heat balance terms, and the main result depending on the
+        analysis mode (``Case1.NSELECT``):
+
+            - ``NSELECT = 1``: prints the steady-state conductor temperature
+            for the given current.
+            - ``NSELECT = 2``: prints the steady-state ampacity for the given
+            conductor temperature.
+
+        .. note::
+            This function only prints to the console. It does not return any
+            value and does not modify any attributes.
         """
         #6070 PRINT
         #6080 PRINT X$
@@ -1137,17 +1364,31 @@ class IEEE738():
 
 
     def str_round( self, valuex):
-        """Obtain the rounded value of <valuex> acording the variable <self.Debug_Dec>.
+        """Round a numeric value and return it as a string.
 
-        :Args:
-            valuex (float): value to be rounded according the number of decimal values defined by <self.Debug_Dec>.
-        
+        Utility function used for printing debug information. The number of
+        decimal places is controlled by ``Debug_Dec``.
+
+        :param valuex: Value to be rounded.
+        :type valuex: float
+        :return: Rounded value converted to string.
+        :rtype: str
         """
         return str( round( valuex, self.Debug_Dec))
 
     def output( self):
-        """Print a summary of intermediate results.
-            
+        """Print a short summary of the main inputs, outputs, and heat balance terms.
+
+        Prints to the console a compact summary including the wind angle,
+        the main input/output pair depending on the analysis mode
+        (``Case1.NSELECT``), and the three heat balance terms:
+
+            - ``NSELECT = 1``: input current (A) → output temperature (°C).
+            - ``NSELECT = 2``: input temperature (°C) → output current (A).
+
+        .. note::
+            This function only prints to the console. It does not return any
+            value and does not modify any attributes.
         """
         print(" ")
         print("******************************************************************")
@@ -1171,9 +1412,11 @@ class IEEE738():
 
 
     def ampacidad( self):
-        """Not yet implemented.
-    
-        """      
+        """Compute the ampacity of the conductor.
+
+        .. note::
+            Not yet implemented.
+        """  
         #Analysis choice (variable data['NSELECT'])
         #1.- CALCULATE THE STEADY STATE CONDUCTOR TEMPERATURE (TCDRPRELOAD) 
         #CORRESPONDING TO THE GIVEN STEADY STATE CURRENT (XIPRELOAD)
@@ -1194,7 +1437,11 @@ class IEEE738():
     
     
     def print_ver( self):
-        """Print current version.
+        """Print the current version of the IEEE738 module.
+
+        .. note::
+            This function only prints to the console. It does not return any
+            value and does not modify any attributes.
         """
         
         print("IEEE738. 30/3/2023. 23:15") 
