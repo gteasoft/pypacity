@@ -1,7 +1,7 @@
 pvsystems module
 ================
 
-.. automodule:: pvsystems.pvsystems
+.. automodule:: utils.pvsystems
    :members:
    :undoc-members:
    :show-inheritance:

@@ -1,9 +1,32 @@
-# -*- coding: utf-8 -*-
+# -*- coding: utf-8
+"""
+Module: cigre601.py
 
-#########################################################################
-# CIGRE TB 601
-#
-# 
+Description
+-----------
+Thermal rating calculations for overhead transmission lines based on
+CIGRE TB601 methodologies.
+
+Author
+------
+Mario Mañana
+
+Copyright
+---------
+Copyright (c) 2026 Mario Mañana
+
+License
+-------
+MIT License
+
+Notes
+-----
+This module is part of the PyPacity project.
+
+References
+----------
+- CIGRE Technical Brochure 601
+"""
 
 
 import numpy as np
@@ -682,7 +705,7 @@ class CIGRE601():
         print("CIGRE TB601 ")
         print("*******************************************************************") 
         
-        print("The angle between wind and conductor is = ", self.Case1.WINDANG_DEG, " DEG")
+        print("+The angle between wind and conductor is = ", self.Case1.WINDANG_DEG, " DEG")
      
 
         if self.Case1.NSELECT == 1:
