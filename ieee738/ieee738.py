@@ -1191,7 +1191,7 @@ class IEEE738():
             print('the steady state thermal rating in amps')
             print("*******************************************************************")
     
-        print("The conductor is a ", self.Cable1.Cstring)
+        print("The conductor is a ", self.Cable1.ID)
     
         #6110 PRINT "AIR TEMPERATURE = "; TAMB; " DEG C &";
         print("Air temperature = ", self.Case1.TAMB," ºC")
