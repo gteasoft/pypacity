@@ -33,7 +33,7 @@ class Cable():
     """Electrical and thermal data for an overhead conductor.
 
     Attributes:
-        Cstring (str): Conductor description.
+        ID (str): Conductor identifier.
         D (float): Outside conductor diameter in millimeters.
         D1 (float): Equivalent steel-core tube diameter in millimeters.
         d (float): Wire diameter in the outermost layer in millimeters.
@@ -48,12 +48,18 @@ class Cable():
         HEATOUT (float): Aluminum heat capacity contribution in W.s/(m.deg C).
         HEATCORE (float): Steel-core heat capacity contribution in W.s/(m.deg C).
         Stranded (int): 1 for stranded conductors, 0 for smooth conductors.
+        CSteel20 (float): Steel specific heat at 20 deg C in J/(kg.K).
+        CAlum20 (float): Aluminum specific heat at 20 deg C in J/(kg.K).
+        BetaSteel20 (float): Steel specific-heat temperature coefficient.
+        BetaAlum20 (float): Aluminum specific-heat temperature coefficient.
+        mSteel (float): Steel mass per unit length in kg/m.
+        mAlum (float): Aluminum mass per unit length in kg/m.
         lambda_ertc (float): Effective radial thermal conductivity in W/(m.K).
     """
     
     def __init__(self):
         """Initialize an empty cable definition."""
-        self.Cstring = None          # Conductor description.
+        self.ID = None               # Conductor identifier.
         self.D = None                # Outside conductor diameter (mm).
         self.D1 = None               # Equivalent steel-core tube diameter (mm).
         self.d = None                # Wire diameter in the outermost layer (mm).
@@ -74,11 +80,17 @@ class Cable():
         self.MASSCORE = None         # Steel mass per unit length (kg/m).
         self.MASSOUT = None          # Aluminum mass per unit length (kg/m).
         self.deltaTcTs_value = None  # Temperature difference between core and surface.
+        self.CSteel20 = None         # Steel specific heat at 20 deg C (J/(kg.K)).
+        self.CAlum20 = None          # Aluminum specific heat at 20 deg C (J/(kg.K)).
+        self.BetaSteel20 = None      # Steel specific-heat temperature coefficient.
+        self.BetaAlum20 = None       # Aluminum specific-heat temperature coefficient.
+        self.mSteel = None           # Steel mass per unit length (kg/m).
+        self.mAlum = None            # Aluminum mass per unit length (kg/m).
         self.lambda_ertc = None      # Effective radial thermal conductivity (W/(m.K)).
       
    
    
-    def load_cable_db( self):
+    def load_cable_db(self):
         """Load the cable database distributed with this package.
 
         Returns:
@@ -89,11 +101,11 @@ class Cable():
         filename = u'cable_db.csv'
 
         package_dir = os.path.dirname(__file__)
-        data_file_path = os.path.join( package_dir, filename) 
+        data_file_path = os.path.join(package_dir, filename) 
              
-        cable_db = pd.read_csv( data_file_path, sep=';')
+        cable_db = pd.read_csv(data_file_path, sep=';')
         
-        if len( cable_db) < 1:
+        if len(cable_db) < 1:
             error = 1
         else:
             error = 0
@@ -101,159 +113,116 @@ class Cable():
         return cable_db, error
 
     
-    def set_cable( self, NSELECT, conductor = 'Demo case' ):
-        """Load one of the built-in conductor definitions.
+    def set_cable(self, NSELECT, conductor='DRAKE'):
+        """Load one conductor definition from the cable database.
 
         Args:
             NSELECT (int): Analysis mode used by the ampacity solver.
-            conductor (str): Conductor ID. The default demo case is based on
-                the 400 mm2 DRAKE 26/7 ACSR conductor.
+            conductor (str): Conductor ID.
         """
-        if  conductor == 'Demo case':
-            self.Cstring = 'Demo case'
-            self.D = 28.12
-            self.D1 = 10.4
-            self.d = 4.44
-            self.TLO = 25.0
-            self.THI = 75.0
-            self.TCDRMAX = 101.0
-            self.RLO = 0.07284/1000.0
-            self.RHI = 0.08689/1000.0
-            self.EMISS = 0.5
-            self.ABSORP = 0.5
-            self.HNH = 3
-            self.HEATOUT = 1139.5
-            self.HEATCORE = 351.7
-            self.TotalS = 486.6
-            self.CSteel20 = 481
-            self.CAlum20 = 897
-            self.BetaSteel20 = 1.00e-4
-            self.BetaAlum20 = 3.80e-4
-            self.mSteel = 0.5119
-            self.mAlum = 1.116
-            self.lambda_ertc = 0.7
-        elif conductor == '400 mm2 DRAKE 26/7 ACSR':
-            self.Cstring = '400 mm2 DRAKE 26/7 ACSR'
-            self.D = 28.12
-            self.D1 = 10.4
-            self.d = 4.44
-            self.TLO = 25.0
-            self.THI = 75.0
-            self.TCDRMAX = 101.0
-            self.RLO = 0.07284/1000.0
-            self.RHI = 0.08689/1000.0
-            self.EMISS = 0.5
-            self.ABSORP = 0.5
-            self.HNH = 3
-            self.HEATOUT = 1139.5
-            self.HEATCORE = 351.7
-            self.TotalS = 486.6
-            self.CSteel20 = 481
-            self.CAlum20 = 897
-            self.BetaSteel20 = 1.00e-4
-            self.BetaAlum20 = 3.80e-4
-            self.mSteel = 0.5119
-            self.mAlum = 1.116
-            self.lambda_ertc = 0.7
-        elif conductor == 'LA-180':
-            self.Cstring = 'LA-180'
-            self.D = 17.50
-            self.D1 = 10.4
-            self.d = 2.50
-            self.TLO = 5.0
-            self.THI = 85.0
-            self.TCDRMAX = 101.0
-            self.RLO = 0.21993/1000.0
-            self.RHI = 0.25197/1000.0
-            self.EMISS = 0.5
-            self.ABSORP = 0.5
-            self.HNH = 2
-            self.HEATOUT = 379.81
-            self.HEATCORE = 128.16
-            self.TotalS = 486.6
-            self.CSteel20 = 481
-            self.CAlum20 = 897
-            self.BetaSteel20 = 1.00e-4
-            self.BetaAlum20 = 3.80e-4
-            self.mSteel = 0.5119
-            self.mAlum = 1.116
-            self.lambda_ertc = 0.7
-        elif conductor == 'LA-280':
-            self.Cstring = 'LA-280'
-            self.D = 21.80
-            self.D1 = 10.4
-            self.d = 3.44
-            self.TLO = 5.0
-            self.THI = 85.0
-            self.TCDRMAX = 101.0
-            self.RLO = 0.13384/1000.0
-            self.RHI = 0.15707/1000.0
-            self.EMISS = 0.5
-            self.ABSORP = 0.5
-            self.HNH = 2
-            self.HEATOUT = 379.81
-            self.HEATCORE = 128.16
-            self.TotalS = 486.6
-            self.CSteel20 = 481
-            self.CAlum20 = 897
-            self.BetaSteel20 = 1.00e-4
-            self.BetaAlum20 = 3.80e-4
-            self.mSteel = 0.5119
-            self.mAlum = 1.116   
-            self.lambda_ertc = 0.7 
-        elif conductor == 'HERON':
-            self.Cstring = 'HERON'
-            self.D = 22.96
-            self.D1 = 8.61
-            self.d = 3.60
-            self.TLO = 5.0
-            self.THI = 85.0
-            self.TCDRMAX = 100.0
-            self.RLO = 0.1122/1000.0
-            self.RHI = 0.1507/1000.0
-            self.EMISS = 0.5
-            self.ABSORP = 0.5
-            self.HNH = 3
-            self.HEATOUT = 623.0
-            self.HEATCORE = 147.0
-            self.TotalS = 486.6
-            self.CSteel20 = 481
-            self.CAlum20 = 897
-            self.BetaSteel20 = 1.00e-4
-            self.BetaAlum20 = 3.80e-4
-            self.mSteel = 0.5119
-            self.mAlum = 1.116
-            self.lambda_ertc = 0.7                    
-            
-                                   
-  
-        # Analysis-mode overrides used by the built-in examples.
+        data = self._get_cable_data(conductor)
+        self._apply_cable_data(data)
+        self._set_common_properties()
+        self._apply_analysis_mode_overrides(NSELECT)
+        self.HEATCAP = self.HEATCORE + self.HEATOUT
+
+    def _get_cable_data(self, conductor):
+        """Return the database row that matches a conductor ID.
+
+        Matching is case-insensitive, so ``drake``, ``DRAKE``, and ``Drake``
+        all select the same conductor if it exists in ``cable_db.csv``.
+
+        Args:
+            conductor (str): Conductor ID requested by the caller.
+
+        Returns:
+            pandas.Series: Row from ``cable_db.csv`` for the selected
+            conductor.
+
+        Raises:
+            ValueError: If the database is empty or the conductor ID is
+            unknown.
+        """
+        # Normalize user input before comparing it with database IDs.
+        conductor_id = str(conductor).strip()
+
+        cable_db, error = self.load_cable_db()
+        if error:
+            raise ValueError("Cable database is empty.")
+
+        # Match conductor IDs without depending on upper/lower case.
+        row = cable_db.loc[
+            cable_db['ID'].astype(str).str.upper() == conductor_id.upper()
+        ]
+        if row.empty:
+            # Include available IDs in the error message to help users fix typos.
+            available = ', '.join(cable_db['ID'].astype(str))
+            raise ValueError(
+                "Unknown conductor '%s'. Available conductors: %s"
+                % (conductor_id, available)
+            )
+
+        # There should be only one matching row for each conductor ID.
+        return row.iloc[0]
+
+    def _apply_cable_data(self, data):
+        """Copy conductor-specific database values to this cable object.
+
+        Args:
+            data (pandas.Series): Row from ``cable_db.csv`` for one conductor.
+        """
+        self.ID = data['ID']
+
+        for param in (
+            'D', 'D1', 'd', 'TLO', 'THI', 'TCDRMAX', 'HEATOUT', 'HEATCORE'
+        ):
+            setattr(self, param, float(data[param]))
+
+        self.HNH = int(data['HNH'])
+
+        self.RLO = float(data['RLO']) / 1000.0 # ohm/m
+        self.RHI = float(data['RHI']) / 1000.0 # ohm/m
+
+    def _set_common_properties(self):
+        """Set default properties shared by the built-in conductors.
+
+        These values are assumptions used by the standard examples. They may
+        be overwritten after ``set_cable()`` if a study requires different
+        material, surface, or thermal properties.
+        """
+        self.EMISS = 0.5          # Default surface emissivity.
+        self.ABSORP = 0.5         # Default solar absorptivity.
+        self.CSteel20 = 481.0     # Steel specific heat at 20 deg C.
+        self.CAlum20 = 897.0      # Aluminum specific heat at 20 deg C.
+        self.BetaSteel20 = 1.00e-4
+        self.BetaAlum20 = 3.80e-4
+        self.mSteel = 0.5119      # Default steel mass per unit length.
+        self.mAlum = 1.116        # Default aluminum mass per unit length.
+        self.lambda_ertc = 0.7    # Effective radial thermal conductivity.
+
+    def _apply_analysis_mode_overrides(self, NSELECT):
+        """Apply mode-specific overrides for built-in ampacity examples.
+
+        Different ``NSELECT`` values represent different study cases. These
+        overrides intentionally change temperature limits or heat capacity
+        values before the solver runs.
+        """
         if NSELECT == 2:
+            # Preload case: define the initial/preload conductor temperature.
             self.TCDRPRELOAD = 101.1
-            #self.TCDRMAX = 1000.0
+
         elif NSELECT == 3:
+            # High-temperature transient case using fixed heat capacity values.
             self.HEATOUT = 1066
             self.HEATCORE = 243
             self.TCDRMAX = 1000  
+
         elif NSELECT == 4:
+            # Limited-temperature case using the same fixed heat capacity values.
             self.TCDRMAX = 150
             self.HEATOUT = 1066
             self.HEATCORE = 243
-            
-        self.HEATCAP = self.HEATCORE + self.HEATOUT     
         
-       
-
-    def set_param( self, param, value):
-        """Set a supported cable parameter.
-
-        Args:
-            param (str): Parameter name. Currently only ``D`` is supported.
-            value: Value assigned to the selected parameter.
-        """
-        if param == 'D':
-            self.D = value
-   
-    def print_ver( self):        
+    def print_ver(self):        
         """Print the current version of this module."""
         print("Cable. 05/6/2026.") 

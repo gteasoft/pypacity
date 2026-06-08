@@ -97,7 +97,7 @@ Calculate the steady-state current (Case.TR) given the steady-state conductor te
     NSELECT = 2 
     Cable1 = cable.Cable()
     c_db, error = Cable1.load_cable_db()
-    Cable1.demo( NSELECT, conductor = '400 mm2 DRAKE 26/7 ACSR')
+    Cable1.demo( NSELECT, conductor = 'DRAKE')
     Cable1.EMISS = 0.8
     Cable1.ABSORP = 0.8
 
