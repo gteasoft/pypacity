@@ -165,12 +165,12 @@ class IEEE738():
         # 1120 REM *****************************************
         # 1130 REM * CALCULATE SOLAR HEAT INPUT TO CONDUCTOR
         # 1140 REM *****************************************
-        self.solar()
+        self._solar()
     
         #1160 REM **************************************************************
         #1170 REM * CALCULATE THERMAL COEF OF RESISTANCE & WIND ANGLE CORRECTION
         #1180 REM **************************************************************
-        self.thermal()
+        self._thermal()
     
         #1200 REM ********************************
         #1210 REM * SELECT THE CALCULATION DESIRED
@@ -183,7 +183,7 @@ class IEEE738():
             #1490 REM ********************************************
             self.Case1.XIDUMMY = self.Case1.XIPRELOAD
             self.Case1.NFLAG = 0
-            self.mueller()
+            self._mueller()
             self.Case1.TCDRPRELOAD = self.Case1.TCDR
             #1540 REM ***************************************************************
             #1550 REM * FOR NSELECT = 1 THE PROGRAM HAS FOUND THE STEADY STATE CONDUCTOR
@@ -199,7 +199,7 @@ class IEEE738():
             #1290 REM * THE SUBROUTINE IS REQUIRED.
             #1300 REM ********************************************************************
             self.Case1.TCDR = self.Case1.TCDRPRELOAD
-            self.thermal_rating()
+            self._thermal_rating()
         elif self.Case1.NSELECT == 3: #TRANSIENT TEMP
             #1360 REM ********************************************************************
             #1370 REM * FOR NSELECT = 1,3,OR 4
@@ -218,7 +218,7 @@ class IEEE738():
                 #1490 REM ********************************************
                 self.Case1.XIDUMMY = self.Case1.XIPRELOAD
                 self.Case1.NFLAG = 0
-                self.mueller()
+                self._mueller()
                 self.Case1.TCDRPRELOAD = self.Case1.TCDR    
                 #1540 REM ***************************************************************
                 #1550 REM * FOR NSELECT = 1 THE PROGRAM HAS FOUND THE STEADY STATE CONDUCTOR
@@ -238,7 +238,7 @@ class IEEE738():
                 #1690 REM *************************************************************
                 self.Case1.ET = 3600
                 self.Case1.XISTEP = self.Case1.XISTEP ######    data['XISTEP'] = data['XISTEP']
-                self.TCDR_vs_TIME()
+                self._TCDR_vs_TIME()
             else:
                     pass
             
@@ -260,7 +260,7 @@ class IEEE738():
                 #1490 REM ********************************************
                 self.Case1.XIDUMMY = self.Case1.XIPRELOAD
                 self.Case1.NFLAG = 0
-                self.mueller()
+                self._mueller()
                 self.Case1.TCDRPRELOAD = self.Case1.TCDR            
             
                 #1540 REM ***************************************************************
@@ -276,14 +276,14 @@ class IEEE738():
                 #1630 REM * AND CONTROL PASSES TO FURTHUR TRANSIENT CALCULATIONS
                 #1640 REM *****************************************************************
                 #1650 IF NSELECT = 4 THEN GOSUB 10000
-                self.starting_ci()
+                self._starting_ci()
                 #1660 REM *************************************************************
                 #1670 REM * BEGIN CALCULATION OF CONDUCTOR TEMP AS A FUNCTION OF TIME
                 #1680 REM * FOR A STEP INCREASE IN ELECTRICAL CURRENT, NSELECT = 3
                 #1690 REM *************************************************************
                 self.Case1.ET = 3600
                 self.Case1.XISTEP = self.Case1.XISTEP
-                self.TCDR_vs_TIME()
+                self._TCDR_vs_TIME()
             
         if out == True:
             self.output()
@@ -315,7 +315,7 @@ class IEEE738():
     # 5010 REM / SUBROUTINE TO CALCULATE CONDUCTOR SOLAR HEAT GAIN (QS)
     # 5020 REM /////////////////////////////////////////////////////////
     ########################################################################
-    def solar( self):
+    def _solar( self):
         """Compute the solar heat gain rate of the conductor (QS).
 
         Calculates the solar heat input per unit length of conductor based on
@@ -354,7 +354,7 @@ class IEEE738():
         DECL_RAD = DECL_DEG*DEG_TO_RAD     
         
         if self.Debug == 1:
-            print(f"Declination: {self.str_round( DECL_DEG)} deg")
+            print(f"Declination: {self._str_round( DECL_DEG)} deg")
         
         
     
@@ -375,9 +375,9 @@ class IEEE738():
         H3_DEG = H3_RAD/DEG_TO_RAD
   
         if self.Debug == 1:
-            print(f"Latitude: {self.str_round(self.Case1.CDR_LAT_DEG)} deg")
-            print(f"Hour angle: {self.str_round(HOUR_ANG_DEG)} deg")
-            print(f"Solar altitude: {self.str_round(H3_DEG)} deg")
+            print(f"Latitude: {self._str_round(self.Case1.CDR_LAT_DEG)} deg")
+            print(f"Hour angle: {self._str_round(HOUR_ANG_DEG)} deg")
+            print(f"Solar altitude: {self._str_round(H3_DEG)} deg")
   
   
         if self.Case1.A3 == 1:
@@ -437,7 +437,7 @@ class IEEE738():
     #9010 REM / SUBROUTINE TO CALCULATE THERM COEF OF RAC & HEATCAP & WIND CORRECTION
     #9020 REM //////////////////////////////////////////////////////////////
     ########################################################################
-    def thermal( self):
+    def _thermal( self):
         """Compute the thermal resistance coefficient, heat capacity, and wind correction factor.
 
         Calculates the linear resistance equation coefficients of the conductor as a
@@ -491,7 +491,7 @@ class IEEE738():
         
         self.Case1.WINDANG_RAD = self.Case1.WINDANG_DEG * PIANG
         if self.Debug == 1:
-            print(f"Wind angle: {self.str_round(self.Case1.WINDANG_DEG)} DEG")
+            print(f"Wind angle: {self._str_round(self.Case1.WINDANG_DEG)} DEG")
         
         self.Case1.YC = 1.194 - np.cos(self.Case1.WINDANG_RAD) + 0.194*np.cos(2.0*self.Case1.WINDANG_RAD) + 0.368*np.sin(2.0*self.Case1.WINDANG_RAD)
         return     
@@ -507,7 +507,7 @@ class IEEE738():
     #13040 REM / REPEATEDLY GUESSING A CURRENT - XISTEP - CALCULATING TCDR AT TT /
     #13050 REM / AND COMPARING THE CALCULATED TCDR TO TCDRMAX. ROUTINE SUPPLIED /
     #13060 REM / COURTESY OF BILL HOWINGTON. /
-    def mueller( self):
+    def _mueller( self):
         """Find the conductor current using Mueller's iterative method.
 
         Implements Mueller's root-finding algorithm (a combination of bisection
@@ -550,7 +550,7 @@ class IEEE738():
         self.Case1.IEND = 20
         self.Case1.X = 0
         
-        self.initial_bounds()
+        self._initial_bounds()
         
         self.Case1.IER = 0
         self.Case1.XL = self.Case1.XLI 
@@ -558,7 +558,7 @@ class IEEE738():
         self.Case1.X = self.Case1.XLO
         self.Case1.TOL = self.Case1.X 
         
-        self.find_TCDR()
+        self._find_TCDR()
        
         self.Case1.F = self.Case1.TEMP
         if (self.Case1.XLI == self.Case1.XRI) or (self.Case1.F == 0):
@@ -568,7 +568,7 @@ class IEEE738():
         self.Case1.X = self.Case1.XR    
         self.Case1.TOL = self.Case1.X
        
-        self.find_TCDR()
+        self._find_TCDR()
        
         self.Case1.F = self.Case1.TEMP
         if self.Case1.F == 0:
@@ -610,7 +610,7 @@ class IEEE738():
             while (JK <= (self.Case1.IEND -1)):            
                 self.Case1.X  = 0.5 * (self.Case1.XL + self.Case1.XR)
                 self.Case1.TOL = self.Case1.X 
-                self.find_TCDR()
+                self._find_TCDR()
 
                 self.Case1.F = self.Case1.TEMP 
     
@@ -682,7 +682,7 @@ class IEEE738():
             self.Case1.X = self.Case1.XL - self.Case1.DX
             self.Case1.TOL = self.Case1.X
             
-            self.find_TCDR()
+            self._find_TCDR()
             
             self.Case1.F = self.Case1.TEMP
     
@@ -720,7 +720,7 @@ class IEEE738():
     #14010 REM / SUBROUTINE GUESS TO DETERMINE INITIAL BOUNDS FOR ITERATION
     #14020 REM ////////////////////////////////////////////////////////////
     ########################################################################
-    def initial_bounds( self):
+    def _initial_bounds( self):
         """Determine the initial search interval for Mueller's iteration.
 
         Scans the search domain by dividing it into ``Case1.DIV`` equal
@@ -757,14 +757,14 @@ class IEEE738():
         self.Case1.NUM = np.floor( self.Case1.DIV)
         self.Case1.X = self.Case1.XLO
         
-        self.find_TCDR()
+        self._find_TCDR()
 
         self.Case1.FO = self.Case1.TEMP
     
         JK=0
         while (JK <=( self.Case1.NUM - 1)):
             self.Case1.X = self.Case1.XLO + (JK+1) * self.Case1.CHA
-            self.find_TCDR()
+            self._find_TCDR()
         
             self.Case1.FF = self.Case1.TEMP
         
@@ -787,7 +787,7 @@ class IEEE738():
     #12010 REM / SUBROUTINE ITERATES TO FIND CONDUCTOR TEMPERATURE
     #12020 REM / GIVEN THE CONDUCTOR CURRENT
     #12030 REM ////////////////////////////////////////////////////
-    def find_TCDR( self):
+    def _find_TCDR( self):
         """Evaluate the residual function for the current iteration step.
 
         Computes the difference between the target value and the value obtained
@@ -801,7 +801,7 @@ class IEEE738():
             difference between the target current ``XIDUMMY`` and the
             computed steady-state current ``TR``.
             - ``NFLAG = 1``: ``Case1.X`` is a trial conductor current (A).
-            Calls ``TCDR_vs_TIME()`` and stores in ``Case1.TEMP`` the
+            Calls ``_TCDR_vs_TIME()`` and stores in ``Case1.TEMP`` the
             difference between the maximum allowable temperature ``TCDRMAX``
             and the computed conductor temperature ``TCDR`` at time ``TT``.
 
@@ -821,12 +821,12 @@ class IEEE738():
         """
         if self.Case1.NFLAG == 0:
             self.Case1.TCDR = self.Case1.X
-            self.thermal_rating()
+            self._thermal_rating()
             self.Case1.TEMP = self.Case1.XIDUMMY - self.Case1.TR
             return 
         elif self.Case1.NFLAG == 1:
             self.Case1.XISTEP = self.Case1.X
-            self.TCDR_vs_TIME()
+            self._TCDR_vs_TIME()
     
         if self.Case1.TCDRPRELOAD <= self.Cable1.TCDRMAX: 
             self.Case1.TEMP = self.Cable1.TCDRMAX - self.Case1.TCDR
@@ -840,7 +840,7 @@ class IEEE738():
     #15020 REM / AND CONDUCTOR PARAMETERS AND WEATHER CONDITIONS
     #15030 REM /////////////////////////////////////////////////////////////////
     #15040 REM PRINT USING "TRYING A TCDR OF ####.### DEG C"; TCDR
-    def thermal_rating( self):
+    def _thermal_rating( self):
         """Compute the steady-state ampacity of the conductor at a given temperature.
 
         Calculates the maximum allowable current (ampacity) ``TR`` that produces
@@ -904,11 +904,11 @@ class IEEE738():
         #self.Case1.QC = 0.0205*(self.Case1.P1**0.5)*(self.Cable1.D**0.75)*( self.Case1.TCDR - self.Case1.TAMB)**1.25
         self.Case1.QC = 0.0205*(self.Case1.P1**0.5)*(self.Cable1.D**0.75)*( self.Case1.TCDR - self.Case1.TAMB)**1.25
         if self.Debug == 1:
-            print(f"rho: {self.str_round(self.Case1.P1)} kg/m3")
-            print(f"D: {self.str_round(self.Cable1.D)} m")
-            print(f"TCDR: {self.str_round(self.Case1.TCDR)} DEG C")
-            print(f"TAMB: {self.str_round(self.Case1.TAMB)} DEG C")
-            print(f"Natural convection QC: {self.str_round(self.Case1.QC)} W/m")    
+            print(f"rho: {self._str_round(self.Case1.P1)} kg/m3")
+            print(f"D: {self._str_round(self.Cable1.D)} m")
+            print(f"TCDR: {self._str_round(self.Case1.TCDR)} DEG C")
+            print(f"TAMB: {self._str_round(self.Case1.TAMB)} DEG C")
+            print(f"Natural convection QC: {self._str_round(self.Case1.QC)} W/m")    
     
     
     
@@ -927,12 +927,12 @@ class IEEE738():
        
             self.Case1.QCF = self.Case1.QCF * self.Case1.YC
             if self.Debug == 1:
-                print(f"Forced convection QCF: {self.str_round(self.Case1.QCF)} W/m")
-                print(f"NRe: {self.str_round(self.Cable1.Z/1000)}")
-                print(f"Qc1: {self.str_round(self.Case1.Q1)} W/m")
-                print(f"Qc2: {self.str_round(self.Case1.Q2)} W/m")
-                print(f"wind angle: {self.str_round(self.Case1.WINDANG_DEG)} DEG ") 
-                print(f"Kangle: {self.str_round(self.Case1.YC)} ")
+                print(f"Forced convection QCF: {self._str_round(self.Case1.QCF)} W/m")
+                print(f"NRe: {self._str_round(self.Cable1.Z/1000)}")
+                print(f"Qc1: {self._str_round(self.Case1.Q1)} W/m")
+                print(f"Qc2: {self._str_round(self.Case1.Q2)} W/m")
+                print(f"wind angle: {self._str_round(self.Case1.WINDANG_DEG)} DEG ") 
+                print(f"Kangle: {self._str_round(self.Case1.YC)} ")
             
             
     
@@ -968,7 +968,7 @@ class IEEE738():
     #11000 REM ///////////////////////////////////////////////////////////
     #11010 REM / SUBROUTINE CALCS CDR TEMP VS TIME FOR STEP CHANGE CURRENT
     #11020 REM ///////////////////////////////////////////////////////////
-    def  TCDR_vs_TIME( self):
+    def  _TCDR_vs_TIME( self):
         """Simulate the transient evolution of conductor temperature over time.
 
         Computes the conductor temperature at each time step ``DELTIME`` following
@@ -1022,7 +1022,7 @@ class IEEE738():
             #print("bflag1")
             self.Case1.ATCDR[0] = self.Case1.TCDRPRELOAD
             self.Case1.TCDR = self.Case1.ATCDR[0]
-            self.thermal_rating()
+            self._thermal_rating()
                 
             self.Case1.K = 1
             salto = 0
@@ -1049,7 +1049,7 @@ class IEEE738():
                 #11140 REM ********************************************************************
                 #11150 REM *
                 #11160 REM ********************************************************************
-                self.thermal_rating()
+                self._thermal_rating()
                 self.Case1.K = self.Case1.K + 1
         
                 #11190 IF K = 3000 THEN PRINT "TIME INTERVAL TOO SMALL. ARRAY OUT OF
@@ -1094,7 +1094,7 @@ class IEEE738():
     #10020 REM / BY ASSUMING ADIABATIC HEATING DURING TIME TT
     #10030 REM ///////////////////////////////////////////////////////////////
     #10040 TCDR = (TCDRMAX + TAMB) / 2
-    def starting_ci( self):
+    def _starting_ci( self):
         """Compute the initial current estimate for the transient iteration.
 
         Estimates a starting value for the current ``AT`` by assuming adiabatic
@@ -1135,7 +1135,7 @@ class IEEE738():
             self.Cable1.HEATCAP = self.Cable1.HEATOUT + self.Cable1.HEATCORE
     
         #10060 GOSUB 15000
-        self.thermal_rating()
+        self._thermal_rating()
     
         #10070 AT = SQR(HEATCAP * (TCDRMAX - TAMB) / TT) / W4
         self.Case1.AT = np.sqrt( self.Cable1.HEATCAP * (self.Cable1.TCDRMAX - self.Case1.TAMB) / self.Case1.TT) / self.Case1.W4
@@ -1147,7 +1147,7 @@ class IEEE738():
         self.Case1.NFLAG = 1
     
         #10100 GOSUB 13000
-        self.mueller()
+        self._mueller()
     
         #10110 RETURN
         return
@@ -1390,7 +1390,7 @@ class IEEE738():
         return 
 
 
-    def str_round( self, valuex):
+    def _str_round( self, valuex):
         """Round a numeric value and return it as a string.
 
         Utility function used for printing debug information. The number of
@@ -1426,15 +1426,15 @@ class IEEE738():
     
         if self.Case1.NSELECT == 1:
             print("INPUT -> Steady-state current: ", self.Case1.XIPRELOAD, " A")
-            print("OUTPUT -> Steady-state temperature: ", self.str_round( self.Case1.TCDRPRELOAD), " ºC")    
+            print("OUTPUT -> Steady-state temperature: ", self._str_round( self.Case1.TCDRPRELOAD), " ºC")    
         
         elif self.Case1.NSELECT == 2:
             print("INPUT -> Steady-state temperature: ", self.Case1.TCDRPRELOAD, " ºC")
-            print("OUTPUT -> Steady-state current: ", self.str_round( self.Case1.TR), " A" )
+            print("OUTPUT -> Steady-state current: ", self._str_round( self.Case1.TR), " A" )
 
-        print("Solar heating:  ", self.str_round( self.Case1.QS), " W/m")
-        print("Radiation cooling: ", self.str_round( self.Case1.QR), " W/m")
-        print("Convection cooling: ", self.str_round( self.Case1.QC), " W/m")
+        print("Solar heating:  ", self._str_round( self.Case1.QS), " W/m")
+        print("Radiation cooling: ", self._str_round( self.Case1.QR), " W/m")
+        print("Convection cooling: ", self._str_round( self.Case1.QC), " W/m")
 
 
 

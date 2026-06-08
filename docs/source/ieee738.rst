@@ -5,4 +5,4 @@ ieee738 module
    :members:
    :undoc-members:
    :show-inheritance:
-
+   :private-members:
