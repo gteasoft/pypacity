@@ -131,15 +131,15 @@ class IEEE738():
         according to ``Case1.NSELECT``:
 
             - ``NSELECT = 1``: steady-state conductor temperature for a given
-            current (``XIPRELOAD``). Result stored in ``Case1.TCDRPRELOAD``.
+                current (``XIPRELOAD``). Result stored in ``Case1.TCDRPRELOAD``.
             - ``NSELECT = 2``: steady-state ampacity for a given conductor
-            temperature (``TCDRPRELOAD``). Result stored in ``Case1.TR``.
+                temperature (``TCDRPRELOAD``). Result stored in ``Case1.TR``.
             - ``NSELECT = 3``: transient conductor temperature following a step
-            change in current from ``XIPRELOAD`` to ``XISTEP``. Results
-            stored in ``Case1.ATCDR`` and ``Case1.TIME``.
+                change in current from ``XIPRELOAD`` to ``XISTEP``. Results
+                stored in ``Case1.ATCDR`` and ``Case1.TIME``.
             - ``NSELECT = 4``: transient thermal rating — the current ``XISTEP``
-            that raises the conductor to ``TCDRMAX`` in time ``TT``. Result
-            stored in ``Case1.XISTEP``.
+                that raises the conductor to ``TCDRMAX`` in time ``TT``. Result
+                stored in ``Case1.XISTEP``.
 
         :param out: If ``True``, prints a short summary of results by calling
             ``output()`` at the end of the calculation. Defaults to ``False``.
@@ -730,9 +730,9 @@ class IEEE738():
 
         The search domain depends on ``Case1.NFLAG``:
             - ``NFLAG = 0``: searches for conductor temperature in the range
-            [``TAMB``, 1000] °C.
+                [``TAMB``, 1000] °C.
             - ``NFLAG = 1``: searches for conductor current in the range
-            [0, 10 * ``AT``] A.
+                [0, 10 * ``AT``] A.
 
         If no sign change is found, the full domain ``[XLO, XHI]`` is used
         as the initial bracket.
@@ -797,13 +797,13 @@ class IEEE738():
 
         The behaviour depends on ``Case1.NFLAG``:
             - ``NFLAG = 0``: ``Case1.X`` is a trial conductor temperature (°C).
-            Calls ``thermal_rating()`` and stores in ``Case1.TEMP`` the
-            difference between the target current ``XIDUMMY`` and the
-            computed steady-state current ``TR``.
+                Calls ``thermal_rating()`` and stores in ``Case1.TEMP`` the
+                difference between the target current ``XIDUMMY`` and the
+                computed steady-state current ``TR``.
             - ``NFLAG = 1``: ``Case1.X`` is a trial conductor current (A).
-            Calls ``_TCDR_vs_TIME()`` and stores in ``Case1.TEMP`` the
-            difference between the maximum allowable temperature ``TCDRMAX``
-            and the computed conductor temperature ``TCDR`` at time ``TT``.
+                Calls ``_TCDR_vs_TIME()`` and stores in ``Case1.TEMP`` the
+                difference between the maximum allowable temperature ``TCDRMAX``
+                and the computed conductor temperature ``TCDR`` at time ``TT``.
 
         .. note::
             The result is stored in ``Case1.TEMP`` rather than returned.
@@ -1161,9 +1161,9 @@ class IEEE738():
         analysis mode (``Case1.NSELECT``):
 
             - ``NSELECT = 1``: prints the steady-state conductor temperature
-            for the given current.
+                for the given current.
             - ``NSELECT = 2``: prints the steady-state ampacity for the given
-            conductor temperature.
+                conductor temperature.
 
         .. note::
             This function only prints to the console. It does not return any
