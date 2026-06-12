@@ -8,7 +8,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>ieee738 module &mdash; pypacity 1.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
-      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="_static/css/sphinx_rtd_size.css?v=3b072d6b" />
       <link rel="stylesheet" type="text/css" href="_static/custom.css?v=77884f9e" />
       <link rel="stylesheet" type="text/css" href="_static/custom.css?v=77884f9e" />
@@ -17,12 +17,12 @@
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
       <script src="_static/documentation_options.js?v=f2a433a1"></script>
-      <script src="_static/doctools.js?v=9bcbadda"></script>
-      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="cigre207 module" href="cigre207.html" />
+    <link rel="next" title="ieee738 examples" href="ieee738_examples.html" />
     <link rel="prev" title="case module" href="case.html" /> 
 </head>
 
@@ -52,25 +52,30 @@
 <li class="toctree-l1"><a class="reference internal" href="cable.html">cable module</a></li>
 <li class="toctree-l1"><a class="reference internal" href="case.html">case module</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">ieee738 module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#description">Description</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#author">Author</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#copyright">Copyright</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#license">License</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#ieee738.ieee738.IEEE738"><code class="docutils literal notranslate"><span class="pre">IEEE738</span></code></a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#ieee738.ieee738.IEEE738.TCDR_vs_TIME"><code class="docutils literal notranslate"><span class="pre">IEEE738.TCDR_vs_TIME()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ieee738.ieee738.IEEE738._TCDR_vs_TIME"><code class="docutils literal notranslate"><span class="pre">IEEE738._TCDR_vs_TIME()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ieee738.ieee738.IEEE738._find_TCDR"><code class="docutils literal notranslate"><span class="pre">IEEE738._find_TCDR()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ieee738.ieee738.IEEE738._initial_bounds"><code class="docutils literal notranslate"><span class="pre">IEEE738._initial_bounds()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ieee738.ieee738.IEEE738._mueller"><code class="docutils literal notranslate"><span class="pre">IEEE738._mueller()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ieee738.ieee738.IEEE738._solar"><code class="docutils literal notranslate"><span class="pre">IEEE738._solar()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ieee738.ieee738.IEEE738._starting_ci"><code class="docutils literal notranslate"><span class="pre">IEEE738._starting_ci()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ieee738.ieee738.IEEE738._str_round"><code class="docutils literal notranslate"><span class="pre">IEEE738._str_round()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ieee738.ieee738.IEEE738._thermal"><code class="docutils literal notranslate"><span class="pre">IEEE738._thermal()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ieee738.ieee738.IEEE738._thermal_rating"><code class="docutils literal notranslate"><span class="pre">IEEE738._thermal_rating()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#ieee738.ieee738.IEEE738.ampacidad"><code class="docutils literal notranslate"><span class="pre">IEEE738.ampacidad()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#ieee738.ieee738.IEEE738.find_TCDR"><code class="docutils literal notranslate"><span class="pre">IEEE738.find_TCDR()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#ieee738.ieee738.IEEE738.ieee_738_2013"><code class="docutils literal notranslate"><span class="pre">IEEE738.ieee_738_2013()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#ieee738.ieee738.IEEE738.initial_bounds"><code class="docutils literal notranslate"><span class="pre">IEEE738.initial_bounds()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#ieee738.ieee738.IEEE738.mueller"><code class="docutils literal notranslate"><span class="pre">IEEE738.mueller()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#ieee738.ieee738.IEEE738.output"><code class="docutils literal notranslate"><span class="pre">IEEE738.output()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#ieee738.ieee738.IEEE738.outputs"><code class="docutils literal notranslate"><span class="pre">IEEE738.outputs()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#ieee738.ieee738.IEEE738.print_ver"><code class="docutils literal notranslate"><span class="pre">IEEE738.print_ver()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#ieee738.ieee738.IEEE738.set_cable"><code class="docutils literal notranslate"><span class="pre">IEEE738.set_cable()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#ieee738.ieee738.IEEE738.set_case"><code class="docutils literal notranslate"><span class="pre">IEEE738.set_case()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#ieee738.ieee738.IEEE738.solar"><code class="docutils literal notranslate"><span class="pre">IEEE738.solar()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#ieee738.ieee738.IEEE738.starting_ci"><code class="docutils literal notranslate"><span class="pre">IEEE738.starting_ci()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#ieee738.ieee738.IEEE738.str_round"><code class="docutils literal notranslate"><span class="pre">IEEE738.str_round()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#ieee738.ieee738.IEEE738.thermal"><code class="docutils literal notranslate"><span class="pre">IEEE738.thermal()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#ieee738.ieee738.IEEE738.thermal_rating"><code class="docutils literal notranslate"><span class="pre">IEEE738.thermal_rating()</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="ieee738_examples.html">ieee738 examples</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="cigre207.html">cigre207 module</a></li>
@@ -104,77 +109,527 @@
              
   <section id="module-ieee738.ieee738">
 <span id="ieee738-module"></span><h1>ieee738 module<a class="headerlink" href="#module-ieee738.ieee738" title="Link to this heading"></a></h1>
+<p>Module: ieee738.py</p>
+<section id="description">
+<h2>Description<a class="headerlink" href="#description" title="Link to this heading"></a></h2>
+<p>Thermal rating calculations for overhead transmission lines performed in accordance with the IEEE
+Standard for Calculating the Current-Temperature Relationship of Bare Overhead Conductors.</p>
+</section>
+<section id="author">
+<h2>Author<a class="headerlink" href="#author" title="Link to this heading"></a></h2>
+<p>Mario Mañana</p>
+</section>
+<section id="copyright">
+<h2>Copyright<a class="headerlink" href="#copyright" title="Link to this heading"></a></h2>
+<p>Copyright (c) 2026 Mario Mañana</p>
+</section>
+<section id="license">
+<h2>License<a class="headerlink" href="#license" title="Link to this heading"></a></h2>
+<p>GPL-3.0 License</p>
+<p class="rubric">Notes</p>
+<p>This module is part of the PyPacity project.</p>
+<p class="rubric">References</p>
+<ul class="simple">
+<li><p>IEEE Std 738-2012, IEEE Standard for Calculating the Current-Temperature Relationship of Bare Overhead Conductors</p></li>
+</ul>
+</section>
 <dl class="py class">
 <dt class="sig sig-object py" id="ieee738.ieee738.IEEE738">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ieee738.ieee738.</span></span><span class="sig-name descname"><span class="pre">IEEE738</span></span><a class="headerlink" href="#ieee738.ieee738.IEEE738" title="Link to this definition"></a></dt>
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">ieee738.ieee738.</span></span><span class="sig-name descname"><span class="pre">IEEE738</span></span><a class="headerlink" href="#ieee738.ieee738.IEEE738" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p>Implementation of the IEEE 738:2012.</p>
+<p>Implementation of the IEEE 738:2012 standard.</p>
+<p>Implements the thermal rating calculations for bare overhead conductors
+as defined in the IEEE Standard for Calculating the Current-Temperature
+Relationship of Bare Overhead Conductors.</p>
+<dl class="simple">
+<dt>Attributes:</dt><dd><dl class="field-list simple">
+<dt class="field-odd">Cable1 (Cable)<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Object of class Cable with the conductor parameters.</p>
+</dd>
+<dt class="field-even">Case1 (Case)<span class="colon">:</span></dt>
+<dd class="field-even"><p>Object of class Case with the environmental and physical conditions.</p>
+</dd>
+<dt class="field-odd">Debug (int)<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Debug mode flag. Set to 1 to print intermediate calculation values.</p>
+</dd>
+<dt class="field-even">Debug_Dec (int)<span class="colon">:</span></dt>
+<dd class="field-even"><p>Number of decimal places used when printing debug information.</p>
+</dd>
+</dl>
+</dd>
+</dl>
 <dl class="py method">
-<dt class="sig sig-object py" id="ieee738.ieee738.IEEE738.TCDR_vs_TIME">
-<span class="sig-name descname"><span class="pre">TCDR_vs_TIME</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#ieee738.ieee738.IEEE738.TCDR_vs_TIME" title="Link to this definition"></a></dt>
-<dd><p>Computes the transient evolution of conductor temperature.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="ieee738.ieee738.IEEE738.ampacidad">
-<span class="sig-name descname"><span class="pre">ampacidad</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#ieee738.ieee738.IEEE738.ampacidad" title="Link to this definition"></a></dt>
-<dd><p>Not yet implemented.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="ieee738.ieee738.IEEE738.find_TCDR">
-<span class="sig-name descname"><span class="pre">find_TCDR</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#ieee738.ieee738.IEEE738.find_TCDR" title="Link to this definition"></a></dt>
-<dd><p>Obtain conductor temperature given the conductor current.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>The computed value is returned in
-self.Case1.TEMP (float): Conductor temperature in [DEG C].</p>
+<dt class="sig sig-object py" id="ieee738.ieee738.IEEE738._TCDR_vs_TIME">
+<span class="sig-name descname"><span class="pre">_TCDR_vs_TIME</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#ieee738.ieee738.IEEE738._TCDR_vs_TIME" title="Link to this definition"></a></dt>
+<dd><p>Simulate the transient evolution of conductor temperature over time.</p>
+<p>Computes the conductor temperature at each time step <code class="docutils literal notranslate"><span class="pre">DELTIME</span></code> following
+a step change in current from <code class="docutils literal notranslate"><span class="pre">XIPRELOAD</span></code> to <code class="docutils literal notranslate"><span class="pre">XISTEP</span></code>, using the
+transient heat balance equation of IEEE 738-2012 (Section 4.5):</p>
+<blockquote>
+<div><p>Tc(t + Δt) = Tc(t) + (I² · R(Tc) + QS - QR - QC) · Δt / mCp</p>
+</div></blockquote>
+<p>where <code class="docutils literal notranslate"><span class="pre">mCp</span></code> (<code class="docutils literal notranslate"><span class="pre">HEATCAP</span></code>) is the total heat capacity of the conductor
+per unit length. <code class="docutils literal notranslate"><span class="pre">thermal_rating()</span></code> is called at each step to update
+the heat loss terms.</p>
+<p>For short-duration fault currents (<code class="docutils literal notranslate"><span class="pre">TT</span> <span class="pre">&lt;</span> <span class="pre">60</span></code> s), only the heat capacity
+of the outer aluminium layer (<code class="docutils literal notranslate"><span class="pre">HEATOUT</span></code>) is used.</p>
+<p>The simulation stops when the elapsed time reaches <code class="docutils literal notranslate"><span class="pre">TT</span></code> or, in
+mode <code class="docutils literal notranslate"><span class="pre">NSELECT</span> <span class="pre">=</span> <span class="pre">3</span></code>, when <code class="docutils literal notranslate"><span class="pre">TCDR</span></code> exceeds <code class="docutils literal notranslate"><span class="pre">TCDRMAX</span></code>. The maximum
+number of time steps is 3000; the program halts with an error if exceeded.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Results are stored in <code class="docutils literal notranslate"><span class="pre">Case1</span></code> attributes rather than returned.</p>
+</div>
+<dl class="simple">
+<dt>Uses the following attributes from <code class="docutils literal notranslate"><span class="pre">Case1</span></code>:</dt><dd><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">TCDRPRELOAD</span></code>: initial conductor temperature (°C).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">XISTEP</span></code>: step current after the transient (A).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">DELTIME</span></code>: simulation time step (s).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">TT</span></code>: total simulation time (s).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">NSELECT</span></code>: analysis mode (3 = transient temperature, 4 = transient rating).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">QS</span></code>, <code class="docutils literal notranslate"><span class="pre">QR</span></code>, <code class="docutils literal notranslate"><span class="pre">QC</span></code>: heat gain and loss terms (W/m), updated each step.</p></li>
+</ul>
+</dd>
+<dt>Uses the following attributes from <code class="docutils literal notranslate"><span class="pre">Cable1</span></code>:</dt><dd><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">TCDRMAX</span></code>: maximum allowable conductor temperature (°C).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">HEATCAP</span></code>: total heat capacity per unit length (W·s/m·°C).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">HEATOUT</span></code>: heat capacity of the aluminium layer only (W·s/m·°C).</p></li>
+</ul>
+</dd>
+<dt>Sets:</dt><dd><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">Case1.ATCDR</span></code> (list): conductor temperature at each time step (°C).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Case1.TIME</span></code> (list): elapsed time at each time step (s).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Case1.KTIMEMAX</span></code> (int): total number of time steps computed.</p></li>
+</ul>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="ieee738.ieee738.IEEE738._find_TCDR">
+<span class="sig-name descname"><span class="pre">_find_TCDR</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#ieee738.ieee738.IEEE738._find_TCDR" title="Link to this definition"></a></dt>
+<dd><p>Evaluate the residual function for the current iteration step.</p>
+<p>Computes the difference between the target value and the value obtained
+for a trial input <code class="docutils literal notranslate"><span class="pre">Case1.X</span></code>. The result is stored in <code class="docutils literal notranslate"><span class="pre">Case1.TEMP</span></code>
+and used by <code class="docutils literal notranslate"><span class="pre">mueller()</span></code> and <code class="docutils literal notranslate"><span class="pre">initial_bounds()</span></code> to detect sign
+changes and drive the iteration toward convergence.</p>
+<dl class="simple">
+<dt>The behaviour depends on <code class="docutils literal notranslate"><span class="pre">Case1.NFLAG</span></code>:</dt><dd><ul class="simple">
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">NFLAG</span> <span class="pre">=</span> <span class="pre">0</span></code>: <code class="docutils literal notranslate"><span class="pre">Case1.X</span></code> is a trial conductor temperature (°C).</dt><dd><p>Calls <code class="docutils literal notranslate"><span class="pre">thermal_rating()</span></code> and stores in <code class="docutils literal notranslate"><span class="pre">Case1.TEMP</span></code> the
+difference between the target current <code class="docutils literal notranslate"><span class="pre">XIDUMMY</span></code> and the
+computed steady-state current <code class="docutils literal notranslate"><span class="pre">TR</span></code>.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">NFLAG</span> <span class="pre">=</span> <span class="pre">1</span></code>: <code class="docutils literal notranslate"><span class="pre">Case1.X</span></code> is a trial conductor current (A).</dt><dd><p>Calls <code class="docutils literal notranslate"><span class="pre">_TCDR_vs_TIME()</span></code> and stores in <code class="docutils literal notranslate"><span class="pre">Case1.TEMP</span></code> the
+difference between the maximum allowable temperature <code class="docutils literal notranslate"><span class="pre">TCDRMAX</span></code>
+and the computed conductor temperature <code class="docutils literal notranslate"><span class="pre">TCDR</span></code> at time <code class="docutils literal notranslate"><span class="pre">TT</span></code>.</p>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The result is stored in <code class="docutils literal notranslate"><span class="pre">Case1.TEMP</span></code> rather than returned.</p>
+</div>
+<dl class="simple">
+<dt>Uses the following attributes from <code class="docutils literal notranslate"><span class="pre">Case1</span></code>:</dt><dd><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">NFLAG</span></code>: operation mode flag.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">X</span></code>: trial value (temperature in °C or current in A).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">XIDUMMY</span></code>: target current (A), used when <code class="docutils literal notranslate"><span class="pre">NFLAG</span> <span class="pre">=</span> <span class="pre">0</span></code>.</p></li>
+</ul>
+</dd>
+<dt>Uses the following attribute from <code class="docutils literal notranslate"><span class="pre">Cable1</span></code>:</dt><dd><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">TCDRMAX</span></code>: maximum allowable conductor temperature (°C), used when <code class="docutils literal notranslate"><span class="pre">NFLAG</span> <span class="pre">=</span> <span class="pre">1</span></code>.</p></li>
+</ul>
+</dd>
+<dt>Sets:</dt><dd><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">Case1.TEMP</span></code> (float): residual value for the current iteration step.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ieee738.ieee738.IEEE738._initial_bounds">
+<span class="sig-name descname"><span class="pre">_initial_bounds</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#ieee738.ieee738.IEEE738._initial_bounds" title="Link to this definition"></a></dt>
+<dd><p>Determine the initial search interval for Mueller’s iteration.</p>
+<p>Scans the search domain by dividing it into <code class="docutils literal notranslate"><span class="pre">Case1.DIV</span></code> equal
+subintervals and evaluating <code class="docutils literal notranslate"><span class="pre">find_TCDR()</span></code> at each point until a
+sign change is detected. The subinterval containing the sign change
+becomes the initial bracket <code class="docutils literal notranslate"><span class="pre">[XLI,</span> <span class="pre">XRI]</span></code> passed to <code class="docutils literal notranslate"><span class="pre">mueller()</span></code>.</p>
+<dl class="simple">
+<dt>The search domain depends on <code class="docutils literal notranslate"><span class="pre">Case1.NFLAG</span></code>:</dt><dd><ul class="simple">
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">NFLAG</span> <span class="pre">=</span> <span class="pre">0</span></code>: searches for conductor temperature in the range</dt><dd><p>[<code class="docutils literal notranslate"><span class="pre">TAMB</span></code>, 1000] °C.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">NFLAG</span> <span class="pre">=</span> <span class="pre">1</span></code>: searches for conductor current in the range</dt><dd><p>[0, 10 * <code class="docutils literal notranslate"><span class="pre">AT</span></code>] A.</p>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+<p>If no sign change is found, the full domain <code class="docutils literal notranslate"><span class="pre">[XLO,</span> <span class="pre">XHI]</span></code> is used
+as the initial bracket.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Results are stored in <code class="docutils literal notranslate"><span class="pre">Case1</span></code> attributes rather than returned.</p>
+</div>
+<dl class="simple">
+<dt>Sets the following attributes in <code class="docutils literal notranslate"><span class="pre">Case1</span></code>:</dt><dd><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">XLI</span></code> (float): lower bound of the initial search interval.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">XRI</span></code> (float): upper bound of the initial search interval.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ieee738.ieee738.IEEE738._mueller">
+<span class="sig-name descname"><span class="pre">_mueller</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#ieee738.ieee738.IEEE738._mueller" title="Link to this definition"></a></dt>
+<dd><p>Find the conductor current using Mueller’s iterative method.</p>
+<p>Implements Mueller’s root-finding algorithm (a combination of bisection
+and inverse parabolic interpolation) to determine the current <code class="docutils literal notranslate"><span class="pre">XISTEP</span></code>
+that raises the conductor temperature to its maximum allowable value
+<code class="docutils literal notranslate"><span class="pre">TCDRMAX</span></code> in the simulation time <code class="docutils literal notranslate"><span class="pre">TT</span></code>.</p>
+<p>The algorithm iterates by calling <code class="docutils literal notranslate"><span class="pre">find_TCDR()</span></code> repeatedly, comparing
+the resulting conductor temperature against <code class="docutils literal notranslate"><span class="pre">TCDRMAX</span></code>, and narrowing
+the current search interval until convergence. The maximum number of
+iterations is controlled by <code class="docutils literal notranslate"><span class="pre">Case1.IEND</span></code> (default: 20). If no
+convergence is reached, the program halts with an error message.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Results are stored in <code class="docutils literal notranslate"><span class="pre">Case1</span></code> attributes rather than returned.
+The program will call <code class="docutils literal notranslate"><span class="pre">sys.exit()</span></code> if the solution does not
+converge or if the temperature is out of range (<code class="docutils literal notranslate"><span class="pre">IER</span> <span class="pre">=</span> <span class="pre">1</span></code> or
+<code class="docutils literal notranslate"><span class="pre">IER</span> <span class="pre">=</span> <span class="pre">2</span></code>).</p>
+</div>
+<dl class="simple">
+<dt>Uses the following attributes from <code class="docutils literal notranslate"><span class="pre">Case1</span></code>:</dt><dd><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">XLO</span></code>, <code class="docutils literal notranslate"><span class="pre">XHI</span></code>: initial lower and upper current bounds (A).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">TT</span></code>: simulation time (s).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">EPS</span></code>: convergence tolerance (default: 0.049).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">IEND</span></code>: maximum number of iterations (default: 20).</p></li>
+</ul>
+</dd>
+<dt>Uses the following attributes from <code class="docutils literal notranslate"><span class="pre">Cable1</span></code>:</dt><dd><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">TCDRMAX</span></code>: maximum allowable conductor temperature (°C).</p></li>
+</ul>
+</dd>
+<dt>Sets the following attributes in <code class="docutils literal notranslate"><span class="pre">Case1</span></code>:</dt><dd><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">X</span></code> (float): converged current value (A).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">IER</span></code> (int): convergence status code. 0 for success; 1 for no convergence; 2 for temperature out of range.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ieee738.ieee738.IEEE738._solar">
+<span class="sig-name descname"><span class="pre">_solar</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#ieee738.ieee738.IEEE738._solar" title="Link to this definition"></a></dt>
+<dd><p>Compute the solar heat gain rate of the conductor (QS).</p>
+<p>Calculates the solar heat input per unit length of conductor based on
+geographic location, time of day, day of the year, and atmospheric
+conditions, following Section 4.4 of IEEE 738-2012.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The result is stored in <code class="docutils literal notranslate"><span class="pre">Case1.QS</span></code> (float, W/m) rather than
+returned directly.</p>
+</div>
+<dl class="simple">
+<dt>Uses the following attributes from <code class="docutils literal notranslate"><span class="pre">Cable1</span></code>:</dt><dd><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">ABSORP</span></code>: solar absorptivity coefficient.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">D</span></code>: outside diameter of the conductor (mm).</p></li>
+</ul>
+</dd>
+<dt>Uses the following attributes from <code class="docutils literal notranslate"><span class="pre">Case1</span></code>:</dt><dd><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">CDR_LAT_DEG</span></code>: conductor latitude (degrees).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">NDAY</span></code>: day of the year [1, 365].</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">SUN_TIME</span></code>: solar hour angle (e.g. 14 = 2 PM; 99 = no sun).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">CDR_ELEV</span></code>: conductor elevation above sea level (m).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Z1_DEG</span></code>: conductor direction clockwise relative to north (degrees).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">A3</span></code>: atmospheric clarity. 0 for clear air; 1 for industrial atmosphere.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">SolarRadiation</span></code>: measured solar radiation (W/m²), used when <code class="docutils literal notranslate"><span class="pre">SUN_TIME</span> <span class="pre">&gt;=</span> <span class="pre">24</span></code> or <code class="docutils literal notranslate"><span class="pre">SUN_TIME</span> <span class="pre">==</span> <span class="pre">99</span></code>.</p></li>
+</ul>
+</dd>
+<dt>Sets:</dt><dd><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">Case1.QS</span></code> (float): solar heat gain rate per unit length (W/m).</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ieee738.ieee738.IEEE738._starting_ci">
+<span class="sig-name descname"><span class="pre">_starting_ci</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#ieee738.ieee738.IEEE738._starting_ci" title="Link to this definition"></a></dt>
+<dd><p>Compute the initial current estimate for the transient iteration.</p>
+<p>Estimates a starting value for the current <code class="docutils literal notranslate"><span class="pre">AT</span></code> by assuming adiabatic
+heating of the conductor during the simulation time <code class="docutils literal notranslate"><span class="pre">TT</span></code>. This estimate
+is used by <code class="docutils literal notranslate"><span class="pre">initial_bounds()</span></code> to define the search interval in
+transient thermal rating calculations (<code class="docutils literal notranslate"><span class="pre">NSELECT</span> <span class="pre">=</span> <span class="pre">4</span></code>).</p>
+<p>For short-duration events (<code class="docutils literal notranslate"><span class="pre">TT</span> <span class="pre">&lt;</span> <span class="pre">60</span></code> s), only the heat capacity of the
+aluminium layer is used. Otherwise, the combined heat capacity of the
+aluminium and steel core is used.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Results are stored in <code class="docutils literal notranslate"><span class="pre">Case1</span></code> and <code class="docutils literal notranslate"><span class="pre">Cable1</span></code> attributes rather
+than returned.</p>
+</div>
+<dl class="simple">
+<dt>Uses the following attributes from <code class="docutils literal notranslate"><span class="pre">Case1</span></code>:</dt><dd><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">TAMB</span></code>: ambient temperature (°C).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">TT</span></code>: simulation time (s).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">TCDRPRELOAD</span></code>: initial conductor temperature (°C).</p></li>
+</ul>
+</dd>
+<dt>Uses the following attributes from <code class="docutils literal notranslate"><span class="pre">Cable1</span></code>:</dt><dd><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">TCDRMAX</span></code>: maximum allowable conductor temperature (°C).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">HEATOUT</span></code>: heat capacity of the aluminium layer (W·s/m·°C).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">HEATCORE</span></code>: heat capacity of the steel core (W·s/m·°C).</p></li>
+</ul>
+</dd>
+<dt>Sets:</dt><dd><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">Cable1.HEATCAP</span></code> (float): total heat capacity per unit length used in the simulation (W·s/m·°C).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Case1.AT</span></code> (float): adiabatic current estimate as starting point for iteration (A).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Case1.NFLAG</span></code> (int): set to 1 to indicate transient current iteration mode.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ieee738.ieee738.IEEE738._str_round">
+<span class="sig-name descname"><span class="pre">_str_round</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">valuex</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ieee738.ieee738.IEEE738._str_round" title="Link to this definition"></a></dt>
+<dd><p>Round a numeric value and return it as a string.</p>
+<p>Utility function used for printing debug information. The number of
+decimal places is controlled by <code class="docutils literal notranslate"><span class="pre">Debug_Dec</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>valuex</strong> (<em>float</em>) – Value to be rounded.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Rounded value converted to string.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ieee738.ieee738.IEEE738._thermal">
+<span class="sig-name descname"><span class="pre">_thermal</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#ieee738.ieee738.IEEE738._thermal" title="Link to this definition"></a></dt>
+<dd><p>Compute the thermal resistance coefficient, heat capacity, and wind correction factor.</p>
+<p>Calculates the linear resistance equation coefficients of the conductor as a
+function of temperature, the effective wind angle relative to the conductor
+axis, and the wind correction factor (YC) for non-perpendicular wind,
+following Section 4.6 of IEEE 738-2012.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>All results are stored directly in <code class="docutils literal notranslate"><span class="pre">Cable1</span></code> and <code class="docutils literal notranslate"><span class="pre">Case1</span></code> attributes
+rather than returned.</p>
+</div>
+<dl class="simple">
+<dt>Sets the following attributes in <code class="docutils literal notranslate"><span class="pre">Cable1</span></code>:</dt><dd><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">B</span></code> (float): Slope of the linear resistance equation (Ohm/m·°C).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">B1</span></code> (float): Intercept of the linear resistance equation (Ohm/m).</p></li>
+</ul>
+</dd>
+<dt>Sets the following attributes in <code class="docutils literal notranslate"><span class="pre">Case1</span></code>:</dt><dd><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">WINDANG_DEG</span></code> (float): Effective angle between wind direction and conductor axis (degrees).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">WINDANG_RAD</span></code> (float): Effective angle between wind direction and conductor axis (radians).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">YC</span></code> (float): Wind correction factor for non-perpendicular wind.</p></li>
+</ul>
+</dd>
+<dt>Uses the following attributes from <code class="docutils literal notranslate"><span class="pre">Cable1</span></code>:</dt><dd><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">RLO</span></code>, <code class="docutils literal notranslate"><span class="pre">RHI</span></code>: conductor resistance at minimum and maximum temperature (Ohm/m).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">TLO</span></code>, <code class="docutils literal notranslate"><span class="pre">THI</span></code>: minimum and maximum temperature for resistance computation (°C).</p></li>
+</ul>
+</dd>
+<dt>Uses the following attributes from <code class="docutils literal notranslate"><span class="pre">Case1</span></code>:</dt><dd><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">DWIND_DEG</span></code>: wind direction (degrees).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Z1_DEG</span></code>: conductor direction clockwise relative to north (degrees).</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ieee738.ieee738.IEEE738._thermal_rating">
+<span class="sig-name descname"><span class="pre">_thermal_rating</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#ieee738.ieee738.IEEE738._thermal_rating" title="Link to this definition"></a></dt>
+<dd><p>Compute the steady-state ampacity of the conductor at a given temperature.</p>
+<p>Calculates the maximum allowable current (ampacity) <code class="docutils literal notranslate"><span class="pre">TR</span></code> that produces
+a steady-state conductor temperature equal to <code class="docutils literal notranslate"><span class="pre">Case1.TCDR</span></code>, based on
+the heat balance equation of IEEE 738-2012 (Section 4.3):</p>
+<blockquote>
+<div><p>I² · R(Tc) = QR + QC - QS</p>
+</div></blockquote>
+<p>where <code class="docutils literal notranslate"><span class="pre">QR</span></code> is the radiated heat loss, <code class="docutils literal notranslate"><span class="pre">QC</span></code> is the convective heat loss
+(natural or forced, whichever is greater), and <code class="docutils literal notranslate"><span class="pre">QS</span></code> is the solar heat gain
+computed by <code class="docutils literal notranslate"><span class="pre">solar()</span></code>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The result is stored in <code class="docutils literal notranslate"><span class="pre">Case1.TR</span></code> rather than returned.
+If the heat balance is negative or zero (<code class="docutils literal notranslate"><span class="pre">R5</span> <span class="pre">&lt;=</span> <span class="pre">0</span></code>), <code class="docutils literal notranslate"><span class="pre">TR</span></code> is set
+to 0 and the function returns immediately.</p>
+</div>
+<dl class="simple">
+<dt>Uses the following attributes from <code class="docutils literal notranslate"><span class="pre">Case1</span></code>:</dt><dd><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">TCDR</span></code>: conductor temperature (°C).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">TAMB</span></code>: ambient temperature (°C).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">VWIND</span></code>: wind speed (m/s).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">CDR_ELEV</span></code>: conductor elevation above sea level (m).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">QS</span></code>: solar heat gain rate (W/m), set by <code class="docutils literal notranslate"><span class="pre">solar()</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">YC</span></code>: wind correction factor, set by <code class="docutils literal notranslate"><span class="pre">thermal()</span></code>.</p></li>
+</ul>
+</dd>
+<dt>Uses the following attributes from <code class="docutils literal notranslate"><span class="pre">Cable1</span></code>:</dt><dd><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">EMISS</span></code>: emissivity coefficient.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">D</span></code>: outside diameter of conductor (mm).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">B</span></code>, <code class="docutils literal notranslate"><span class="pre">B1</span></code>: linear resistance coefficients (Ohm/m·°C, Ohm/m), set by <code class="docutils literal notranslate"><span class="pre">thermal()</span></code>.</p></li>
+</ul>
+</dd>
+<dt>Sets:</dt><dd><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">Case1.TR</span></code> (float): steady-state ampacity (A).</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ieee738.ieee738.IEEE738.ampacidad">
+<span class="sig-name descname"><span class="pre">ampacidad</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#ieee738.ieee738.IEEE738.ampacidad" title="Link to this definition"></a></dt>
+<dd><p>Compute the ampacity of the conductor.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Not yet implemented.</p>
+</div>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="ieee738.ieee738.IEEE738.ieee_738_2013">
 <span class="sig-name descname"><span class="pre">ieee_738_2013</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">out</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ieee738.ieee738.IEEE738.ieee_738_2013" title="Link to this definition"></a></dt>
-<dd><p>Implementation of IEEE 738:2013.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="ieee738.ieee738.IEEE738.initial_bounds">
-<span class="sig-name descname"><span class="pre">initial_bounds</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#ieee738.ieee738.IEEE738.initial_bounds" title="Link to this definition"></a></dt>
-<dd><p>Computes initial bounds for iteration.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="ieee738.ieee738.IEEE738.mueller">
-<span class="sig-name descname"><span class="pre">mueller</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#ieee738.ieee738.IEEE738.mueller" title="Link to this definition"></a></dt>
-<dd><p>Function that implements an iteration method that selects a current which just raises self.Case1.TCDR to its maximum value in the time TT.</p>
+<dd><p>Execute the IEEE 738-2013 thermal rating calculation.</p>
+<p>Main entry point of the module. Computes the solar heat gain and the
+thermal resistance coefficients, then performs the selected analysis
+according to <code class="docutils literal notranslate"><span class="pre">Case1.NSELECT</span></code>:</p>
+<blockquote>
+<div><ul class="simple">
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">NSELECT</span> <span class="pre">=</span> <span class="pre">1</span></code>: steady-state conductor temperature for a given</dt><dd><p>current (<code class="docutils literal notranslate"><span class="pre">XIPRELOAD</span></code>). Result stored in <code class="docutils literal notranslate"><span class="pre">Case1.TCDRPRELOAD</span></code>.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">NSELECT</span> <span class="pre">=</span> <span class="pre">2</span></code>: steady-state ampacity for a given conductor</dt><dd><p>temperature (<code class="docutils literal notranslate"><span class="pre">TCDRPRELOAD</span></code>). Result stored in <code class="docutils literal notranslate"><span class="pre">Case1.TR</span></code>.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">NSELECT</span> <span class="pre">=</span> <span class="pre">3</span></code>: transient conductor temperature following a step</dt><dd><p>change in current from <code class="docutils literal notranslate"><span class="pre">XIPRELOAD</span></code> to <code class="docutils literal notranslate"><span class="pre">XISTEP</span></code>. Results
+stored in <code class="docutils literal notranslate"><span class="pre">Case1.ATCDR</span></code> and <code class="docutils literal notranslate"><span class="pre">Case1.TIME</span></code>.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">NSELECT</span> <span class="pre">=</span> <span class="pre">4</span></code>: transient thermal rating — the current <code class="docutils literal notranslate"><span class="pre">XISTEP</span></code></dt><dd><p>that raises the conductor to <code class="docutils literal notranslate"><span class="pre">TCDRMAX</span></code> in time <code class="docutils literal notranslate"><span class="pre">TT</span></code>. Result
+stored in <code class="docutils literal notranslate"><span class="pre">Case1.XISTEP</span></code>.</p>
+</dd>
+</dl>
+</li>
+</ul>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>out</strong> (<em>bool</em>) – If <code class="docutils literal notranslate"><span class="pre">True</span></code>, prints a short summary of results by calling
+<code class="docutils literal notranslate"><span class="pre">output()</span></code> at the end of the calculation. Defaults to <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Results are stored in <code class="docutils literal notranslate"><span class="pre">Case1</span></code> attributes rather than returned.
+Requires <code class="docutils literal notranslate"><span class="pre">Cable1</span></code> and <code class="docutils literal notranslate"><span class="pre">Case1</span></code> to be set beforehand via
+<code class="docutils literal notranslate"><span class="pre">set_cable()</span></code> and <code class="docutils literal notranslate"><span class="pre">set_case()</span></code>.</p>
+</div>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ieee738.ieee738.IEEE738.output">
 <span class="sig-name descname"><span class="pre">output</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#ieee738.ieee738.IEEE738.output" title="Link to this definition"></a></dt>
-<dd><p>Print a summary of intermediate results.</p>
+<dd><p>Print a short summary of the main inputs, outputs, and heat balance terms.</p>
+<p>Prints to the console a compact summary including the wind angle,
+the main input/output pair depending on the analysis mode
+(<code class="docutils literal notranslate"><span class="pre">Case1.NSELECT</span></code>):</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">NSELECT</span> <span class="pre">=</span> <span class="pre">1</span></code>: input current (A) → output temperature (°C).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">NSELECT</span> <span class="pre">=</span> <span class="pre">2</span></code>: input temperature (°C) → output current (A).</p></li>
+</ul>
+</div></blockquote>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This function only prints to the console. It does not return any
+value and does not modify any attributes.</p>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="#ieee738.ieee738.IEEE738.outputs" title="ieee738.ieee738.IEEE738.outputs"><code class="xref py py-meth docutils literal notranslate"><span class="pre">outputs()</span></code></a> for the full detailed report.</p>
+</div>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ieee738.ieee738.IEEE738.outputs">
 <span class="sig-name descname"><span class="pre">outputs</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#ieee738.ieee738.IEEE738.outputs" title="Link to this definition"></a></dt>
-<dd><p>Print detailed results.</p>
+<dd><p>Print a detailed report of the IEEE 738-2013 calculation results.</p>
+<p>Prints to the console a full summary including conductor and environmental
+parameters, heat balance terms, and the main result depending on the
+analysis mode (<code class="docutils literal notranslate"><span class="pre">Case1.NSELECT</span></code>):</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">NSELECT</span> <span class="pre">=</span> <span class="pre">1</span></code>: prints the steady-state conductor temperature
+for the given current.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">NSELECT</span> <span class="pre">=</span> <span class="pre">2</span></code>: prints the steady-state ampacity for the given
+conductor temperature.</p></li>
+</ul>
+</div></blockquote>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This function only prints to the console. It does not return any
+value and does not modify any attributes.</p>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="#ieee738.ieee738.IEEE738.output" title="ieee738.ieee738.IEEE738.output"><code class="xref py py-meth docutils literal notranslate"><span class="pre">output()</span></code></a> for a compact summary.</p>
+</div>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ieee738.ieee738.IEEE738.print_ver">
 <span class="sig-name descname"><span class="pre">print_ver</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#ieee738.ieee738.IEEE738.print_ver" title="Link to this definition"></a></dt>
-<dd><p>Print current version.</p>
+<dd><p>Print the current version of the IEEE738 module.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This function only prints to the console. It does not return any
+value and does not modify any attributes.</p>
+</div>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ieee738.ieee738.IEEE738.set_cable">
 <span class="sig-name descname"><span class="pre">set_cable</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">Cable</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ieee738.ieee738.IEEE738.set_cable" title="Link to this definition"></a></dt>
-<dd><p>Set the cable characteristics for a specific IEEE 738 analysis.</p>
-<dl class="simple">
-<dt>Args:</dt><dd><p>Cable (class Cable): Object of type Cable with information about the cable.</p>
+<dd><p>Set the conductor parameters for the IEEE 738 analysis.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>Cable</strong> (<a class="reference internal" href="cable.html#cable.cable.Cable" title="cable.cable.Cable"><em>Cable</em></a>) – Object of class Cable containing the conductor physical and
+electrical characteristics (diameter, resistance, emissivity, etc.).</p>
 </dd>
 </dl>
 </dd></dl>
@@ -182,63 +637,22 @@ self.Case1.TEMP (float): Conductor temperature in [DEG C].</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="ieee738.ieee738.IEEE738.set_case">
 <span class="sig-name descname"><span class="pre">set_case</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">Case</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ieee738.ieee738.IEEE738.set_case" title="Link to this definition"></a></dt>
-<dd><p>Set the case characteristics for a specific IEEE 738 analysis.</p>
-<dl class="simple">
-<dt>Args:</dt><dd><p>Case (class Case): Object of type Case with information about the environmental and other physical conditions to consider in the dynamic operation of the cable.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="ieee738.ieee738.IEEE738.solar">
-<span class="sig-name descname"><span class="pre">solar</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#ieee738.ieee738.IEEE738.solar" title="Link to this definition"></a></dt>
-<dd><p>Compute the conductor solar heat gain (QS).</p>
+<dd><p>Set the environmental and operational conditions for the IEEE 738 analysis.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Value of solar heat gain QS in W/m.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="ieee738.ieee738.IEEE738.starting_ci">
-<span class="sig-name descname"><span class="pre">starting_ci</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#ieee738.ieee738.IEEE738.starting_ci" title="Link to this definition"></a></dt>
-<dd><p>Compute the starting value for current iteration by assuming adiabatic heating during transient.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="ieee738.ieee738.IEEE738.str_round">
-<span class="sig-name descname"><span class="pre">str_round</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">valuex</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ieee738.ieee738.IEEE738.str_round" title="Link to this definition"></a></dt>
-<dd><p>Obtain the rounded value of &lt;valuex&gt; acording the variable &lt;self.Debug_Dec&gt;.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Args<span class="colon">:</span></dt>
-<dd class="field-odd"><p>valuex (float): value to be rounded according the number of decimal values defined by &lt;self.Debug_Dec&gt;.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="ieee738.ieee738.IEEE738.thermal">
-<span class="sig-name descname"><span class="pre">thermal</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#ieee738.ieee738.IEEE738.thermal" title="Link to this definition"></a></dt>
-<dd><p>Compute thermal Coefficient of RAC, HeatCap and Wind Correction.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="ieee738.ieee738.IEEE738.thermal_rating">
-<span class="sig-name descname"><span class="pre">thermal_rating</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#ieee738.ieee738.IEEE738.thermal_rating" title="Link to this definition"></a></dt>
-<dd><p>Computes the thermal rating of the cable given a conductor temperature.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Args<span class="colon">:</span></dt>
-<dd class="field-odd"><p>self.Case1.TCDR (float): conductor temperature [DEG C].</p>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>self.Case1.TR (float): ampacity [A]</p>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>Case</strong> (<a class="reference internal" href="case.html#case.case.Case" title="case.case.Case"><em>Case</em></a>) – Object of class Case containing the analysis mode, weather
+conditions, simulation parameters, and geographic data.</p>
 </dd>
 </dl>
 </dd></dl>
 
 </dd></dl>
 
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="ieee738_examples.html">ieee738 examples</a></li>
+</ul>
+</div>
 </section>
 
 
@@ -246,7 +660,7 @@ self.Case1.TEMP (float): Conductor temperature in [DEG C].</p>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="case.html" class="btn btn-neutral float-left" title="case module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="cigre207.html" class="btn btn-neutral float-right" title="cigre207 module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="ieee738_examples.html" class="btn btn-neutral float-right" title="ieee738 examples" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

@@ -8,7 +8,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>cable module &mdash; pypacity 1.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
-      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="_static/css/sphinx_rtd_size.css?v=3b072d6b" />
       <link rel="stylesheet" type="text/css" href="_static/custom.css?v=77884f9e" />
       <link rel="stylesheet" type="text/css" href="_static/custom.css?v=77884f9e" />
@@ -17,8 +17,8 @@
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
       <script src="_static/documentation_options.js?v=f2a433a1"></script>
-      <script src="_static/doctools.js?v=9bcbadda"></script>
-      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -50,11 +50,14 @@
 </ul>
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">cable module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#description">Description</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#author">Author</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#copyright">Copyright</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#license">License</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#cable.cable.Cable"><code class="docutils literal notranslate"><span class="pre">Cable</span></code></a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#cable.cable.Cable.load_cable_db"><code class="docutils literal notranslate"><span class="pre">Cable.load_cable_db()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#cable.cable.Cable.print_ver"><code class="docutils literal notranslate"><span class="pre">Cable.print_ver()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#cable.cable.Cable.set_cable"><code class="docutils literal notranslate"><span class="pre">Cable.set_cable()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#cable.cable.Cable.set_param"><code class="docutils literal notranslate"><span class="pre">Cable.set_param()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -92,72 +95,64 @@
              
   <section id="module-cable.cable">
 <span id="cable-module"></span><h1>cable module<a class="headerlink" href="#module-cable.cable" title="Link to this heading"></a></h1>
+<p>Module: cable.py</p>
+<section id="description">
+<h2>Description<a class="headerlink" href="#description" title="Link to this heading"></a></h2>
+<p>Cable data structures and cable database loading helpers for PyPacity
+ampacity studies.</p>
+</section>
+<section id="author">
+<h2>Author<a class="headerlink" href="#author" title="Link to this heading"></a></h2>
+<p>Mario Manana</p>
+</section>
+<section id="copyright">
+<h2>Copyright<a class="headerlink" href="#copyright" title="Link to this heading"></a></h2>
+<p>Copyright (c) 2026 Mario Manana</p>
+</section>
+<section id="license">
+<h2>License<a class="headerlink" href="#license" title="Link to this heading"></a></h2>
+<p>MIT License</p>
+<p class="rubric">Notes</p>
+<p>This module is part of the PyPacity project.</p>
+</section>
 <dl class="py class">
 <dt class="sig sig-object py" id="cable.cable.Cable">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cable.cable.</span></span><span class="sig-name descname"><span class="pre">Cable</span></span><a class="headerlink" href="#cable.cable.Cable" title="Link to this definition"></a></dt>
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">cable.cable.</span></span><span class="sig-name descname"><span class="pre">Cable</span></span><a class="headerlink" href="#cable.cable.Cable" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p>Definition of cable XX</p>
-<p>Defines an object of the class Cable() including basic information about the cable:</p>
+<p>Electrical and thermal data for an overhead conductor.</p>
 <dl class="simple">
-<dt>Attributes:</dt><dd><dl class="field-list simple">
-<dt class="field-odd">Cstring (str)<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Conductor description.</p>
-</dd>
-<dt class="field-even">D (float)<span class="colon">:</span></dt>
-<dd class="field-even"><p>Outside diameter of conductor (mm).</p>
-</dd>
-<dt class="field-odd">D1 (float)<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Diameter of a tubular conductor of the steel core (mm).</p>
-</dd>
-<dt class="field-even">d (float)<span class="colon">:</span></dt>
-<dd class="field-even"><p>Diameter of the wires in the outermost layer (mm).</p>
-</dd>
-<dt class="field-odd">TLO (float)<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Conductor minimum temperature for resistance computation (ºC).</p>
-</dd>
-<dt class="field-even">THI (float)<span class="colon">:</span></dt>
-<dd class="field-even"><p>Conductor maximum temperature for resistance computation (ºC).</p>
-</dd>
-<dt class="field-odd">TCDRMAX (float)<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Maximum conductor temperature (ºC).</p>
-</dd>
-<dt class="field-even">RLO (float)<span class="colon">:</span></dt>
-<dd class="field-even"><p>Conductor resistance at TLO (Ohms/m).</p>
-</dd>
-<dt class="field-odd">RHI (float)<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Conductor resistance at THI (Ohms/m).</p>
-</dd>
-<dt class="field-even">EMISS (float)<span class="colon">:</span></dt>
-<dd class="field-even"><p>Coefficient of emission.</p>
-</dd>
-<dt class="field-odd">ABSORP (float)<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Coefficient of solar absorption.</p>
-</dd>
-<dt class="field-even">HNH (int)<span class="colon">:</span></dt>
-<dd class="field-even"><p>Number of layers (aluminum)</p>
-</dd>
-<dt class="field-odd">HEATOUT (float)<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Aluminum layer (W.s/m.ºC)</p>
-</dd>
-<dt class="field-even">HEATCORE (float)<span class="colon">:</span></dt>
-<dd class="field-even"><p>Steel core (W.s/m.ºC)</p>
-</dd>
-</dl>
+<dt>Attributes:</dt><dd><p>ID (str): Conductor identifier.
+D (float): Outside conductor diameter in millimeters.
+D1 (float): Equivalent steel-core tube diameter in millimeters.
+d (float): Wire diameter in the outermost layer in millimeters.
+TLO (float): Low reference temperature for resistance in deg C.
+THI (float): High reference temperature for resistance in deg C.
+TCDRMAX (float): Maximum allowable conductor temperature in deg C.
+RLO (float): Conductor resistance at <code class="docutils literal notranslate"><span class="pre">TLO</span></code> in ohm/m.
+RHI (float): Conductor resistance at <code class="docutils literal notranslate"><span class="pre">THI</span></code> in ohm/m.
+EMISS (float): Surface emissivity coefficient.
+ABSORP (float): Solar absorptivity coefficient.
+HNH (int): Number of aluminum layers.
+HEATOUT (float): Aluminum heat capacity contribution in W.s/(m.deg C).
+HEATCORE (float): Steel-core heat capacity contribution in W.s/(m.deg C).
+Stranded (int): 1 for stranded conductors, 0 for smooth conductors.
+CSteel20 (float): Steel specific heat at 20 deg C in J/(kg.K).
+CAlum20 (float): Aluminum specific heat at 20 deg C in J/(kg.K).
+BetaSteel20 (float): Steel specific-heat temperature coefficient.
+BetaAlum20 (float): Aluminum specific-heat temperature coefficient.
+mSteel (float): Steel mass per unit length in kg/m.
+mAlum (float): Aluminum mass per unit length in kg/m.
+lambda_ertc (float): Effective radial thermal conductivity in W/(m.K).</p>
 </dd>
 </dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="cable.cable.Cable.load_cable_db">
 <span class="sig-name descname"><span class="pre">load_cable_db</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cable.cable.Cable.load_cable_db" title="Link to this definition"></a></dt>
-<dd><p>Load cable database</p>
-<blockquote>
-<div><p>The cable database is a file with name ‘cable_db.xlsx’ that is located in the same folder of cable module.</p>
-</div></blockquote>
-<dl class="field-list simple">
-<dt class="field-odd">Return cable_db, error<span class="colon">:</span></dt>
-<dd class="field-odd"><p>cable_db is a dataframe with the cable database. error is 1 if the database is empty. 0 is the load process is sucessful.</p>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>dataframe, int</p>
+<dd><p>Load the cable database distributed with this package.</p>
+<dl class="simple">
+<dt>Returns:</dt><dd><p>tuple: <code class="docutils literal notranslate"><span class="pre">(cable_db,</span> <span class="pre">error)</span></code> where <code class="docutils literal notranslate"><span class="pre">cable_db</span></code> is a pandas
+dataframe and <code class="docutils literal notranslate"><span class="pre">error</span></code> is 0 when data is loaded or 1 when the
+database is empty.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -165,53 +160,16 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="cable.cable.Cable.print_ver">
 <span class="sig-name descname"><span class="pre">print_ver</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cable.cable.Cable.print_ver" title="Link to this definition"></a></dt>
-<dd><p>Returns the current version of this module</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Current version of Cable module.</p>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>string</p>
-</dd>
-</dl>
+<dd><p>Print the current version of this module.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="cable.cable.Cable.set_cable">
-<span class="sig-name descname"><span class="pre">set_cable</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">NSELECT</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">conductor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Demo</span> <span class="pre">case'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cable.cable.Cable.set_cable" title="Link to this definition"></a></dt>
-<dd><p>Load a demo case.. Ejemplo para Alberto</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>NSELECT</strong> (<em>int</em>) – Type of computation</p></li>
-<li><p><strong>conductor</strong> (<em>string</em>) – Conductor ID. Type of conductor. By default the function defines a demo case that is based on 400 mm2 DRAKE 26/7 ACSR</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>None.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><ul class="simple">
-<li></li>
-</ul>
-</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="cable.cable.Cable.set_param">
-<span class="sig-name descname"><span class="pre">set_param</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">param</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cable.cable.Cable.set_param" title="Link to this definition"></a></dt>
-<dd><p>Set the parameter &lt;param&gt; to value &lt;value&gt;</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>param</strong> (<em>Depends on the parameter</em>) – Parameter.</p>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>1 if the update is successful and 0 if the update is wrong</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>int</p>
+<span class="sig-name descname"><span class="pre">set_cable</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">NSELECT</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">conductor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'DRAKE'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cable.cable.Cable.set_cable" title="Link to this definition"></a></dt>
+<dd><p>Load one conductor definition from the cable database.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>NSELECT (int): Analysis mode used by the ampacity solver.
+conductor (str): Conductor ID.</p>
 </dd>
 </dl>
 </dd></dl>

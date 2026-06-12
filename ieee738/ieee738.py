@@ -97,32 +97,6 @@ class IEEE738():
      
        
     
-    # 10 REM *****************************************************************
-    # 20 REM * IEEE METHOD - TRANSIENT OR STEADY STATE CALCULATION
-    # 30 REM * OF BARE OVERHEAD CONDUCTOR TEMPERATURE OR THERMAL RATING
-    # 40 REM *
-    # 50 REM *
-    # 60 REM *
-    # 70 REM * ASSUMES SI UNITS FOR INPUT
-    # 80 REM *
-    # 90 REM *
-    # 240 REM * IN COMPARISON WITH THE 1986 VERSION OF THIS PROGRAM, PROVIDED
-    # 250 REM * BY THE IEEE, THE 1993 VERSION ADDED THE FOLLOWING FEATURES:
-    # 260 REM *
-    # 290 REM * - INITIAL CONDUCTOR TEMP OR CURRENT CAN BE USED IN
-    # 300 REM * TRANSIENT CALCULATIONS
-    # 330 REM * - VERY SHORT DURATION "FAULT" CURRENTS AS LARGE AS 1E6
-    # 340 REM * AMPERES FOR TIMES AS SHORT AS 0.01 SEC CAN BE USED
-    # 350 REM * - THE ORIGINAL NUMERICAL ITERATION METHOD HAS BEEN
-    # 360 REM * REPLACED WITH A MUCH MORE EFFICIENT METHOD
-    # 370 REM * - FOR ACSR CONDUCTOR, THE HEAT CAPACITY OF THE STEEL CORE
-    # 380 REM * AND THE OUTER ALUM STRANDS ARE ENTERED SEPARATELY.
-    # 390 REM *
-    # 392 REM * THIS VERSION IS CONSISTENT WITH IEEE 738-2012
-    # 394 REM * - THE SOLAR MODEL ALLOWS ANY HOUR AND LATITUDE
-    # 396 REM * - THE AIR PROPERTIES ARE CALCULATED WITH CLOSED FORM EQUATIONS
-    # 398 REM * - THIS PROGRAM AND EQUATIONS USE SI UNITS
-    # 400 REM **************************************************************
     def ieee_738_2013( self, out = False):
         """Execute the IEEE 738-2013 thermal rating calculation.
 
@@ -1153,7 +1127,7 @@ class IEEE738():
         return
   
   
-    def outputs( self):
+    def outputs(self):
         """Print a detailed report of the IEEE 738-2013 calculation results.
 
         Prints to the console a full summary including conductor and environmental
@@ -1161,13 +1135,16 @@ class IEEE738():
         analysis mode (``Case1.NSELECT``):
 
             - ``NSELECT = 1``: prints the steady-state conductor temperature
-                for the given current.
+              for the given current.
             - ``NSELECT = 2``: prints the steady-state ampacity for the given
-                conductor temperature.
+              conductor temperature.
 
         .. note::
             This function only prints to the console. It does not return any
             value and does not modify any attributes.
+
+        .. seealso::
+            :meth:`output` for a compact summary.
         """
         #6070 PRINT
         #6080 PRINT X$
@@ -1309,7 +1286,7 @@ class IEEE738():
                 #6740 IF ATCDR(KTIMEMAX) < TCDRMAX THEN GOTO 6780
                 if self.Case1.ATCDR[( self.Case1.KTIMEMAX-1)] >= self.Cable1.TCDRMAX:
                     #6750 PRINT USING "IT TAKES ####.#### SEC (####.#### MIN) "; TIME(KTIMEMAX) TIME(KTIMEMAX) / 60!
-                    print("it takes ", self.Case1.TIME[( self.Cable1KTIMEMAX-1)]," seconds (", self.Case1.TIME[( self.Case1.KTIMEMAX-1)]/60," minutes)")            
+                    print("it takes ", self.Case1.TIME[( self.Cable1.KTIMEMAX-1)]," seconds (", self.Case1.TIME[( self.Case1.KTIMEMAX-1)]/60," minutes)")            
                     #6760 PRINT "TO REACH THE MAXIMUM ALLOWABLE CONDUCTOR TEMPERATURE "
                     print("TO REACH THE MAXIMUM ALLOWABLE CONDUCTOR TEMPERATURE")    
                     #6770 PRINT USING "OF ####.# DEGREES C"; TCDRMAX
@@ -1403,12 +1380,12 @@ class IEEE738():
         """
         return str( round( valuex, self.Debug_Dec))
 
-    def output( self):
+    def output(self):
         """Print a short summary of the main inputs, outputs, and heat balance terms.
 
         Prints to the console a compact summary including the wind angle,
         the main input/output pair depending on the analysis mode
-        (``Case1.NSELECT``), and the three heat balance terms:
+        (``Case1.NSELECT``):
 
             - ``NSELECT = 1``: input current (A) → output temperature (°C).
             - ``NSELECT = 2``: input temperature (°C) → output current (A).
@@ -1416,6 +1393,9 @@ class IEEE738():
         .. note::
             This function only prints to the console. It does not return any
             value and does not modify any attributes.
+
+        .. seealso::
+            :meth:`outputs` for the full detailed report.
         """
         print(" ")
         print("******************************************************************")
