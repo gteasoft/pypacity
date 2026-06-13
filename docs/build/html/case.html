@@ -8,7 +8,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>case module &mdash; pypacity 1.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
-      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="_static/css/sphinx_rtd_size.css?v=3b072d6b" />
       <link rel="stylesheet" type="text/css" href="_static/custom.css?v=77884f9e" />
       <link rel="stylesheet" type="text/css" href="_static/custom.css?v=77884f9e" />
@@ -17,8 +17,8 @@
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
       <script src="_static/documentation_options.js?v=f2a433a1"></script>
-      <script src="_static/doctools.js?v=9bcbadda"></script>
-      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -51,6 +51,10 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="cable.html">cable module</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">case module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#description">Description</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#author">Author</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#copyright">Copyright</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#license">License</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#case.case.Case"><code class="docutils literal notranslate"><span class="pre">Case</span></code></a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#case.case.Case.demo"><code class="docutils literal notranslate"><span class="pre">Case.demo()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#case.case.Case.print_ver"><code class="docutils literal notranslate"><span class="pre">Case.print_ver()</span></code></a></li>
@@ -90,77 +94,69 @@
              
   <section id="module-case.case">
 <span id="case-module"></span><h1>case module<a class="headerlink" href="#module-case.case" title="Link to this heading"></a></h1>
+<p>Module: case.py</p>
+<section id="description">
+<h2>Description<a class="headerlink" href="#description" title="Link to this heading"></a></h2>
+<p>Operating-case data model for PyPacity ampacity calculations.</p>
+</section>
+<section id="author">
+<h2>Author<a class="headerlink" href="#author" title="Link to this heading"></a></h2>
+<p>Mario Manana</p>
+</section>
+<section id="copyright">
+<h2>Copyright<a class="headerlink" href="#copyright" title="Link to this heading"></a></h2>
+<p>Copyright (c) 2026 Mario Manana</p>
+</section>
+<section id="license">
+<h2>License<a class="headerlink" href="#license" title="Link to this heading"></a></h2>
+<p>MIT License</p>
+<p class="rubric">Notes</p>
+<p>This module is part of the PyPacity project.</p>
+</section>
 <dl class="py class">
 <dt class="sig sig-object py" id="case.case.Case">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">case.case.</span></span><span class="sig-name descname"><span class="pre">Case</span></span><a class="headerlink" href="#case.case.Case" title="Link to this definition"></a></dt>
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">case.case.</span></span><span class="sig-name descname"><span class="pre">Case</span></span><a class="headerlink" href="#case.case.Case" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p>Class Case()</p>
-<p>Define the specific charasteristics of an ampacity case</p>
+<p>Environmental and operational inputs for an ampacity study.</p>
 <dl>
-<dt>Attributes:</dt><dd><dl class="field-list">
-<dt class="field-odd">NSELECT (int)<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Analysis mode.</p>
-<p>1.- Steady-state conductor temperature. Given the constant current and the weather conditions the function returns the conductor temperature. The current value is provided by &lt;XIPRELOAD&gt; and the steady-state temperature is returned by &lt;TCDRPRELOAD&gt;.</p>
-<p>2.- Steady-state conductor current. Given the constant steady-state conductor temperature the function returns the conductor current.  The conductor temperature is provided by &lt;TCDRPRELOAD&gt; and the steady-state current is returned by &lt;TR&gt;.</p>
-<p>3.- Transient conductor temperature. Transient conductor temperature when the conductor current steps from an initial value &lt;XIPRELOAD&gt; to a final value &lt;XISTEP&gt;. Total duration of the simulation is &lt;TT&gt; (if &lt;SORM&gt; is 0 then &lt;TT&gt; is defined in seconds. If &lt;SORM&gt; is 1 then &lt;TT&gt; is defined in minutes.) The time resolution of the simulation is &lt;DELTIME&gt;.</p>
-<p>4.- Transient conductor thermal rating. Transient current thermal rating &lt;XISTEP&gt; to reach  the maximum allowable conductor temperature &lt;TCDRMAX&gt; in &lt;TT&gt; minutes when the initial conductor temperature is &lt;TCDRPRELOAD&gt;.</p>
-</dd>
-<dt class="field-even">TT (int)<span class="colon">:</span></dt>
-<dd class="field-even"><p>Simulation time (seconds).</p>
-</dd>
-<dt class="field-odd">SORM (int)<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Unit of time for output print. 0: seconds; 1: minutes.</p>
-</dd>
-<dt class="field-even">DELTIME (int)<span class="colon">:</span></dt>
-<dd class="field-even"><p>Simulation Delta time in seconds.</p>
-</dd>
-<dt class="field-odd">TCDRPRELOAD (float)<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Steady-state initial conductor temperature.</p>
-</dd>
-<dt class="field-even">XIPRELOAD (float)<span class="colon">:</span></dt>
-<dd class="field-even"><p>Initial current (A).</p>
-</dd>
-<dt class="field-odd">XISTEP (float)<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Final current (A).</p>
-</dd>
-<dt class="field-even">TAMB (float)<span class="colon">:</span></dt>
-<dd class="field-even"><p>Ambient temperature (ºC).</p>
-</dd>
-<dt class="field-odd">VWIND (float)<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Wind speed (m/s).</p>
-</dd>
-<dt class="field-even">WINDANG_DEG (float)<span class="colon">:</span></dt>
-<dd class="field-even"><p>Angle between wind and conductor main axis in DEG (Degrees).</p>
-</dd>
-<dt class="field-odd">CDR_ELEV (float)<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Conductor elevation above sea level in meters (m).</p>
-</dd>
-<dt class="field-even">ALBEDO (float)<span class="colon">:</span></dt>
-<dd class="field-even"><p>Albedo (CIGRE TB601. Pg. 20). Water.- 0.05; Forest.- 0.15; Urban Areas.- 0.2; Soil, grass and crops.- 0.2
-Sand.- 0.3; Ice.- 0.4 to 0.6; Snow.- 0.6 to 0.8</p>
-</dd>
-<dt class="field-odd">SOLAR (int)<span class="colon">:</span></dt>
-<dd class="field-odd"><p>0.- Computed solar heating based on location and suntime; 1.- Measured solar radiation.</p>
-</dd>
-<dt class="field-even">NDAY (int)<span class="colon">:</span></dt>
-<dd class="field-even"><p>Day of the year [1, 365]</p>
-</dd>
-<dt class="field-odd">Ns (float)<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Clearness ratio. 1 for standard atmosphere; 0.8 to 1.2 for clear skies with decreasing amounts of dust and aerosols; 0.5 for industrial atmosphere and less than 0.5 for a cloudy or overcast sky;  0 for thick cloud.</p>
-</dd>
-<dt class="field-even">CDR_LAT_DEG (float)<span class="colon">:</span></dt>
-<dd class="field-even"><p>Conductor latitude in degrees..</p>
-</dd>
-</dl>
+<dt>Attributes:</dt><dd><p>NSELECT (int): Analysis mode.</p>
+<blockquote>
+<div><p>1. Steady-state conductor temperature. Given current and weather
+conditions, the solver returns conductor temperature.
+2. Steady-state conductor current. Given conductor temperature and
+weather conditions, the solver returns current.
+3. Transient conductor temperature after a current step.
+4. Transient thermal rating to reach the maximum conductor
+temperature in the requested time.</p>
+</div></blockquote>
+<p>TT (int): Simulation time. Units are controlled by <code class="docutils literal notranslate"><span class="pre">SORM</span></code>.
+SORM (int): Time unit selector, 0 for seconds and 1 for minutes.
+DELTIME (int): Simulation time step in seconds.
+TCDRPRELOAD (float): Initial steady-state conductor temperature.
+XIPRELOAD (float): Initial current in amperes.
+XISTEP (float): Final step current in amperes.
+TAMB (float): Ambient temperature in deg C.
+VWIND (float): Wind speed in m/s.
+DWIND_DEG (float): Wind direction in degrees.
+WINDANG_DEG (float): Angle between wind and conductor axis in degrees.
+CDR_ELEV (float): Conductor elevation above sea level in meters.
+Z1_DEG (float): Conductor direction clockwise from north in degrees.
+CDR_LAT_DEG (float): Conductor latitude in degrees.
+SUN_TIME (float): Solar hour. Use 99 when sun is not considered.
+NDAY (int): Day of year in the range 1 to 365.
+A3 (int): Air clarity selector, 0 for clear air and 1 for industrial.
+Ns (float): Clearness ratio from CIGRE TB601.
+SolarRadiation (float): Measured solar radiation in W/m2.
+ALBEDO (float): Ground reflectance coefficient.
+SOLAR (int): Solar source selector, 0 for measured and 1 for computed.</p>
 </dd>
 </dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="case.case.Case.demo">
 <span class="sig-name descname"><span class="pre">demo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">NSELECT</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#case.case.Case.demo" title="Link to this definition"></a></dt>
-<dd><p>Define a demo case (<strong>see</strong> the definition of atribute &lt;NSELECT&gt;)</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>NSELECT</strong> (<em>int</em>) – select a demo case [1, 2, 3 or 4]</p>
+<dd><p>Populate the case with built-in demo values.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>NSELECT (int): Demo analysis mode. Valid values are 1, 2, 3 and 4.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -168,15 +164,7 @@ Sand.- 0.3; Ice.- 0.4 to 0.6; Snow.- 0.6 to 0.8</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="case.case.Case.print_ver">
 <span class="sig-name descname"><span class="pre">print_ver</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#case.case.Case.print_ver" title="Link to this definition"></a></dt>
-<dd><p>Returns the current version of this module</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Current version of Cable module.</p>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>string</p>
-</dd>
-</dl>
+<dd><p>Print the current version of this module.</p>
 </dd></dl>
 
 </dd></dl>
