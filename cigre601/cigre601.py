@@ -589,10 +589,8 @@ class CIGRE601():
             print("Starting point")
             print("Initial current: ", self.Case1.XIPRELOAD, " ; Initial temperature: ", self.Case1.TCDRPRELOAD)
             
-        
         time.append(t)
         temp.append( Tc)
-        
         
         # ma.ca
         maca = self.Cable1.mAlum*self.Cable1.CAlum20*(1+self.Cable1.BetaAlum20*(self.Case1.TCDRPRELOAD - 20.0))
@@ -622,26 +620,34 @@ class CIGRE601():
             
         steps = int(tend/self.Case1.DELTIME)
         print("steps: ", steps)
-        for i in range(steps):
+        for _ in range(steps):
             print("Tinitial: ", Tc, " ; dT: ", deltaT) 
+            
+            # Update time and conductor temperature for the transient step
             t += deltaTime
             Tc += deltaT
             time.append( t)
             temp.append( Tc)
             self.Case1.TCDR = Tc
+            
+            # Compute the heat balance power terms 
             Pj = self.joule() 
             Ps = self.solar()
             Pr = self.radiation()
             Pc = self.convection()
+            
+            # Compute the equivalent thermal capacity of the aluminum-steel conductor
+            maca = self.Cable1.mAlum*self.Cable1.CAlum20*(1+self.Cable1.BetaAlum20*(Tc - 20.0))
+            mscs = self.Cable1.mSteel*self.Cable1.CSteel20*(1+self.Cable1.BetaSteel20*(Tc - 20.0))
+            mc   = maca + mscs
+            
+            # Compute the temperature increment for the next time step
             deltaT = (Pj + Ps - Pr - Pc)*deltaTime/(mc)
             
             
         self.Case1.TIME = time
         self.Case1.ATCDR = temp              
         
-        
-
-
    
     def thermal_rating( self):
         """Implementation of CIGRE TB601.
