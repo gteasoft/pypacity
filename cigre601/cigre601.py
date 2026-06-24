@@ -576,7 +576,6 @@ class CIGRE601():
         Tc = 0
         time = []
         temp = []
-        # starting point I = self.Case1.XIPRELOAD
         
         if self.Case1.TTfromST == 0:
             Tc = self.Case1.TCDRinitial
@@ -584,37 +583,18 @@ class CIGRE601():
             self.conductor_temperature()
             Tc = self.Case1.TCDRPRELOAD
        
-        
         if self.Debug == 1:
             print("Starting point")
-            print("Initial current: ", self.Case1.XIPRELOAD, " ; Initial temperature: ", self.Case1.TCDRPRELOAD)
+            print("Initial current: ", self.Case1.XIPRELOAD, " ; Initial temperature: ", Tc)
             
-        
         time.append(t)
         temp.append( Tc)
         
         
-        # ma.ca
-        maca = self.Cable1.mAlum*self.Cable1.CAlum20*(1+self.Cable1.BetaAlum20*(self.Case1.TCDRPRELOAD - 20.0))
-        
-        # mscs
-        mscs = self.Cable1.mSteel*self.Cable1.CSteel20*(1+self.Cable1.BetaSteel20*(self.Case1.TCDRPRELOAD - 20.0))
-        
-        # mc
-        mc = maca + mscs
-        
-        # Rac
-        Rac = self.Rac()
-        
-        # PJ
-        PJ = (Rac)*(self.Case1.XIPRELOAD**2)
-        self.Case1.QJ = PJ
-        
         # DeltaTime (update to use loaded values from IEEE case)
-        deltaTime = 60.0
-        # DeltaTemperature CIGRE601 Pag 86
-        deltaT = (self.Case1.QJ + self.Case1.QS - self.Case1.QR - self.Case1.QC)*deltaTime/(mc)
-        
+        # deltaTime = 60.0
+        deltaTime = self.Case1.DELTIME
+
         if self.Case1.SORM == 1:
             tend = self.Case1.TT*60
         else:
@@ -622,26 +602,37 @@ class CIGRE601():
             
         steps = int(tend/self.Case1.DELTIME)
         print("steps: ", steps)
-        for i in range(steps):
-            print("Tinitial: ", Tc, " ; dT: ", deltaT) 
-            t += deltaTime
-            Tc += deltaT
-            time.append( t)
-            temp.append( Tc)
+        for _ in range(steps):
+            
+            
             self.Case1.TCDR = Tc
+            
+            # Compute the heat balance power terms 
             Pj = self.joule() 
             Ps = self.solar()
             Pr = self.radiation()
             Pc = self.convection()
+            
+            # Compute the equivalent thermal capacity of the aluminum-steel conductor
+            maca = self.Cable1.mAlum*self.Cable1.CAlum20*(1+self.Cable1.BetaAlum20*(Tc - 20.0))
+            mscs = self.Cable1.mSteel*self.Cable1.CSteel20*(1+self.Cable1.BetaSteel20*(Tc - 20.0))
+            mc   = maca + mscs
+            
+            # Compute the temperature increment for the next time step
             deltaT = (Pj + Ps - Pr - Pc)*deltaTime/(mc)
             
+            # Update time and conductor temperature for the transient step
+            print(f"Tinitial: {Tc:6.3f}°C  dT:{deltaT:0.3f}") 
+
+
+            t += deltaTime
+            Tc += deltaT
+            time.append( t)
+            temp.append( Tc)
             
-        self.Case1.TIME = time
+        self.Case1.TIME  = time
         self.Case1.ATCDR = temp              
         
-        
-
-
    
     def thermal_rating( self):
         """Implementation of CIGRE TB601.
