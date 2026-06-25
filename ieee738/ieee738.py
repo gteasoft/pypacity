@@ -993,7 +993,7 @@ class IEEE738():
         bflag1 = 1
         bflag2 = 1
         while(bflag1):
-            #print("bflag1")
+            
             self.Case1.ATCDR[0] = self.Case1.TCDRPRELOAD
             self.Case1.TCDR = self.Case1.ATCDR[0]
             self._thermal_rating()
