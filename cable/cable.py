@@ -9,11 +9,11 @@ ampacity studies.
 
 Author
 ------
-Mario Manana
+Mario Mañana
 
 Copyright
 ---------
-Copyright (c) 2026 Mario Manana
+Copyright (c) 2026 Mario Mañana
 
 License
 -------
@@ -22,6 +22,12 @@ MIT License
 Notes
 -----
 This module is part of the PyPacity project.
+
+References
+----------
+- IEEE Std 738-2012, IEEE Standard for Calculating the Current-Temperature Relationship of Bare Overhead Conductors
+- CIGRE Technical Brochure 601, Guide for Thermal Rating Calculations of Overhead Lines
+- CIGRE Technical Brochure 207, Thermal Rating of Overhead Lines
 """
 
 
@@ -32,29 +38,107 @@ import os
 class Cable():
     """Electrical and thermal data for an overhead conductor.
 
-    Attributes:
-        ID (str): Conductor identifier.
-        D (float): Outside conductor diameter in millimeters.
-        D1 (float): Equivalent steel-core tube diameter in millimeters.
-        d (float): Wire diameter in the outermost layer in millimeters.
-        TLO (float): Low reference temperature for resistance in deg C.
-        THI (float): High reference temperature for resistance in deg C.
-        TCDRMAX (float): Maximum allowable conductor temperature in deg C.
-        RLO (float): Conductor resistance at ``TLO`` in ohm/m.
-        RHI (float): Conductor resistance at ``THI`` in ohm/m.
-        EMISS (float): Surface emissivity coefficient.
-        ABSORP (float): Solar absorptivity coefficient.
-        HNH (int): Number of aluminum layers.
-        HEATOUT (float): Aluminum heat capacity contribution in W.s/(m.deg C).
-        HEATCORE (float): Steel-core heat capacity contribution in W.s/(m.deg C).
-        Stranded (int): 1 for stranded conductors, 0 for smooth conductors.
-        CSteel20 (float): Steel specific heat at 20 deg C in J/(kg.K).
-        CAlum20 (float): Aluminum specific heat at 20 deg C in J/(kg.K).
-        BetaSteel20 (float): Steel specific-heat temperature coefficient.
-        BetaAlum20 (float): Aluminum specific-heat temperature coefficient.
-        mSteel (float): Steel mass per unit length in kg/m.
-        mAlum (float): Aluminum mass per unit length in kg/m.
-        lambda_ertc (float): Effective radial thermal conductivity in W/(m.K).
+    Stores the physical, electrical, and thermal properties of a bare overhead
+    conductor. Properties are loaded from the built-in cable database via
+    :meth:`set_cable` or assigned directly by the caller.
+
+    .. list-table:: Attributes
+       :header-rows: 1
+       :widths: 22 8 70
+
+       * - Attribute
+         - Type
+         - Description
+       * - ``ID``
+         - str
+         - Conductor identifier.
+       * - ``D``
+         - float
+         - Outside conductor diameter in millimeters.
+       * - ``D1``
+         - float
+         - Equivalent steel-core tube diameter in millimeters.
+       * - ``d``
+         - float
+         - Wire diameter in the outermost layer in millimeters.
+       * - ``TLO``
+         - float
+         - Low reference temperature for resistance in deg C.
+       * - ``THI``
+         - float
+         - High reference temperature for resistance in deg C.
+       * - ``TCDRMAX``
+         - float
+         - Maximum allowable conductor temperature in deg C.
+       * - ``RLO``
+         - float
+         - Conductor resistance at ``TLO`` in ohm/m.
+       * - ``RHI``
+         - float
+         - Conductor resistance at ``THI`` in ohm/m.
+       * - ``B``
+         - float
+         - Slope of the linear resistance-temperature equation in ohm/(m.deg C).
+           Computed as ``(RHI - RLO) / (THI - TLO)``.
+       * - ``B1``
+         - float
+         - Intercept of the linear resistance-temperature equation in ohm/m.
+           Computed as ``RLO - B * TLO``.
+       * - ``EMISS``
+         - float
+         - Surface emissivity coefficient.
+       * - ``ABSORP``
+         - float
+         - Solar absorptivity coefficient.
+       * - ``HNH``
+         - int
+         - Number of aluminum layers.
+       * - ``Stranded``
+         - int
+         - 1 for stranded conductors, 0 for smooth conductors.
+       * - ``CrossSection``
+         - float
+         - Conductor cross-sectional area in mm².
+       * - ``MASSCORE``
+         - float
+         - Steel core mass per unit length in kg/m.
+       * - ``MASSOUT``
+         - float
+         - Aluminum outer layer mass per unit length in kg/m.
+       * - ``HEATOUT``
+         - float
+         - Aluminum heat capacity contribution in W.s/(m.deg C).
+       * - ``HEATCORE``
+         - float
+         - Steel-core heat capacity contribution in W.s/(m.deg C).
+       * - ``HEATCAP``
+         - float
+         - Total heat capacity per unit length in W.s/(m.deg C), equal to
+           ``HEATOUT + HEATCORE``. Set by :meth:`set_cable`.
+       * - ``deltaTcTs_value``
+         - float
+         - Temperature difference between conductor core and surface in deg C.
+       * - ``CSteel20``
+         - float
+         - Steel specific heat at 20 deg C in J/(kg.K).
+       * - ``CAlum20``
+         - float
+         - Aluminum specific heat at 20 deg C in J/(kg.K).
+       * - ``BetaSteel20``
+         - float
+         - Steel specific-heat temperature coefficient.
+       * - ``BetaAlum20``
+         - float
+         - Aluminum specific-heat temperature coefficient.
+       * - ``mSteel``
+         - float
+         - Steel mass per unit length in kg/m.
+       * - ``mAlum``
+         - float
+         - Aluminum mass per unit length in kg/m.
+       * - ``lambda_ertc``
+         - float
+         - Effective radial thermal conductivity in W/(m.K).
     """
     
     def __init__(self):
@@ -93,10 +177,19 @@ class Cable():
     def load_cable_db(self):
         """Load the cable database distributed with this package.
 
-        Returns:
-            tuple: ``(cable_db, error)`` where ``cable_db`` is a pandas
-            dataframe and ``error`` is 0 when data is loaded or 1 when the
-            database is empty.
+        Reads ``cable_db.csv`` from the same directory as this module. The
+        file uses a semicolon separator and contains one row per conductor
+        with the columns: ``ID``, ``D``, ``D1``, ``d``, ``TLO``, ``THI``,
+        ``TCDRMAX``, ``RLO``, ``RHI``, ``HNH``, ``HEATOUT``, ``HEATCORE``.
+
+        :return: A tuple ``(cable_db, error)`` where ``cable_db`` is a
+            :class:`pandas.DataFrame` with one row per conductor, and
+            ``error`` is ``0`` if at least one conductor was loaded or ``1``
+            if the database file is empty.
+        :rtype: tuple
+
+        :raises FileNotFoundError: If ``cable_db.csv`` is not found in the
+            package directory.
         """
         filename = u'cable_db.csv'
 
@@ -116,9 +209,32 @@ class Cable():
     def set_cable(self, NSELECT, conductor='DRAKE'):
         """Load one conductor definition from the cable database.
 
-        Args:
-            NSELECT (int): Analysis mode used by the ampacity solver.
-            conductor (str): Conductor ID.
+        Reads the conductor identified by ``conductor`` from ``cable_db.csv``,
+        applies default material and surface properties, and then adjusts
+        temperature limits and heat capacity values according to the analysis
+        mode ``NSELECT``. Conductor matching is case-insensitive.
+
+        :param NSELECT: Analysis mode selector:
+
+            - ``1``: steady-state conductor temperature.
+            - ``2``: steady-state ampacity; sets ``TCDRPRELOAD`` to 101.1 deg C.
+            - ``3``: high-temperature transient; overrides ``HEATOUT``,
+              ``HEATCORE``, and ``TCDRMAX``.
+            - ``4``: limited-temperature transient; overrides ``TCDRMAX``,
+              ``HEATOUT``, and ``HEATCORE``.
+
+        :type NSELECT: int
+        :param conductor: Conductor identifier as listed in ``cable_db.csv``.
+            Defaults to ``'DRAKE'``.
+        :type conductor: str
+
+        :raises ValueError: If the cable database is empty or ``conductor``
+            is not found in ``cable_db.csv``.
+
+        .. note::
+            Results are stored directly in the instance attributes (see class
+            docstring) rather than returned. After this call, ``HEATCAP`` is
+            set to ``HEATOUT + HEATCORE``.
         """
         data = self._get_cable_data(conductor)
         self._apply_cable_data(data)
@@ -129,19 +245,21 @@ class Cable():
     def _get_cable_data(self, conductor):
         """Return the database row that matches a conductor ID.
 
-        Matching is case-insensitive, so ``drake``, ``DRAKE``, and ``Drake``
-        all select the same conductor if it exists in ``cable_db.csv``.
+        Strips leading and trailing whitespace from ``conductor`` before
+        matching. Matching is case-insensitive, so ``drake``, ``DRAKE``,
+        and ``Drake`` all select the same conductor.
 
-        Args:
-            conductor (str): Conductor ID requested by the caller.
+        :param conductor: Conductor identifier to look up in ``cable_db.csv``.
+        :type conductor: str
 
-        Returns:
-            pandas.Series: Row from ``cable_db.csv`` for the selected
+        :return: Row from ``cable_db.csv`` corresponding to the requested
             conductor.
+        :rtype: pandas.Series
 
-        Raises:
-            ValueError: If the database is empty or the conductor ID is
-            unknown.
+        :raises ValueError: If the cable database is empty, or if
+            ``conductor`` is not found in ``cable_db.csv``. The error
+            message lists the available conductor IDs when the conductor
+            is unknown.
         """
         # Normalize user input before comparing it with database IDs.
         conductor_id = str(conductor).strip()
@@ -168,8 +286,18 @@ class Cable():
     def _apply_cable_data(self, data):
         """Copy conductor-specific database values to this cable object.
 
-        Args:
-            data (pandas.Series): Row from ``cable_db.csv`` for one conductor.
+        Assigns the values from a single database row to the corresponding
+        instance attributes. ``RLO`` and ``RHI`` are converted from ohm/km
+        (as stored in ``cable_db.csv``) to ohm/m by dividing by 1000.
+
+        :param data: Row from ``cable_db.csv`` for one conductor, as
+            returned by :meth:`_get_cable_data`.
+        :type data: pandas.Series
+
+        .. note::
+            Sets the following attributes: ``ID``, ``D``, ``D1``, ``d``,
+            ``TLO``, ``THI``, ``TCDRMAX``, ``HEATOUT``, ``HEATCORE``,
+            ``HNH``, ``RLO``, ``RHI``.
         """
         self.ID = data['ID']
 
@@ -184,11 +312,20 @@ class Cable():
         self.RHI = float(data['RHI']) / 1000.0 # ohm/m
 
     def _set_common_properties(self):
-        """Set default properties shared by the built-in conductors.
+        """Set default material, surface, and thermal properties.
 
-        These values are assumptions used by the standard examples. They may
-        be overwritten after ``set_cable()`` if a study requires different
-        material, surface, or thermal properties.
+        Assigns the default values used by the built-in standard examples.
+        These assumptions follow the IEEE 738 and CIGRE TB 601 reference
+        cases and may be overwritten after :meth:`set_cable` if a study
+        requires different conductor properties.
+
+        .. note::
+            Sets the following attributes with their default values:
+            ``EMISS = 0.5``, ``ABSORP = 0.5``,
+            ``CSteel20 = 481.0`` J/(kg.K), ``CAlum20 = 897.0`` J/(kg.K),
+            ``BetaSteel20 = 1.00e-4``, ``BetaAlum20 = 3.80e-4``,
+            ``mSteel = 0.5119`` kg/m, ``mAlum = 1.116`` kg/m,
+            ``lambda_ertc = 0.7`` W/(m.K).
         """
         self.EMISS = 0.5          # Default surface emissivity.
         self.ABSORP = 0.5         # Default solar absorptivity.
@@ -203,9 +340,30 @@ class Cable():
     def _apply_analysis_mode_overrides(self, NSELECT):
         """Apply mode-specific overrides for built-in ampacity examples.
 
-        Different ``NSELECT`` values represent different study cases. These
-        overrides intentionally change temperature limits or heat capacity
-        values before the solver runs.
+        Adjusts conductor temperature limits and heat capacity values
+        according to the analysis mode before the solver runs. Values not
+        covered by a given mode are left unchanged.
+
+        :param NSELECT: Analysis mode selector. Recognised values:
+
+            - ``2``: steady-state ampacity; sets ``TCDRPRELOAD`` to
+              101.1 deg C.
+            - ``3``: high-temperature transient; sets
+              ``HEATOUT = 1066`` W.s/(m.deg C),
+              ``HEATCORE = 243`` W.s/(m.deg C), and
+              ``TCDRMAX = 1000`` deg C.
+            - ``4``: limited-temperature transient; sets
+              ``TCDRMAX = 150`` deg C,
+              ``HEATOUT = 1066`` W.s/(m.deg C), and
+              ``HEATCORE = 243`` W.s/(m.deg C).
+            - Any other value: no overrides are applied.
+
+        :type NSELECT: int
+
+        .. note::
+            For ``NSELECT = 3`` and ``NSELECT = 4``, the ``HEATOUT`` and
+            ``HEATCORE`` values loaded from the database are replaced by
+            fixed values from the IEEE 738 standard examples.
         """
         if NSELECT == 2:
             # Preload case: define the initial/preload conductor temperature.
@@ -223,6 +381,6 @@ class Cable():
             self.HEATOUT = 1066
             self.HEATCORE = 243
         
-    def print_ver(self):        
-        """Print the current version of this module."""
+    def print_ver(self):
+        """Print the module name and release date to standard output."""
         print("Cable. 05/6/2026.") 
