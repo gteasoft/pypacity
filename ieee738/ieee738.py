@@ -25,7 +25,7 @@ This module is part of the PyPacity project.
 
 References
 ----------
-- IEEE Std 738-2012, IEEE Standard for Calculating the Current-Temperature Relationship of Bare Overhead Conductors
+- IEEE Std 738-2023, IEEE Standard for Calculating the Current-Temperature Relationship of Bare Overhead Conductors
 """
 
 
