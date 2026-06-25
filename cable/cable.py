@@ -42,103 +42,44 @@ class Cable():
     conductor. Properties are loaded from the built-in cable database via
     :meth:`set_cable` or assigned directly by the caller.
 
-    .. list-table:: Attributes
-       :header-rows: 1
-       :widths: 22 8 70
+    .. raw:: html
 
-       * - Attribute
-         - Type
-         - Description
-       * - ``ID``
-         - str
-         - Conductor identifier.
-       * - ``D``
-         - float
-         - Outside conductor diameter in millimeters.
-       * - ``D1``
-         - float
-         - Equivalent steel-core tube diameter in millimeters.
-       * - ``d``
-         - float
-         - Wire diameter in the outermost layer in millimeters.
-       * - ``TLO``
-         - float
-         - Low reference temperature for resistance in deg C.
-       * - ``THI``
-         - float
-         - High reference temperature for resistance in deg C.
-       * - ``TCDRMAX``
-         - float
-         - Maximum allowable conductor temperature in deg C.
-       * - ``RLO``
-         - float
-         - Conductor resistance at ``TLO`` in ohm/m.
-       * - ``RHI``
-         - float
-         - Conductor resistance at ``THI`` in ohm/m.
-       * - ``B``
-         - float
-         - Slope of the linear resistance-temperature equation in ohm/(m.deg C).
-           Computed as ``(RHI - RLO) / (THI - TLO)``.
-       * - ``B1``
-         - float
-         - Intercept of the linear resistance-temperature equation in ohm/m.
-           Computed as ``RLO - B * TLO``.
-       * - ``EMISS``
-         - float
-         - Surface emissivity coefficient.
-       * - ``ABSORP``
-         - float
-         - Solar absorptivity coefficient.
-       * - ``HNH``
-         - int
-         - Number of aluminum layers.
-       * - ``Stranded``
-         - int
-         - 1 for stranded conductors, 0 for smooth conductors.
-       * - ``CrossSection``
-         - float
-         - Conductor cross-sectional area in mm².
-       * - ``MASSCORE``
-         - float
-         - Steel core mass per unit length in kg/m.
-       * - ``MASSOUT``
-         - float
-         - Aluminum outer layer mass per unit length in kg/m.
-       * - ``HEATOUT``
-         - float
-         - Aluminum heat capacity contribution in W.s/(m.deg C).
-       * - ``HEATCORE``
-         - float
-         - Steel-core heat capacity contribution in W.s/(m.deg C).
-       * - ``HEATCAP``
-         - float
-         - Total heat capacity per unit length in W.s/(m.deg C), equal to
-           ``HEATOUT + HEATCORE``. Set by :meth:`set_cable`.
-       * - ``deltaTcTs_value``
-         - float
-         - Temperature difference between conductor core and surface in deg C.
-       * - ``CSteel20``
-         - float
-         - Steel specific heat at 20 deg C in J/(kg.K).
-       * - ``CAlum20``
-         - float
-         - Aluminum specific heat at 20 deg C in J/(kg.K).
-       * - ``BetaSteel20``
-         - float
-         - Steel specific-heat temperature coefficient.
-       * - ``BetaAlum20``
-         - float
-         - Aluminum specific-heat temperature coefficient.
-       * - ``mSteel``
-         - float
-         - Steel mass per unit length in kg/m.
-       * - ``mAlum``
-         - float
-         - Aluminum mass per unit length in kg/m.
-       * - ``lambda_ertc``
-         - float
-         - Effective radial thermal conductivity in W/(m.K).
+       <p style="text-align:center; font-weight:bold; text-decoration:underline;">Attributes</p>
+
+    .. csv-table::
+       :header: "Attribute", "Type", "Description"
+       :widths: 20, 8, 72
+       :align: center
+
+       "``ID``", "str", "Conductor identifier."
+       "``D``", "float", "Outside conductor diameter in millimeters."
+       "``D1``", "float", "Equivalent steel-core tube diameter in millimeters."
+       "``d``", "float", "Wire diameter in the outermost layer in millimeters."
+       "``TLO``", "float", "Low reference temperature for resistance in deg C."
+       "``THI``", "float", "High reference temperature for resistance in deg C."
+       "``TCDRMAX``", "float", "Maximum allowable conductor temperature in deg C."
+       "``RLO``", "float", "Conductor resistance at ``TLO`` in ohm/m."
+       "``RHI``", "float", "Conductor resistance at ``THI`` in ohm/m."
+       "``B``", "float", "Slope of the linear resistance-temperature equation in ohm/(m.deg C). Computed as ``(RHI - RLO) / (THI - TLO)``."
+       "``B1``", "float", "Intercept of the linear resistance-temperature equation in ohm/m. Computed as ``RLO - B * TLO``."
+       "``EMISS``", "float", "Surface emissivity coefficient."
+       "``ABSORP``", "float", "Solar absorptivity coefficient."
+       "``HNH``", "int", "Number of aluminum layers."
+       "``Stranded``", "int", "1 for stranded conductors, 0 for smooth conductors."
+       "``CrossSection``", "float", "Conductor cross-sectional area in mm²."
+       "``MASSCORE``", "float", "Steel core mass per unit length in kg/m."
+       "``MASSOUT``", "float", "Aluminum outer layer mass per unit length in kg/m."
+       "``HEATOUT``", "float", "Aluminum heat capacity contribution in W.s/(m.deg C)."
+       "``HEATCORE``", "float", "Steel-core heat capacity contribution in W.s/(m.deg C)."
+       "``HEATCAP``", "float", "Total heat capacity per unit length in W.s/(m.deg C), equal to ``HEATOUT + HEATCORE``. Set by :meth:`set_cable`."
+       "``deltaTcTs_value``", "float", "Temperature difference between conductor core and surface in deg C."
+       "``CSteel20``", "float", "Steel specific heat at 20 deg C in J/(kg.K)."
+       "``CAlum20``", "float", "Aluminum specific heat at 20 deg C in J/(kg.K)."
+       "``BetaSteel20``", "float", "Steel specific-heat temperature coefficient."
+       "``BetaAlum20``", "float", "Aluminum specific-heat temperature coefficient."
+       "``mSteel``", "float", "Steel mass per unit length in kg/m."
+       "``mAlum``", "float", "Aluminum mass per unit length in kg/m."
+       "``lambda_ertc``", "float", "Effective radial thermal conductivity in W/(m.K)."
     """
     
     def __init__(self):
