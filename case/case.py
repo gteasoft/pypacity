@@ -47,7 +47,7 @@ class Case():
        :widths: 18, 8, 12, 62
        :align: center
 
-       "``NSELECT``", "int", "Both", "Analysis mode: ``1`` steady-state conductor temperature, ``2`` steady-state ampacity, ``3`` transient conductor temperature, ``4`` transient thermal rating. CIGRE implements modes 1-3 only; mode 4 is IEEE 738 only."
+       "``NSELECT``", "int", "Both", "Analysis mode: ``1`` steady-state conductor temperature, ``2`` steady-state ampacity, ``3`` transient conductor temperature, ``4`` transient thermal rating."
        "``TT``", "int", "Both", "Total simulation time. Units are controlled by ``SORM``."
        "``SORM``", "int", "Both", "Time unit selector: ``0`` for seconds, ``1`` for minutes."
        "``DELTIME``", "int", "Both", "Simulation time step in seconds."
@@ -104,9 +104,9 @@ class Case():
 
        "``TR``", "float", "Both", "Steady-state thermal rating in amperes. Populated after ``NSELECT = 2``."
        "``TCDRPRELOAD``", "float", "Both", "Also used as a result: steady-state conductor temperature in deg C populated after ``NSELECT = 1``."
-       "``XISTEP``", "float", "IEEE 738", "Transient thermal rating current in amperes. Populated after ``NSELECT = 4`` (CIGRE does not implement ``NSELECT = 4``)."
-       "``ATCDR``", "list", "Both", "Transient conductor temperature trace in deg C. Populated after ``NSELECT = 3``; also after ``NSELECT = 4`` for IEEE 738 only."
-       "``TIME``", "list", "Both", "Transient time trace in seconds. Populated after ``NSELECT = 3``; also after ``NSELECT = 4`` for IEEE 738 only."
+       "``XISTEP``", "float", "Both", "Transient thermal rating current in amperes. Populated after ``NSELECT = 4``."
+       "``ATCDR``", "list", "Both", "Transient conductor temperature trace in deg C. Populated after ``NSELECT = 3`` or ``4``."
+       "``TIME``", "list", "Both", "Transient time trace in seconds. Populated after ``NSELECT = 3`` or ``4``."
        "``QS``", "float", "Both", "Solar heat gain rate in W/m."
        "``QR``", "float", "Both", "Radiative heat loss rate in W/m."
        "``QC``", "float", "Both", "Convective heat loss rate in W/m."

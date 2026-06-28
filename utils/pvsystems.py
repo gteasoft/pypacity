@@ -46,38 +46,25 @@ class PVSystems():
     radiation, and standard-to-solar time conversions. Accepts a geographic
     location at construction time and uses it in all subsequent method calls.
 
-    :param Location: Name of the location. Defaults to ``'Santander'``.
-    :type Location: str
-    :param Country: Country name. Used to determine the local daylight
-        saving time offset. Defaults to ``'Spain'``.
-    :type Country: str
-    :param Latitude: Geographic latitude in degrees. Defaults to ``43.46``.
-    :type Latitude: float
-    :param Longitude: Geographic longitude in degrees. Defaults to ``-3.8``.
-    :type Longitude: float
+    .. raw:: html
 
-    :ivar version: Module version string.
-    :vartype version: str
-    :ivar vdate: Release date of the current version.
-    :vartype vdate: str
-    :ivar Gsc: Solar constant in W/m² (1367.0 W/m²). Value from
-        Duffie-Beckman, *Solar Engineering of Thermal Processes*, p. 10.
-    :vartype Gsc: float
-    :ivar SolarDistance: Mean Sun–Earth distance in meters (1.495×10¹¹ m).
-    :vartype SolarDistance: float
-    :ivar EarthDiameter: Earth diameter in meters (1.27×10⁷ m).
-    :vartype EarthDiameter: float
-    :ivar SunDiameter: Sun diameter in meters (1.39×10⁹ m).
-    :vartype SunDiameter: float
-    :ivar Location: Location name.
-    :vartype Location: str
-    :ivar Country: Country name. Used to apply the local daylight saving
-        time offset.
-    :vartype Country: str
-    :ivar Lat: Latitude in degrees (constructor parameter ``Latitude``).
-    :vartype Lat: float
-    :ivar Lon: Longitude in degrees (constructor parameter ``Longitude``).
-    :vartype Lon: float
+       <p style="text-align:center; font-weight:bold; text-decoration:underline;">Attributes</p>
+
+    .. csv-table::
+       :header: "Attribute", "Type", "Role", "Description"
+       :widths: 18, 8, 12, 62
+       :align: center
+
+       "``Location``", "str", "Parameter", "Name of the location. Defaults to ``'Santander'``."
+       "``Country``", "str", "Parameter", "Country name. Used to determine the local daylight saving time offset. Defaults to ``'Spain'``."
+       "``Lat``", "float", "Parameter", "Geographic latitude in degrees (constructor parameter ``Latitude``). Defaults to ``43.46``."
+       "``Lon``", "float", "Parameter", "Geographic longitude in degrees (constructor parameter ``Longitude``). Defaults to ``-3.8``."
+       "``version``", "str", "Variable", "Module version string."
+       "``vdate``", "str", "Variable", "Release date of the current version."
+       "``Gsc``", "float", "Variable", "Solar constant in W/m² (1367.0 W/m²)."
+       "``SolarDistance``", "float", "Variable", "Mean Sun–Earth distance in meters (1.495×10¹¹ m)."
+       "``EarthDiameter``", "float", "Variable", "Earth diameter in meters (1.27×10⁷ m)."
+       "``SunDiameter``", "float", "Variable", "Sun diameter in meters (1.39×10⁹ m)."
     """
         
     def __init__(self, Location='Santander', Country='Spain', Latitude=43.46, Longitude=-3.8):
