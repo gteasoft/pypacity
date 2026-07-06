@@ -4,8 +4,12 @@ Module: pvsystems.py
 
 Description
 -----------
-
-
+Solar geometry and time-conversion utilities for PyPacity ampacity
+calculations. Provides methods for computing extraterrestrial radiation,
+solar declination, hour angle, solar azimuth, and the conversions between
+standard clock time and solar time. Designed to support the solar
+heat-gain calculations required by CIGRE TB 601 and CIGRE TB 207 overhead
+line ampacity models.
 
 Author
 ------
@@ -25,7 +29,9 @@ This module is part of the PyPacity project.
 
 References
 ----------
-- CIGRE Technical Brochure 601
+- CIGRE Technical Brochure 601, Guide for Thermal Rating Calculations of Overhead Lines
+- CIGRE Technical Brochure 207, Thermal Rating of Overhead Lines
+- J. A. Duffie and W. A. Beckman, Solar Engineering of Thermal Processes, Wiley
 """
 
 
@@ -33,36 +39,36 @@ import math
 import numpy as np
 
 
-class PVSystems:
-    """Class PVSystems.
-        
-    Implement several tools for solar computation.
-        
-    Attributes:
-        :version (str): Version of the PVSystems module.
-        :vdate (str): Date of current version.
-        :Gsc (float): The solar constant (Gsc) is a flux density measuring mean solar electromagnetic radiation (total solar irradiance) per unit area. Value adopted by Duffie-Beckman [SOLAR ENG. of THERMAL PROCESSES. pg. 10].
-        :SolarDistance (float): 1.495e11 m. Distance between the Sun and the Earth [meters].
-        :EarthDiameter (float): 1.27e7 m. Return: Earth diameter [meters].
-        :SunDiameter (float): 1.39e9 m. Return: Sun diameter [meters].
-        :Location (str): Description of the location.
-        :Country (str): Country.
-        :Lat (float): Latitude.
-        :Lon (float): Longitude.
+class PVSystems():
+    """Solar geometry and time-conversion toolkit.
+
+    Computes solar declination, hour angle, azimuth, extraterrestrial
+    radiation, and standard-to-solar time conversions. Accepts a geographic
+    location at construction time and uses it in all subsequent method calls.
+
+    .. raw:: html
+
+       <p style="text-align:center; font-weight:bold; text-decoration:underline;">Attributes</p>
+
+    .. csv-table::
+       :header: "Attribute", "Type", "Role", "Description"
+       :widths: 18, 8, 12, 62
+       :align: center
+
+       "``Location``", "str", "Parameter", "Name of the location. Defaults to ``'Santander'``."
+       "``Country``", "str", "Parameter", "Country name. Used to determine the local daylight saving time offset. Defaults to ``'Spain'``."
+       "``Lat``", "float", "Parameter", "Geographic latitude in degrees (constructor parameter ``Latitude``). Defaults to ``43.46``."
+       "``Lon``", "float", "Parameter", "Geographic longitude in degrees (constructor parameter ``Longitude``). Defaults to ``-3.8``."
+       "``version``", "str", "Variable", "Module version string."
+       "``vdate``", "str", "Variable", "Release date of the current version."
+       "``Gsc``", "float", "Variable", "Solar constant in W/m² (1367.0 W/m²)."
+       "``SolarDistance``", "float", "Variable", "Mean Sun–Earth distance in meters (1.495×10¹¹ m)."
+       "``EarthDiameter``", "float", "Variable", "Earth diameter in meters (1.27×10⁷ m)."
+       "``SunDiameter``", "float", "Variable", "Sun diameter in meters (1.39×10⁹ m)."
     """
         
     def __init__(self, Location='Santander', Country='Spain', Latitude=43.46, Longitude=-3.8):
-        """_summary_
-
-        :param Location: _description_. Defaults to 'Santander'.
-        :type Location: str, optional.
-        :param Country: _description_. Defaults to 'Spain'.
-        :type Country: str, optional.
-        :param Latitude: _description_. Defaults to 43.46.
-        :type Latitude: float.
-        :param Longitude: _description_. Defaults to -3.8.
-        :type Longitude: float.
-        """
+        """Initialise instance attributes from the constructor parameters."""
 
         self.version = '1.0'
         self.vdate = u'8/Apr/2023'
@@ -76,13 +82,13 @@ class PVSystems:
         self.Lon=Longitude
 
     def Gon(self, day):
-        """Computes the solar radiation for a specific <day>.
-                
-        :param day: Day of the year [1 365].
-        :type day: int.
-        
-        :return: Extraterrestrial radiation [W/m^2].
-        :rtype float: float...
+        """Compute the extraterrestrial solar radiation for a given day of the year.
+
+        :param day: Day of the year in the range [1, 365].
+        :type day: int
+
+        :return: Extraterrestrial radiation in W/m².
+        :rtype: float
         """
         # input: day .- Day of the year [1, 365]
         # return: Gon .- Extraterrestrial radiation [W/m^2]
@@ -90,15 +96,20 @@ class PVSystems:
         return Gon
     
     def DayOfYear(self, day, month):
-        """Computes the day of the year with the month and the day of the month.
+        """Compute the day of the year from the day of the month and the month.
 
-        :param day: day of the month [1, 31].
+        :param day: Day of the month in the range [1, 31].
         :type day: int
-        :param month: month of the year [1, 12].
+        :param month: Month of the year in the range [1, 12].
         :type month: int
 
-        :return: Day of the year [1 365]
+        :return: Day of the year in the range [1, 365].
         :rtype: int
+
+        .. note::
+            Uses a fixed monthly offset table and does not apply a leap-year
+            correction. For leap-year-aware computation from a
+            :class:`datetime.datetime` object use :meth:`DatetimetoDayOfYear`.
         """
         # input: day .- Day of the month [1,31]
         #        month .- Month [1,12] 
@@ -108,12 +119,12 @@ class PVSystems:
         return DoY
 
     def Declination(self, day):
-        """ Computes the declination of the Earth (degree).
-        
-        :param day: Day of the year [1, 365]
+        """Compute the solar declination for a given day of the year.
+
+        :param day: Day of the year in the range [1, 365].
         :type day: int
-        
-        :return: Declination of the Earth (degrees).
+
+        :return: Solar declination in degrees.
         :rtype: float
         """
         # input: day .- Day of the year [1,365]
@@ -122,10 +133,9 @@ class PVSystems:
         return delta
 
     def LongStd(self):
-        """ 
-        Computes de normalized Longitude using the self parameter <Lon>. The input value is defined in degrees and the output is 15n with n in {1,2,3,...}.
-                
-        :return:  Longitude of the close [ceil aprox.] 15n with n {1,2,3,...}.
+        """Compute the standard meridian nearest to ``Lon`` (ceiling to the next multiple of 15°).
+
+        :return: Standard meridian longitude in degrees (multiple of 15).
         :rtype: int
         """
         # input: Long .- Longitude in degrees [0, 360º] East direction
@@ -134,13 +144,12 @@ class PVSystems:
         return LongStd
    
     def ET(self, dayofyear):
-        """ 
-        Computes de time difference between solar and sideral time in minutes.
-        
-        :param dayofyear: Day of the year [1, 365]
+        """Compute the equation of time — the difference between solar and sidereal time.
+
+        :param dayofyear: Day of the year in the range [1, 365].
         :type dayofyear: int
-        
-        :return: Time diference between solar and sideral time in minutes.
+
+        :return: Equation of time in minutes.
         :rtype: float
         """
         # input: day .- day of the year [1,365]
@@ -155,18 +164,22 @@ class PVSystems:
         return ET
     
     def HMtoStandardTime(self, day, month, hour, minutes):
-        """  
-        Computes the standard time in minutes.
-        
-        :param day: Day of the month [1, 31].
+        """Convert a clock time to standard time in minutes past midnight.
+
+        Applies a daylight saving time correction when applicable for the
+        configured country.
+
+        :param day: Day of the month in the range [1, 31].
         :type day: int
-        :param month: Month of the year [1, 12].
+        :param month: Month of the year in the range [1, 12].
         :type month: int
-        :param hour: hour of the day [0, 23]
+        :param hour: Hour of the day in the range [0, 23].
         :type hour: int
-        :param minutes: Minutes of the hour [0, 59]
+        :param minutes: Minutes of the hour in the range [0, 59].
         :type minutes: int
-    
+
+        :return: Standard time in minutes past midnight.
+        :rtype: int
         """
         # Standard time. Daylight Saving Time is taken into account
         # input: day .- day of the month [1,31]
@@ -188,19 +201,18 @@ class PVSystems:
         return StdTime
 
     def StandardTimetoSolarTime(self, day, month, hour, minutes):
-        """ 
-        Computes the solar time in minutes.
-        
-        :param day: Day of the month [1, 31].
+        """Convert standard clock time to solar time in minutes past midnight.
+
+        :param day: Day of the month in the range [1, 31].
         :type day: int
-        :param month: Month of the year [1, 12].
+        :param month: Month of the year in the range [1, 12].
         :type month: int
-        :param hour: Hour standard time [0, 23].
+        :param hour: Hour in standard time in the range [0, 23].
         :type hour: int
-        :param minutes: Minutes standard time [0, 59].
+        :param minutes: Minutes in standard time in the range [0, 59].
         :type minutes: int
-        
-        :return: Solar time in minutes.
+
+        :return: Solar time in minutes past midnight.
         :rtype: float
         """
         # input: day .- Day of the month [1,31]
@@ -217,19 +229,17 @@ class PVSystems:
         return STime
 
     def SolarTimetoStandardTime(self, day, month, solartime):
-        """ 
-        Computes the standard time.
-        
-        :param day: Day of the month [1, 31].
+        """Convert solar time to standard time in minutes past midnight.
+
+        :param day: Day of the month in the range [1, 31].
         :type day: int
-        :param month: Month of the year [1, 12].
+        :param month: Month of the year in the range [1, 12].
         :type month: int
-        :param solartime: Solartime [minutes].
+        :param solartime: Solar time in minutes past midnight.
         :type solartime: float
-        
-        :return: Standard time in minutes.
+
+        :return: Standard time in minutes past midnight.
         :rtype: float
-        
         """
         # input: day .- Day of the month [1,31]
         #        month .- Month of the year [1,12]
@@ -237,22 +247,21 @@ class PVSystems:
         #        minute .- Minute std time [0,59]
         #        Long .- Longitude in degrees (+ West; - East)
         # return: Standard Time [min]
-        LStd=self.LongStd( self.Lon)
+        LStd=self.LongStd()
         DoY=self.DayOfYear( day, month)
         E=self.ET( DoY)
         StdTime=solartime-4.0*(LStd-self.Lon)-E
         return StdTime
 
     def SolarTimetoHourAngle(self, SolarTime):
-        """ 
-        Computes the hour angle in degrees.
-        
+        """Convert solar time to the hour angle omega.
+
         :param SolarTime: Solar time in minutes past midnight.
         :type SolarTime: float
-        
-        :return: Omega in degrees.
+
+        :return: Hour angle omega in degrees (negative before solar noon,
+            positive after).
         :rtype: float
-        
         """
         # Input: SolarTime .- Solar time in minutes past midnight [minutes]
         # return: omega [degrees]
@@ -260,21 +269,20 @@ class PVSystems:
         return omega
     
     def StandardTimetoHM(self, standardtime, day, month):
-        """ 
-        Computes de hour and minutes of the day from the standard time in minutes.
-        
-        :param standardtime: Standard time in minutes.
+        """Convert standard time in minutes to a ``[hour, minutes]`` list.
+
+        Applies a daylight saving time correction when applicable for the
+        configured country.
+
+        :param standardtime: Standard time in minutes past midnight.
         :type standardtime: float
-        :param day: Day of the month [1, 31].
+        :param day: Day of the month in the range [1, 31].
         :type day: int
-        :param month: Month of the year [1, 12].
+        :param month: Month of the year in the range [1, 12].
         :type month: int
-        
-        :return: Array of two elements:
-            H[0].- Hour.
-            H[1].- Minutes.
-        :rtype: array of int
-        
+
+        :return: Two-element list ``[hour, minutes]`` in official local time.
+        :rtype: list
         """
         # Input: hourangle .- Solar time in minutes past midnight [minutes]
         #        day .- day of the month [1,31]
@@ -296,15 +304,13 @@ class PVSystems:
         return H    
 
     def HourAngletoSolarTime(self, HourAngle):
-        """ 
-        Computes the solar time in minutes.
-        
-        :param HourAngle: Hour Angle in degrees.
+        """Convert the hour angle to solar time in minutes past midnight.
+
+        :param HourAngle: Hour angle in degrees.
         :type HourAngle: float
-        
-        :return: Solar time in minutes.
+
+        :return: Solar time in minutes past midnight.
         :rtype: float
-        
         """
         # Input: HourAngle [degrees]
         # Return: solar time [minutes]
@@ -312,23 +318,22 @@ class PVSystems:
         return ST
 
     def Theta(self, day, month, hour, minutes, Azimuth, beta):
-        """ 
-        Computes the solar angle.
-        
-        :param day: Day of the month [1, 31].
+        """Compute the angle of incidence of solar radiation on a tilted surface.
+
+        :param day: Day of the month in the range [1, 31].
         :type day: int
-        :param month: Month of the year [1, 12].
+        :param month: Month of the year in the range [1, 12].
         :type month: int
-        :param hour: Hour solar time [0, 23].
+        :param hour: Solar time hour in the range [0, 23].
         :type hour: int
-        :param minutes: Minutes of the hour [0, 59].
+        :param minutes: Solar time minutes in the range [0, 59].
         :type minutes: int
-        :param Azimuth: Azimuth of solar panel in degrees.
+        :param Azimuth: Surface azimuth angle in degrees.
         :type Azimuth: float
-        :param beta: slope of the PV panel in degrees.
+        :param beta: Surface tilt angle from the horizontal in degrees.
         :type beta: float
-        
-        :return: Solar angle theta in degrees.
+
+        :return: Angle of incidence theta in degrees.
         :rtype: float
         """
         # Input: day .- Day of the month [1,31]
@@ -357,22 +362,20 @@ class PVSystems:
         theta=math.acos( cos_theta)/DtR
         return theta
 
-    def Azimuth( self, day, month, hour, minutes ):
-        """  
-        Return de solar azimuth
-        
-        :param day: Day of the month [1, 31].
+    def Azimuth(self, day, month, hour, minutes):
+        """Compute the solar azimuth angle.
+
+        :param day: Day of the month in the range [1, 31].
         :type day: int
-        :param month: Month of the year [1, 12]
+        :param month: Month of the year in the range [1, 12].
         :type month: int
-        :param hour: Hour solar time [0, 23]
+        :param hour: Solar time hour in the range [0, 23].
         :type hour: int
-        :param minutes: Minutes solar time [0, 59]
+        :param minutes: Solar time minutes in the range [0, 59].
         :type minutes: int
-        
-        :return: azimuth angle in degrees
+
+        :return: Solar azimuth angle in degrees.
         :rtype: float
-                
         """
         # Input: day .- day of the month
         #        month .- month
@@ -397,15 +400,13 @@ class PVSystems:
 
 
     def SunsetHourAngle(self, declination):
-        """ 
-        Computes the sunset hour angle in degrees
-        
-        :param declination: Declination angle in degrees.
+        """Compute the sunset hour angle in degrees.
+
+        :param declination: Solar declination in degrees.
         :type declination: float
-        
+
         :return: Sunset hour angle in degrees.
         :rtype: float
-                
         """
         # Input: declination [degrees]
         #        lat .- latitude [degrees]
@@ -417,69 +418,58 @@ class PVSystems:
         return omega_s
     
     def GetLocation(self):
-        """ 
-        Return de Location.
-        
-        :return: Location.
+        """Return the location name.
+
+        :return: Location name.
         :rtype: str
-        
         """
         return self.Location
  
     def GetLatitude(self):
-        """ 
-        Return de Latitude in degrees.
-        
+        """Return the latitude in degrees.
+
         :return: Latitude in degrees.
         :rtype: float
-        
         """
         return self.Lat
     
     def GetLongitude(self):
-        """ 
-        Return the Longitude in degrees.
-        
+        """Return the longitude in degrees.
+
         :return: Longitude in degrees.
         :rtype: float
-        
         """
         return self.Lon
     
-    def print_ver( self):
-        """ 
-        Print module version
-        
-        :return: module version
+    def print_ver(self):
+        """Print and return the module name, version, and last update date.
+
+        :return: Module name, version, and last update date.
         :rtype: str
-        
         """
         ver = "PVSystems module. Version: " + str(self.version) + ". Last update: " + str(self.vdate)
-        return ( ver)
+        print(ver)
+        return ver
         
         
-        print("PVSystems. 2/5/2026. 0:45") 
-        
-        
-    def DatetimetoDayOfYear(self, dt):
-        """
-        Computes the day of the year from a datetime object.
+    def DatetimetoDayOfYearNative(self, dt):
+        """Compute the day of the year from a datetime object using Python's built-in calendar.
+
+        Delegates to :func:`datetime.datetime.timetuple` so leap years are
+        handled automatically.
 
         :param dt: Date and time.
         :type dt: datetime.datetime
 
-        :return: Day of the year [1, 365/366].
+        :return: Day of the year in the range [1, 365/366].
         :rtype: int
         """
-        # input: dt .- datetime object
-        # return: DoY .- Day of the year [1,365/366]
         DoY=dt.timetuple().tm_yday
         return DoY
 
 
     def DatetimetoSolarTime(self, dt):
-        """
-        Computes the solar time in minutes from a datetime object.
+        """Compute the solar time in minutes from a datetime object.
 
         :param dt: Date and time in official local time.
         :type dt: datetime.datetime
@@ -500,13 +490,12 @@ class PVSystems:
 
 
     def DatetimetoSolarHour(self, dt):
-        """
-        Computes the solar time in decimal hours from a datetime object.
+        """Compute the solar time in decimal hours from a datetime object.
 
         :param dt: Date and time in official local time.
         :type dt: datetime.datetime
 
-        :return: Solar time in decimal hours [0, 24).
+        :return: Solar time in decimal hours in the range [0, 24).
         :rtype: float
         """
         # input: dt .- datetime object in official local time
@@ -518,17 +507,18 @@ class PVSystems:
         return SolarHour
         
     def DatetimetoDayOfYear(self, dt):
-        """
-        Computes the day of the year from a datetime object.
+        """Compute the day of the year from a datetime object using an explicit offset table.
+
+        Uses a monthly offset table with an explicit Gregorian leap-year
+        correction. See also :meth:`DatetimetoDayOfYearNative` for an
+        equivalent implementation that delegates to Python's built-in calendar.
 
         :param dt: Date and time.
         :type dt: datetime.datetime
 
-        :return: Day of the year [1, 365/366].
+        :return: Day of the year in the range [1, 365/366].
         :rtype: int
         """
-        # input: dt .- datetime object
-        # return: DoY .- Day of the year [1,365/366]
         offset=[0,0,31,59,90,120,151,181,212,243,273,304,334]
 
         year=dt.year

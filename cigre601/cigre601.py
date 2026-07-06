@@ -1,11 +1,15 @@
-# -*- coding: utf-8
+# -*- coding: utf-8 -*-
 """
 Module: cigre601.py
 
 Description
 -----------
-Thermal rating calculations for overhead transmission lines based on
-CIGRE TB601 methodologies.
+Steady-state and transient thermal rating solver for bare overhead conductors
+following CIGRE Technical Brochure 601. Supports four analysis modes:
+steady-state conductor temperature (NSELECT = 1), steady-state ampacity
+(NSELECT = 2), transient conductor temperature (NSELECT = 3), and transient
+thermal rating (NSELECT = 4). Inputs are provided through a
+:class:`cable.Cable` object and a :class:`case.Case` object.
 
 Author
 ------
@@ -25,7 +29,7 @@ This module is part of the PyPacity project.
 
 References
 ----------
-- CIGRE Technical Brochure 601
+- CIGRE Technical Brochure 601, Guide for Thermal Rating Calculations of Overhead Lines, 2nd ed., 2014
 """
 
 
@@ -38,9 +42,33 @@ reload( cable)
 reload( case)
 
 class CIGRE601():
-    """Implementation of CIGRE TB601."""
-    
+    """Thermal rating solver implementing CIGRE Technical Brochure 601.
+
+    Computes steady-state conductor temperature (NSELECT = 1), steady-state
+    ampacity (NSELECT = 2), and transient conductor temperature (NSELECT = 3)
+    for bare overhead conductors. Inputs are provided via :attr:`Cable1` and
+    :attr:`Case1` before calling :meth:`cigre601`.
+
+    .. raw:: html
+
+       <p style="text-align:center; font-weight:bold; text-decoration:underline;">Attributes</p>
+
+    .. csv-table::
+       :header: "Attribute", "Type", "Description"
+       :widths: 20, 8, 72
+       :align: center
+
+       "``Cable1``", "Cable", "Conductor physical and thermal properties."
+       "``Case1``", "Case", "Environmental and operational inputs."
+       "``Debug``", "int", "Debug output level. ``0`` disables output; ``1`` prints intermediate values during computation. Defaults to ``0``."
+       "``Debug_Dec``", "int", "Number of decimal places used in debug output. Defaults to ``3``."
+       "``Tolerance``", "float", "Convergence tolerance for the conductor temperature iteration in amperes. Defaults to ``1``."
+       "``MaxIterations``", "int", "Maximum number of iterations allowed in the conductor temperature solver. Defaults to ``400``."
+       "``error``", "int", "Error code. ``0`` indicates no error; ``100`` indicates a thermal balance inconsistency. Defaults to ``0``."
+    """
+
     def __init__(self):
+        """Initialise the solver with default Cable, Case, and control parameters."""
         self.Cable1 = cable.Cable()
         self.Case1 = case.Case()
         self.Debug = 0 # 1 print intermediate values
@@ -50,73 +78,112 @@ class CIGRE601():
         self.error = 0 # 0 no error
 
 
-    def set_error( self, error):
-        """Set error value"""
+    def set_error(self, error):
+        """Set the solver error code.
+
+        :param error: Error code to assign. Use ``0`` to clear a previous error.
+        :type error: int
+
+        .. note::
+            Sets :attr:`error` on this instance.
+        """
         self.error = error
         return
-    
-    
-    def get_error( self):
-        """Get error value"""
-        return( self.error)
+
+
+    def get_error(self):
+        """Return the current solver error code.
+
+        :return: Error code. ``0`` indicates no error; ``100`` indicates a
+            thermal balance inconsistency.
+        :rtype: int
+        """
+        return(self.error)
     
 
-    def set_cable( self, Cable):
-        """Set the cable characteristics for a specific CIGRE TB601 analysis.
+    def set_cable(self, Cable):
+        """Assign a conductor definition to this solver.
 
-        Args:
-            Cable (class Cable): Object of type Cable with information about the cable.
+        :param Cable: Conductor physical and thermal properties.
+        :type Cable: cable.Cable
+
+        .. note::
+            Sets :attr:`Cable1` on this instance.
         """
         self.Cable1 = Cable
         return
-        
 
-    def set_case( self, Case):
-        """Set the case characteristics for a specific CIGRE TB601 analysis.
-        
-        Args:
-            Case (class Case): Object of type Case with information about the environmental and other physical conditions to consider in the dynamic operation of the cable.
+
+    def set_case(self, Case):
+        """Assign an environmental and operational case to this solver.
+
+        Initialises any unset attributes required by the solver
+        (``CDR_LAT_DEG``, ``NDAY``, ``SUN_TIME``, ``A3``) to ``0`` if
+        not already set.
+
+        :param Case: Environmental and operational inputs.
+        :type Case: case.Case
+
+        .. note::
+            Sets :attr:`Case1` on this instance.
         """
         self.Case1 = Case
 
         if type(self.Case1.CDR_LAT_DEG) == None:
             self.Case1.CDR_LAT_DEG = 0
-        
+
         if type(self.Case1.NDAY) == None:
             self.Case1.NDAY = 0
-        
+
         if type(self.Case1.SUN_TIME) == None:
             self.Case1.SUN_TIME = 0
-       
+
         if type(self.Case1.A3) == None:
-            self.Case1.A3 = 0       
-            
+            self.Case1.A3 = 0
+
         return
 
-    def sind( self, angle):
-        """Computes the sin of angle [deg].
-        
-        Args:
-            angle (float): angle in deg.
+    def sind(self, angle):
+        """Compute the sine of an angle given in degrees.
+
+        :param angle: Angle in degrees.
+        :type angle: float
+
+        :return: Sine of the angle.
+        :rtype: float
         """
         DEG_TO_RAD = np.pi/180
-        return ( np.sin(DEG_TO_RAD*angle))
-    
-    def cosd( self, angle):
-        """Computes the cos of angle [deg].
-        
-        Args:
-            angle (float): angle in deg.
-        """        
+        return(np.sin(DEG_TO_RAD*angle))
+
+    def cosd(self, angle):
+        """Compute the cosine of an angle given in degrees.
+
+        :param angle: Angle in degrees.
+        :type angle: float
+
+        :return: Cosine of the angle.
+        :rtype: float
+        """
         DEG_TO_RAD = np.pi/180
-        return( np.cos(DEG_TO_RAD*angle))    
+        return(np.cos(DEG_TO_RAD*angle))    
   
   
    ########################################################################
-    def solar( self):
-        """Compute the conductor solar heat gain (QS).
-        
-        :return: Value of solar heat gain QS in W/m.
+    def solar(self):
+        """Compute the solar heat gain rate on the conductor using the IEEE 738 polynomial model.
+
+        Computes the solar altitude from ``Case1.CDR_LAT_DEG``, ``Case1.NDAY``,
+        and ``Case1.SUN_TIME``, then evaluates the solar irradiance at the Earth
+        surface using the polynomial coefficients selected by ``Case1.A3``
+        (``0`` for clear air, ``1`` for industrial atmosphere). When
+        ``Case1.SUN_TIME >= 24``, ``Case1.SolarRadiation`` is used directly as
+        the irradiance instead of computing it from solar position.
+
+        :return: Solar heat gain rate QS in W/m.
+        :rtype: float
+
+        .. note::
+            Sets ``Case1.QS`` to the computed value.
         """
         DEG_TO_RAD = np.pi/180
         RAD_TO_DEG = 180/np.pi
@@ -202,9 +269,16 @@ class CIGRE601():
   
   
   
-    def solarx( self):
-        """Solar heating. Section 3.3 TB601. Pag. 18..
-        
+    def solarx(self):
+        """Compute the solar heat gain rate on the conductor per CIGRE TB 601 Section 3.3.
+
+        Uses the CIGRE TB 601 solar model with clearness ratio ``Case1.Ns``
+        and ground reflectance ``Case1.ALBEDO``. The solar source is selected
+        by ``Case1.SOLAR``: ``0`` uses the measured ``Case1.SolarRadiation``
+        directly; ``1`` computes the irradiance from date, time, and location.
+
+        :return: Solar heat gain rate in W/m.
+        :rtype: float
         """
 
         if self.Debug == 1:
@@ -287,9 +361,14 @@ class CIGRE601():
 
 
 
-    def radiation( self):
-        """Computes the radiative cooling of conductor in W/m. 
-        
+    def radiation(self):
+        """Compute the radiative heat loss rate of the conductor.
+
+        Applies the Stefan-Boltzmann law using surface emissivity
+        ``Cable1.EMISS`` and the conductor temperature ``Case1.TCDR``.
+
+        :return: Radiative heat loss rate in W/m.
+        :rtype: float
         """
         # Pr Pag. 30. Eq (27).
         # sigmaB. Stefan-Boltzmann constant        
@@ -303,9 +382,18 @@ class CIGRE601():
         return Pr
         
 
-    def joule( self):
-        """Computes the Joule heating of conductor in W/m.
-        
+    def joule(self):
+        """Compute the Joule heating rate of the conductor.
+
+        The current used depends on ``Case1.NSELECT``: ``Case1.XIPRELOAD``
+        for NSELECT = 1, ``Case1.TR`` for NSELECT = 2, and ``Case1.XISTEP``
+        for NSELECT = 3 and 4.
+
+        :return: Joule heating rate in W/m.
+        :rtype: float
+
+        .. note::
+            Sets ``Case1.QJ`` to the computed value.
         """
         Rac = self.Rac()
         
@@ -325,9 +413,21 @@ class CIGRE601():
 
 
 
-    def convection( self):
-        """Computes de convective cooling of conductor in W/m.
-        
+    def convection(self):
+        """Compute the convective heat loss rate of the conductor.
+
+        Evaluates both natural and forced convection following CIGRE TB 601
+        and returns the larger of the two. Natural convection coefficients are
+        selected from the Grashof-Prandtl product. Forced convection
+        coefficients depend on the Reynolds number and the conductor roughness
+        ratio ``d / (2*(D - d))``.
+
+        :return: Convective heat loss rate in W/m.
+        :rtype: float
+
+        .. note::
+            Computes ``Case1.WINDANG_DEG`` from ``Case1.DWIND_DEG`` and
+            ``Case1.Z1_DEG`` before evaluating forced convection.
         """
         if self.Debug == 1:
             print("****************************************")
@@ -490,9 +590,14 @@ class CIGRE601():
         return Pc
 
 
-    def Rac( self):
-        """Computes the equivalente conductor resistance [ohm/m] at operation temperature. 
-        
+    def Rac(self):
+        """Compute the AC resistance of the conductor at the operating temperature.
+
+        Applies a linear interpolation between ``Cable1.RLO`` at ``Cable1.TLO``
+        and ``Cable1.RHI`` at ``Cable1.THI``, evaluated at ``Case1.TCDR``.
+
+        :return: AC resistance in ohm/m.
+        :rtype: float
         """
         
         alpha = (self.Cable1.RHI - self.Cable1.RLO)/(self.Cable1.THI - self.Cable1.TLO)
@@ -509,9 +614,18 @@ class CIGRE601():
 
 
 
-    def cigre601( self):
-        """ 
-        
+    def cigre601(self):
+        """Run the CIGRE TB 601 thermal rating analysis for the configured mode.
+
+        Dispatches to the appropriate solver method based on ``Case1.NSELECT``:
+
+        - ``1``: calls :meth:`conductor_temperature` — steady-state conductor
+          temperature for a given current.
+        - ``2``: calls :meth:`thermal_rating` — steady-state ampacity for a
+          given conductor temperature.
+        - ``3``: calls :meth:`TCDR_vs_time` — transient conductor temperature
+          evolution.
+        - ``4``: transient thermal rating (reserved for future implementation).
         """
 
         if self.Case1.NSELECT == 1:
@@ -528,9 +642,16 @@ class CIGRE601():
         return
     
 
-    def conductor_temperature( self):
-        """Computes the conductor temperature 
-        
+    def conductor_temperature(self):
+        """Compute the steady-state conductor temperature for a given current.
+
+        Iterates :meth:`thermal_rating` while stepping the conductor
+        temperature downward from ``Cable1.TCDRMAX + 100`` until the rated
+        current equals ``Case1.XIPRELOAD``, then interpolates to find the
+        exact equilibrium temperature.
+
+        .. note::
+            Sets ``Case1.TCDRPRELOAD`` to the computed conductor temperature.
         """
         
         TCDR = self.Cable1.TCDRMAX + 100
@@ -568,9 +689,19 @@ class CIGRE601():
     
 
 
-    def TCDR_vs_time( self):
-        """Computes the transient evolution of conductor temperature.
-        
+    def TCDR_vs_time(self):
+        """Compute the transient conductor temperature evolution over time.
+
+        Integrates the heat balance equation step by step using
+        ``Case1.DELTIME`` as the time step. The starting temperature is either
+        computed from steady state (when ``Case1.TTfromST = 1``) or taken
+        directly from ``Case1.TCDRinitial`` (when ``Case1.TTfromST = 0``).
+        Total simulation time is ``Case1.TT`` seconds, or
+        ``Case1.TT * 60`` seconds when ``Case1.SORM = 1``.
+
+        .. note::
+            Sets ``Case1.TIME`` and ``Case1.ATCDR`` with the time and
+            temperature traces respectively.
         """        
         t = 0
         Tc = 0
@@ -634,11 +765,22 @@ class CIGRE601():
         self.Case1.ATCDR = temp              
         
    
-    def thermal_rating( self):
-        """Implementation of CIGRE TB601.
-        
+    def thermal_rating(self):
+        """Compute the steady-state ampacity for a given conductor temperature.
 
-        """ 
+        Evaluates solar heat gain (:meth:`solarx`), radiative cooling
+        (:meth:`radiation`), convective cooling (:meth:`convection`), and AC
+        resistance (:meth:`Rac`) at ``Case1.TCDR``, then solves the heat
+        balance for the current that produces thermal equilibrium.
+
+        :return: Steady-state ampacity in amperes.
+        :rtype: float
+
+        .. note::
+            Sets ``Case1.QS``, ``Case1.QR``, ``Case1.QC``, ``Case1.RAC``,
+            ``Case1.TR``, and ``self.deltaTcTs_value``. Sets
+            ``self.error = 100`` if no thermal balance is achievable.
+        """
 
         # Solar heating
         Ps = self.solarx()  
@@ -676,18 +818,27 @@ class CIGRE601():
         return I       
 
 
-    def str_round( self, valuex):
-        """Obtain the rounded value of <valuex> acording the variable <self.Debug_Dec>. 
-               
-        Args:
-            valuex (float): value to be rounded according the number of decimal values defined by <self.Debug_Dec>.
+    def str_round(self, valuex):
+        """Return a rounded string representation of a numeric value.
+
+        Rounds to the number of decimal places defined by :attr:`Debug_Dec`.
+
+        :param valuex: Value to round and convert.
+        :type valuex: float
+
+        :return: Rounded value as a string.
+        :rtype: str
         """
         return str( round( valuex, self.Debug_Dec))
 
     
-    def output( self):
-        """Print a summary of intermediate results
-            
+    def output(self):
+        """Print a formatted summary of the most recent analysis results.
+
+        For NSELECT = 1 prints the input current and the resulting steady-state
+        temperature. For NSELECT = 2 prints the input temperature and the
+        resulting ampacity. Solar heat gain, radiative cooling, convective
+        cooling, and the core-surface temperature difference are always printed.
         """
         print(" ")
         print(" ")
@@ -715,16 +866,24 @@ class CIGRE601():
    
    
     
-    def print_ver( self):
-        """Print version of cigre601 module.
-        
-        """
+    def print_ver(self):
+        """Print the module name and release date to standard output."""
         print("CIGRE TB601. 2/5/2026. 15:35")
         
     
-    def deltaTcTs( self):
-        """Compute the temperature difference between conductor surface and core.
-        
+    def deltaTcTs(self):
+        """Compute the temperature difference between conductor core and surface.
+
+        Uses the effective radial thermal conductivity ``Cable1.lambda_ertc``
+        and the steady-state current ``Case1.TR`` to evaluate the radial
+        temperature gradient through the conductor cross-section.
+
+        :return: Temperature difference between conductor core and surface
+            in deg C.
+        :rtype: float
+
+        .. note::
+            Sets ``self.deltaTcTs_value`` to the computed value.
         """
         D1 = self.Cable1.D1
         D = self.Cable1.D

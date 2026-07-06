@@ -81,6 +81,7 @@ autosummary_generate = True
 #source_suffix = ['.rst', '.txt']
 
 autodoc_typehints = "description"
+autodoc_member_order = 'bysource'
 
 # Define the html theme
 # https://www.sphinx-doc.org/en/master/usage/theming.html

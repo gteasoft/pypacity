@@ -59,19 +59,24 @@ Thermal Rating. I_CDR = f(T_CDR)
 
 Calculate the steady-state current (Case.TR) given the steady-state conductor temperature (Case.TCDR)
 
-**Input Parameters**
+.. raw:: html
+
+   <p style="text-align:center; font-weight:bold; text-decoration:underline;">Input Parameters</p>
 
 .. tabularcolumns:: |p{4cm}|p{10cm}|p{10cm}|
 
-.. csv-table:: 
+.. csv-table::
     :file: files/thermal_rating_input.csv
     :header-rows: 1
     :class: longtable
     :widths: 1 1 1
+    :align: center
 
 
 
-**Output Parameters**
+.. raw:: html
+
+   <p style="text-align:center; font-weight:bold; text-decoration:underline;">Output Parameters</p>
 
 .. tabularcolumns:: |p{4cm}|p{10cm}|p{10cm}|
 
@@ -80,6 +85,7 @@ Calculate the steady-state current (Case.TR) given the steady-state conductor te
     :header-rows: 1
     :class: longtable
     :widths: 1 1 1
+    :align: center
 
 
 **Example**

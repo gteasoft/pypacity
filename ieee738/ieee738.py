@@ -45,11 +45,19 @@ class IEEE738():
     as defined in the IEEE Standard for Calculating the Current-Temperature
     Relationship of Bare Overhead Conductors.
 
-    Attributes:
-        :Cable1 (Cable): Object of class Cable with the conductor parameters.
-        :Case1 (Case): Object of class Case with the environmental and physical conditions.
-        :Debug (int): Debug mode flag. Set to 1 to print intermediate calculation values.
-        :Debug_Dec (int): Number of decimal places used when printing debug information.
+    .. raw:: html
+
+       <p style="text-align:center; font-weight:bold; text-decoration:underline;">Attributes</p>
+
+    .. csv-table::
+       :header: "Attribute", "Type", "Description"
+       :widths: 20, 8, 72
+       :align: center
+
+       "``Cable1``", "Cable", "Conductor physical and electrical properties."
+       "``Case1``", "Case", "Environmental and operational inputs."
+       "``Debug``", "int", "Debug output level. ``0`` disables output; ``1`` prints intermediate calculation values. Defaults to ``0``."
+       "``Debug_Dec``", "int", "Number of decimal places used in debug output. Defaults to ``3``."
     """
     #DEG_TO_RAD = np.pi/180
      
