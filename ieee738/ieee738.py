@@ -89,17 +89,17 @@ class IEEE738():
         """
         self.Case1 = Case
 
-        if type(self.Case1.CDR_LAT_DEG) == None:
+        if self.Case1.CDR_LAT_DEG is None:
             self.Case1.CDR_LAT_DEG = 0
-        
-        if type(self.Case1.NDAY) == None:
+
+        if self.Case1.NDAY is None:
             self.Case1.NDAY = 0
-        
-        if type(self.Case1.SUN_TIME) == None:
+
+        if self.Case1.SUN_TIME is None:
             self.Case1.SUN_TIME = 0
-       
-        if type(self.Case1.A3) == None:
-            self.Case1.A3 = 0       
+
+        if self.Case1.A3 is None:
+            self.Case1.A3 = 0
             
         return
      
@@ -1051,7 +1051,7 @@ class IEEE738():
                     #11220 PRINT "EVEN IF THE CURRENT IS REDUCED TO ZERO AMPS, THE CONDUCTOR"
                     print("Even if the current is reduced to zero amps, the conductor")
                     #11230 PRINT USING "TEMPERATURE WILL NOT DECREASE TO ####.# DEG C IN ####.#
-                    print("temperature will no decrease to ", self.Cable1.TCDRMAX, " in ", self.Cable1TT/60, " minutes")
+                    print("temperature will no decrease to ", self.Cable1.TCDRMAX, " in ", self.Case1.TT/60, " minutes")
                     #MINUTES"; TCDRMAX; TT / 60
                     #11240 GOTO 1880
                     sys.exit(0)
@@ -1061,11 +1061,18 @@ class IEEE738():
             #11270 REM **********************************
             if ( self.Case1.TIME[self.Case1.K - 1] >= 60) or ( self.Cable1.FLAG == 1) or ( self.Cable1.HEATCORE == 0) or (self.Case1.TT < 60):
                 break
-        
-                self.Cable1.HEATCAP = self.Cable1.HEATOUT
-                self.Cable1.FLAG = 1
+
+                # NOTE: The two lines below are unreachable code — they sit right after
+                # the `break` above, inside the same `if` block, so Python never executes
+                # them under any input. They look like leftover logic that was meant to
+                # run before repeating the outer loop with HEATOUT-only heat capacity
+                # (short-duration fault case), but as written they never fire. Left here
+                # commented out rather than deleted, pending a decision on intended
+                # behaviour.
+                # self.Cable1.HEATCAP = self.Cable1.HEATOUT
+                # self.Cable1.FLAG = 1
                 #11310 GOTO 11050
-                
+
     
     
         self.Case1.KTIMEMAX = self.Case1.K
