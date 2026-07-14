@@ -253,11 +253,12 @@ class Case():
 
             - ``3`` (transient conductor temperature): ``XIPRELOAD = 400 A``,
               ``XISTEP = 1200 A``, ``SORM = 1``, ``TT = 7200``,
-              ``DELTIME = 30 s``, ``HNH = 2``.
+              ``DELTIME = 30 s``.
             - ``4`` (transient thermal rating): ``IORTPRELOAD = 2``,
-              ``TCDRPRELOAD = 40 °C``, ``TCDRMAX = 150 °C``,
-              ``SORM = 1``, ``TT = 1800``, ``DELTIME = 60 s``,
-              ``HNH = 2``.
+              ``TCDRPRELOAD = 40 °C``, ``SORM = 1``, ``TT = 1800``,
+              ``DELTIME = 60 s``. The conductor temperature limit for this
+              mode is read from :attr:`cable.Cable.TCDRMAX`, not from this
+              case.
 
         :type NSELECT: int
 
@@ -300,15 +301,12 @@ class Case():
             self.SORM = 1
             self.TT = 7200
             self.DELTIME = 30
-            self.HNH = 2
         elif NSELECT == 4:
             self.IORTPRELOAD = 2
             self.TCDRPRELOAD = 40
-            self.TCDRMAX = 150
             self.SORM = 1
             self.TT = 1800
             self.DELTIME = 60
-            self.HNH = 2
 
         if self.A3 == 0:
             self.Bstring = "CLEAR"

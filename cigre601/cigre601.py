@@ -486,18 +486,14 @@ class CIGRE601():
             m = 0.333
 
         Nunat = A*(GrPr)**m
-
-        # NOTE: Nubeta is the beta-corrected (conductor inclination) natural-convection
-        # Nusselt number, but it is never used below — Pcnat is computed from the
-        # uncorrected Nunat instead. As written, Case1.beta has no effect on natural
-        # convection. Left as-is pending a decision on whether Pcnat should use Nubeta.
         
         if self.Cable1.Stranded == 1: # stranted conductor
             Nubeta = Nunat*(1 - 1.76e-6*(self.Case1.beta**2.5))
         else: # smooth conductor
             Nubeta = Nunat*(1 - 1.58e-4*(self.Case1.beta**1.5))
 
-        Pcnat = np.pi*lambdaf*(self.Case1.TCDR - self.Case1.TAMB)*Nunat
+        Pcnat = np.pi*lambdaf*(self.Case1.TCDR - self.Case1.TAMB)*Nubeta
+        
         if self.Debug == 1:
             print('Pc,nat: ' + self.str_round(Pcnat) + ' W/m')
         
@@ -664,7 +660,15 @@ class CIGRE601():
         deltaI = 1
         
         
-        # abs(balance) > self.Tolerance) 
+        # abs(balance) > self.Tolerance)
+
+        # NOTE: self.Tolerance (declared in __init__, documented as the convergence
+        # tolerance) is never actually checked below — the loop stops on the sign
+        # change of deltaI instead, with a fixed 0.5 deg C step. Changing
+        # self.Tolerance currently has no effect on the result. Left as-is pending
+        # a decision on whether to wire it in here as the intended stopping criterion.
+
+        
         while (deltaI > 0) and (Niterations < self.MaxIterations):
             self.Case1.TCDRPRELOAD = TCDR 
             self.Case1.TCDR = self.Case1.TCDRPRELOAD         
