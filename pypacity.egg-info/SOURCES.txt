@@ -1,8 +1,0 @@
-README.md
-setup.py
-pypacity/__init__.py
-pypacity.egg-info/PKG-INFO
-pypacity.egg-info/SOURCES.txt
-pypacity.egg-info/dependency_links.txt
-pypacity.egg-info/not-zip-safe
-pypacity.egg-info/top_level.txt
