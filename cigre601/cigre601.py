@@ -129,16 +129,16 @@ class CIGRE601():
         """
         self.Case1 = Case
 
-        if type(self.Case1.CDR_LAT_DEG) == None:
+        if self.Case1.CDR_LAT_DEG is None:
             self.Case1.CDR_LAT_DEG = 0
 
-        if type(self.Case1.NDAY) == None:
+        if self.Case1.NDAY is None:
             self.Case1.NDAY = 0
 
-        if type(self.Case1.SUN_TIME) == None:
+        if self.Case1.SUN_TIME is None:
             self.Case1.SUN_TIME = 0
 
-        if type(self.Case1.A3) == None:
+        if self.Case1.A3 is None:
             self.Case1.A3 = 0
 
         return
@@ -251,7 +251,7 @@ class CIGRE601():
             Q3 = self.Case1.SolarRadiation
     
         #5400 REM * CALCULATE SOLAR AZIMUTH IN DEGREES, Z4.DEG
-        Z4_DEG = CAZ + np.arctan(CHI)
+        Z4_DEG = CAZ + np.arctan(CHI)/DEG_TO_RAD
         Z4_RAD = Z4_DEG*DEG_TO_RAD
         Z1_RAD = self.Case1.Z1_DEG*DEG_TO_RAD
         E1 = np.cos(H3_RAD)*np.cos(Z4_RAD-Z1_RAD)
@@ -486,6 +486,11 @@ class CIGRE601():
             m = 0.333
 
         Nunat = A*(GrPr)**m 
+        
+        # NOTE: Nubeta is the beta-corrected (conductor inclination) natural-convection
+        # Nusselt number, but it is never used below — Pcnat is computed from the
+        # uncorrected Nunat instead. As written, Case1.beta has no effect on natural
+        # convection. Left as-is pending a decision on whether Pcnat should use Nubeta.
        
         if self.Cable1.Stranded == 1: # stranted conductor
             Nubeta = Nunat*(1 - 1.76e-6*(self.Case1.beta**2.5))
