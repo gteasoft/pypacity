@@ -486,7 +486,10 @@ class CIGRE601():
             m = 0.333
 
         Nunat = A*(GrPr)**m
-        
+
+        # NOTE: Nubeta is the beta-corrected (conductor inclination) natural-convection
+        # Nusselt number, and Pcnat below now uses it, so Case1.beta correctly affects
+        # natural convection.
         if self.Cable1.Stranded == 1: # stranted conductor
             Nubeta = Nunat*(1 - 1.76e-6*(self.Case1.beta**2.5))
         else: # smooth conductor
