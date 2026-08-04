@@ -50,7 +50,6 @@ Modules
    cable
    case
    ieee738
-   cigre207
    cigre601
    pvsystems 
 
