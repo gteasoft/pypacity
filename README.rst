@@ -2,16 +2,15 @@ pypacity
 ##########################
 
 
-.. raw:: html
-    .. image:: _images/50UC_RGB.svg   
-        :width: 200px
 
-.. raw:: html
+.. image:: docs/images/pypacity_logo.png
+   :alt: Pypacity
+   :align: center
 
    <br>
 
 .. raw:: html
-    .. image:: _images/badge.svg   
+    .. image:: pypacity_logo.png   
 
 .. raw:: html
     .. image:: https://github.com/shunsvineyard/python-sample-code/workflows/Linting/badge.svg 
@@ -28,10 +27,15 @@ pypacity
 
 The **pypacity** is a Python library for ampacity computation. 
 
-The library provides methods for the computation of IEEE 738 and CIGRE TB 601.
+The library provides methods for the computation of IEEE 738 and CIGRE TB 601 in both static and transient conditions.
 
 .. math::
     q_c + q_r = q_s + I^2 R(T_{avg})
+
+
+**pypacity** is a joint development of the GTEA research group of the Department of Electrical and Energy Engineering, Universidad de Cantabria, Spain.
+
+
 
 Requirements
 ------------
@@ -147,3 +151,11 @@ Calculate the steady-state current (Case.TR) given the steady-state conductor te
     X2.outputs()
 
 
+.. raw:: html
+    .. image:: _images/50UC_RGB.svg   
+        :width: 200px
+
+
+.. image:: docs/images/UC_logo.png
+   :alt: Universidad de Cantabria
+   :align: center
