@@ -25,7 +25,6 @@ classifiers = [
     "Development Status :: 3 - Alpha",
     "Intended Audience :: Education",
     "Intended Audience :: Science/Research",
-    "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
     "Operating System :: OS Independent",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.9",
@@ -38,6 +37,9 @@ classifiers = [
 dependencies = [
     "numpy>=1.23",
     "pandas>=1.5",
+    "matplotlib",
+    "ipympl",
+    "ipykernel"
 ]
 
 [project.optional-dependencies]
