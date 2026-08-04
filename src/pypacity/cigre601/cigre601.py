@@ -35,11 +35,11 @@ References
 
 import numpy as np
 import sys
-from cable import cable
-from case import case
+from pypacity.cable import cable
+from pypacity.case import case
 from importlib import reload
-reload( cable)
-reload( case)
+#reload( cable)
+#reload( case)
 
 class CIGRE601():
     """Thermal rating solver implementing CIGRE Technical Brochure 601.
