@@ -1,13 +1,15 @@
+
+.. image:: docs/images/pypacity_logo.png
+   :alt: Pypacity
+   :width: 200px
+   :align: center
+
+   <br>
+
 pypacity 
 ##########################
 
 
-
-.. image:: docs/images/pypacity_logo.png
-   :alt: Pypacity
-   :align: center
-
-   <br>
 
 .. raw:: html
     .. image:: pypacity_logo.png   
@@ -158,4 +160,5 @@ Calculate the steady-state current (Case.TR) given the steady-state conductor te
 
 .. image:: docs/images/UC_logo.png
    :alt: Universidad de Cantabria
+   :width: 200px
    :align: center
