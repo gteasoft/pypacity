@@ -1,6 +1,6 @@
 .. image:: docs/images/pypacity_logo.png
    :alt: PyPacity
-   :width: 200px
+   :width: 300px
    :align: center
 
 
