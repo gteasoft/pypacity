@@ -11,7 +11,6 @@ requires-python = ">=3.9"
 license = "GPL-3.0-only"
 authors = [
     { name = "GTEA - Universidad de Cantabria" },
-    { name = "Mario Mañana Canteli" },
 ]
 keywords = [
     "ampacity",
