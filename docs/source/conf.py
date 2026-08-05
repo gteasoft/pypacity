@@ -12,8 +12,8 @@ import sys
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
 project = 'pypacity'
-copyright = '2023, Universidad de Cantabria. DIEE. GTEA'
-author = 'Mario Mañana'
+copyright = 'Copyright (c) 2026 Group of Advanced Electro-Technologies (GTEA). Universidad de Cantabria. All rights reserved'
+author = 'Group of Advanced Electro-Technologies (GTEA). Universidad de Cantabria'
 release = '1.0'
 
 # -- General configuration ---------------------------------------------------
@@ -21,7 +21,7 @@ release = '1.0'
 
 
 #sys.path.insert(0, os.path.abspath(".."))
-sys.path.insert(0, os.path.abspath("../.."))
+sys.path.insert(0, os.path.abspath("../../src"))
 #sys.path.insert(0, os.path.abspath("../../.."))
 #sys.path.insert(0, os.path.abspath("../../cable"))
 
@@ -34,7 +34,11 @@ sys.path.insert(0, os.path.abspath("../.."))
 # coming with Sphinx (named 'sphinx.ext.*') or your custom ones.
 #extensions = ['sphinx.ext.intersphinx', 'sphinx.ext.mathjax', 'sphinx.ext.autodoc', 
 #              'sphinx.ext.autosummary'] #sphinx.ext.mathjax and sphinx.ext.imgmath don't comply with each other anymore., pngmath will be replaced by imgmath in new sphinx version
-extensions = [ 'sphinx.ext.napoleon', 'sphinx_rtd_size', ]
+extensions = [
+    "sphinx.ext.autodoc",
+    "sphinx.ext.napoleon",
+    "sphinx_rtd_size",
+]
 
 sphinx_rtd_size_width = "90%"
 napoleon_google_docstring = False

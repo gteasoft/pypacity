@@ -1,6 +1,6 @@
 case module
 =============
-.. automodule:: case.case
+.. automodule:: pypacity.case.case
    :members:
    :undoc-members:
    :show-inheritance:

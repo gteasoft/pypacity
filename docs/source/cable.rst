@@ -1,7 +1,7 @@
 cable module
 =============
 
-.. automodule:: cable.cable
+.. automodule:: pypacity.cable.cable
    :members:
    :private-members:
    :undoc-members:
