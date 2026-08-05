@@ -8,6 +8,7 @@
 PyPacity
 ========
 
+
 .. image:: https://github.com/gteasoft/pypacity/actions/workflows/docs.yml/badge.svg?branch=master
    :target: https://github.com/gteasoft/pypacity/actions/workflows/docs.yml
    :alt: Documentation build
@@ -51,14 +52,16 @@ Documentation
 The complete documentation includes the theoretical formulation,
 input and output parameters, and application examples.
 
+.. toctree::
+   :maxdepth: 2
+   :caption: Contents
+
+   quickstart
+
+
 .. image:: _images/UC_logo.png
    :alt: Universidad de Cantabria
    :width: 200px
    :align: center
 
 
-.. toctree::
-   :maxdepth: 2
-   :caption: Contents
-
-   quickstart
