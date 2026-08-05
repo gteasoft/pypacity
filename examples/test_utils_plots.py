@@ -13,7 +13,7 @@ plt.rc('legend',framealpha=1)
 plt.rc('lines' ,linewidth=0.9) # lw
 
 plt.rcParams.update({
-    "text.usetex": False,
+    "text.usetex": False,  # Change to True if you want to use LaTeX for text rendering
     "font.family": "serif",
 })
 

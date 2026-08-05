@@ -4,8 +4,10 @@
    contain the root `toctree` directive.
 
 
-.. image:: _images/50UC_RGB_title_iberdrola.svg   
-    :width: 400px
+.. image:: ../images/pypacity_logo.png
+   :alt: pypacity logo
+   :align: center
+   :width: 400px
 
 
 .. raw::html
@@ -51,7 +53,7 @@ Modules
    case
    ieee738
    cigre601
-   pvsystems 
+   solar
 
 Indices and tables
 ==================
