@@ -5,4 +5,3 @@
    :caption: Contents
 
    quickstart
-   api

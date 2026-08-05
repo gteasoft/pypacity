@@ -19,29 +19,7 @@ where :math:`q_c` is the convective heat loss, :math:`q_r` is the radiative
 heat loss, :math:`q_s` is the solar heat gain, and :math:`R(T_{avg})` is the
 conductor resistance evaluated at its average temperature.
 
-Input parameters
-^^^^^^^^^^^^^^^^
 
-.. tabularcolumns:: |p{4cm}|p{10cm}|p{10cm}|
-
-.. csv-table::
-   :file: files/thermal_rating_input.csv
-   :header-rows: 1
-   :class: longtable
-   :widths: 1 1 1
-   :align: center
-
-Output parameters
-^^^^^^^^^^^^^^^^^
-
-.. tabularcolumns:: |p{4cm}|p{10cm}|p{10cm}|
-
-.. csv-table::
-   :file: files/thermal_rating_output.csv
-   :header-rows: 1
-   :class: longtable
-   :widths: 1 1 1
-   :align: center
 
 Example
 ^^^^^^^
@@ -52,11 +30,14 @@ and CIGRE TB 601.
 
 .. code-block:: python
 
-   from cable import cable
-   from case import case
-   from ieee738 import ieee738
-   from cigre601 import cigre601
-   from pvsystems import pvsystems
+   from pypacity.ieee738 import ieee738
+   from pypacity.cable import cable
+   from pypacity.case import case
+   from pypacity.utils import solar
+   from datetime import datetime
+
+   import matplotlib.pyplot as plt 
+   import numpy as np
 
    NSELECT = 2
 

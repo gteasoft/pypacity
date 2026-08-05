@@ -1,8 +1,5 @@
-.. pypacity documentation master file, created by
-   sphinx-quickstart on Wed Apr  5 21:11:44 2023.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
-
+PyPacity
+========
 
 .. image:: ../images/pypacity_logo.png
    :alt: pypacity logo
@@ -23,9 +20,9 @@
 
 .
 
+**PyPacity** is a Python library for computing the ampacity of overhead electrical conductors.
 
-Python Ampacity (pypacity) is a library devoted to the analysis of ampacity in Overhead Transmission Lines. The development of pypacity is partially funded by Iberdrola.
-
+It implements the IEEE 738 and CIGRE TB 601 methods under steady-state and transient conditions.
 
 .. raw:: html
 
