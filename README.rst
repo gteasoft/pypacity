@@ -1,4 +1,4 @@
-.. image:: docs/sources/_images/pypacity_logo.png
+.. image:: docs/source/_images/pypacity_logo.png
    :alt: PyPacity
    :width: 300px
    :align: center
@@ -33,7 +33,7 @@ Documentation
 The complete documentation includes the theoretical formulation,
 input and output parameters, and application examples.
 
-.. image:: docs/sources/_images/UC_logo.png
+.. image:: docs/source/_images/UC_logo.png
    :alt: Universidad de Cantabria
    :width: 200px
    :align: center
