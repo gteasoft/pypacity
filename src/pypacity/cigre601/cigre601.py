@@ -733,7 +733,9 @@ class CIGRE601():
             tend = self.Case1.TT
             
         steps = int(tend/self.Case1.DELTIME)
-        print("steps: ", steps)
+        if self.Debug == 1:
+            print("steps: ", steps)
+            
         for _ in range(steps):
             
             
@@ -754,7 +756,8 @@ class CIGRE601():
             deltaT = (Pj + Ps - Pr - Pc)*deltaTime/(mc)
             
             # Update time and conductor temperature for the transient step
-            print(f"Tinitial: {Tc:6.3f}°C  dT:{deltaT:0.3f}") 
+            if self.Debug == 1:
+                print(f"Tinitial: {Tc:6.3f}°C  dT:{deltaT:0.3f}") 
 
 
             t += deltaTime

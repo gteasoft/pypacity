@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Module: pvsystems.py
+Module: solar
 
 Description
 -----------
@@ -35,7 +35,7 @@ import math
 import numpy as np
 
 
-class PVSystems():
+class SolarGeometry():
     """Solar geometry and time-conversion toolkit.
 
     Computes solar declination, hour angle, azimuth, extraterrestrial
