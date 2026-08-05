@@ -6,17 +6,13 @@ Description
 -----------
 Operating-case data model for PyPacity ampacity calculations.
 
-Author
-------
-Mario Mañana
-
 Copyright
 ---------
-Copyright (c) 2026 Mario Mañana
+Copyright (c) 2026 Group of Advanced Electro-Technologies (GTEA). Universidad de Cantabria. All rights reserved.
 
 License
 -------
-MIT License
+SPDX-License-Identifier: GPL-3.0-only
 
 Notes
 -----

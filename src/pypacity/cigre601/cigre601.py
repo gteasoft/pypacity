@@ -11,17 +11,13 @@ steady-state conductor temperature (NSELECT = 1), steady-state ampacity
 thermal rating (NSELECT = 4). Inputs are provided through a
 :class:`cable.Cable` object and a :class:`case.Case` object.
 
-Author
-------
-Mario Mañana
-
 Copyright
 ---------
-Copyright (c) 2026 Mario Mañana
+Copyright (c) 2026 Group of Advanced Electro-Technologies (GTEA). Universidad de Cantabria. All rights reserved.
 
 License
 -------
-MIT License
+SPDX-License-Identifier: GPL-3.0-only
 
 Notes
 -----

@@ -7,17 +7,13 @@ Description
 Thermal rating calculations for overhead transmission lines performed in accordance with the IEEE 
 Standard for Calculating the Current-Temperature Relationship of Bare Overhead Conductors.
 
-Author
-------
-Mario Mañana
-
 Copyright
 ---------
-Copyright (c) 2026 Mario Mañana
+Copyright (c) 2026 Group of Advanced Electro-Technologies (GTEA). Universidad de Cantabria. All rights reserved.
 
 License
 -------
-GPL-3.0 License
+SPDX-License-Identifier: GPL-3.0-only
 
 Notes
 -----
