@@ -743,7 +743,7 @@ class CIGRE601():
             
             # Compute the heat balance power terms 
             Pj = self.joule() 
-            Ps = self.solar()
+            Ps = self.solarx()
             Pr = self.radiation()
             Pc = self.convection()
             
