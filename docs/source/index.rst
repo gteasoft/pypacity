@@ -1,7 +1,7 @@
 PyPacity
 ========
 
-.. image:: ../images/pypacity_logo.png
+.. image:: ./_images/pypacity_logo.png
    :alt: pypacity logo
    :align: center
    :width: 400px

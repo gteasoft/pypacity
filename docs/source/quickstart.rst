@@ -91,9 +91,6 @@ and CIGRE TB 601.
 Notes
 ^^^^^
 
-* The paths in the ``csv-table`` directives assume that this file is stored
-  as ``docs/source/quickstart.rst`` and that the CSV files are stored in
-  ``docs/source/files``.
 * The import statements reproduce the current module structure of the example.
   They should be updated if the package is reorganized to use imports such as
   ``from pypacity...``.
