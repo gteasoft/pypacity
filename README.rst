@@ -7,29 +7,17 @@
 PyPacity
 ========
 
-.. image:: https://img.shields.io/pypi/v/pypacity.svg
-   :target: https://pypi.org/project/pypacity/
-   :alt: PyPI version
-
-.. image:: https://img.shields.io/pypi/pyversions/pypacity.svg
-   :target: https://pypi.org/project/pypacity/
-   :alt: Supported Python versions
-
-.. image:: https://github.com/gteasoft/pypacity/actions/workflows/tests.yml/badge.svg?branch=master
-   :target: https://github.com/gteasoft/pypacity/actions/workflows/tests.yml
-   :alt: Tests
-
 .. image:: https://github.com/gteasoft/pypacity/actions/workflows/docs.yml/badge.svg?branch=master
-   :target: https://gteasoft.github.io/pypacity/
-   :alt: Documentation
+   :target: https://github.com/gteasoft/pypacity/actions/workflows/docs.yml
+   :alt: Documentation build
 
-.. image:: https://codecov.io/gh/gteasoft/pypacity/branch/master/graph/badge.svg
-   :target: https://codecov.io/gh/gteasoft/pypacity
-   :alt: Code coverage
+.. image:: https://img.shields.io/badge/status-development-orange.svg
+   :target: https://github.com/gteasoft/pypacity
+   :alt: Development status
 
-.. image:: https://img.shields.io/pypi/l/pypacity.svg
+.. image:: https://img.shields.io/badge/license-BSD--3--Clause-blue.svg
    :target: https://github.com/gteasoft/pypacity/blob/master/LICENSE
-   :alt: License
+   :alt: BSD 3-Clause License
 
 
 **PyPacity** is a Python library for computing the ampacity of
