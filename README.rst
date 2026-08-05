@@ -19,7 +19,10 @@ PyPacity
    :target: https://github.com/gteasoft/pypacity/blob/master/LICENSE
    :alt: BSD 3-Clause License
 
-<br>
+.. |nbsp| unicode:: 0xA0
+   :trim:
+
+|nbsp|
 
 **PyPacity** is a Python library for computing the ampacity of
 overhead electrical conductors.
