@@ -1,7 +1,7 @@
-pvsystems module
+solar module
 ================
 
-.. automodule:: utils.pvsystems
+.. automodule:: pypacity.utils.solar
    :members:
    :undoc-members:
    :show-inheritance:
