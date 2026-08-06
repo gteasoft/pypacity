@@ -67,7 +67,7 @@ class CIGRE601 {
   +cosd(angle)
 }
 
-class PVSystems {
+class SolarGeometry {
   +version: str
   +vdate: str
   +Gsc: float
@@ -89,7 +89,7 @@ Case  "1" <-- "1" IEEE738 : usa
 Cable "1" <-- "1" CIGRE601 : usa
 Case  "1" <-- "1" CIGRE601 : usa
 
-PVSystems ..> Case : aporta cálculos solares
+SolarGeometry ..> Case : aporta cálculos solares
 
 IEEE738 ..> "IEEE Std 738" : implementa
 CIGRE601 ..> "CIGRE TB601" : implementa

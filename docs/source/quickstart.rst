@@ -142,9 +142,3 @@ and CIGRE TB 601.
    Case2IEEE738.output()
 
 
-Notes
-^^^^^
-
-* The import statements reproduce the current module structure of the example.
-  They should be updated if the package is reorganized to use imports such as
-  ``from pypacity...``.

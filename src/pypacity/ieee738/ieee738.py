@@ -35,7 +35,7 @@ from pypacity.case import case
 #reload( case)
 
 class IEEE738():
-    """Implementation of the IEEE 738:2012 standard.
+    """Implementation of the IEEE 738 standard.
 
     Implements the thermal rating calculations for bare overhead conductors
     as defined in the IEEE Standard for Calculating the Current-Temperature
@@ -101,8 +101,8 @@ class IEEE738():
      
        
     
-    def ieee_738_2013( self, out = False):
-        """Execute the IEEE 738-2013 thermal rating calculation.
+    def ieee_738( self, out = False):
+        """Execute the IEEE 738 thermal rating calculation.
 
         Main entry point of the module. Computes the solar heat gain and the
         thermal resistance coefficients, then performs the selected analysis

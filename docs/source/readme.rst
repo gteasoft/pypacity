@@ -1,5 +1,5 @@
 
-.. image:: _images/pypacity_logo.png
+.. image:: https://raw.githubusercontent.com/gteasoft/pypacity/master/docs/images/pypacity_logo.png
    :alt: PyPacity
    :width: 300px
    :align: center
@@ -17,20 +17,18 @@ PyPacity
    :target: https://github.com/gteasoft/pypacity
    :alt: Development status
 
-.. image:: https://img.shields.io/badge/license-BSD--3--Clause-blue.svg
+.. image:: https://img.shields.io/badge/license-GPL--3.0--only-blue.svg
    :target: https://github.com/gteasoft/pypacity/blob/master/LICENSE
-   :alt: BSD 3-Clause License
+   :alt: GPL-3.0-only License
 
 .. |nbsp| unicode:: 0xA0
    :trim:
 
 |nbsp|
 
-**PyPacity** is a Python library for computing the ampacity of
-overhead electrical conductors.
+**PyPacity** is a Python library for computing the ampacity of overhead electrical conductors.
 
-It implements the IEEE 738 and CIGRE TB 601 methods under
-steady-state and transient conditions.
+It implements the IEEE 738 and CIGRE TB 601 methods under steady-state and transient conditions.
 
 Requirements
 ------------
@@ -42,9 +40,17 @@ Installation
 
 .. code-block:: console
 
-   git clone https://github.com/mmanana/pypacity.git
+   git clone https://github.com/gteasoft/pypacity
    cd pypacity
    pip install .
+
+o bien    
+
+.. code-block:: console
+
+   python -m pip install pypacity
+
+
 
 Documentation
 -------------
@@ -59,7 +65,7 @@ input and output parameters, and application examples.
    quickstart
 
 
-.. image:: _images/UC_logo.png
+.. image:: https://raw.githubusercontent.com/gteasoft/pypacity/master/docs/images/UC_logo.png
    :alt: Universidad de Cantabria
    :width: 200px
    :align: center

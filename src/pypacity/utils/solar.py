@@ -443,7 +443,7 @@ class SolarGeometry():
         :return: Module name, version, and last update date.
         :rtype: str
         """
-        ver = "PVSystems module. Version: " + str(self.version) + ". Last update: " + str(self.vdate)
+        ver = "solar module. Version: " + str(self.version) + ". Last update: " + str(self.vdate)
         print(ver)
         return ver
         
