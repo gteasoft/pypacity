@@ -21,4 +21,5 @@ env/
 
 # Windows
 Thumbs.db
-Desktop.inidocs/build/
+Desktop.ini
+docs/build/

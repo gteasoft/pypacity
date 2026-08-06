@@ -851,7 +851,7 @@ class CIGRE601():
         print("CIGRE TB601 ")
         print("*******************************************************************") 
         
-        print("+The angle between wind and conductor is = ", self.Case1.WINDANG_DEG, " DEG")
+        print("The angle between wind and conductor is = ", self.Case1.WINDANG_DEG, " DEG")
      
 
         if self.Case1.NSELECT == 1:
