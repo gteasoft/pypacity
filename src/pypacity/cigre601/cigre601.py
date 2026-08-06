@@ -5,7 +5,7 @@ Module: cigre601.py
 Description
 -----------
 Steady-state and transient thermal rating solver for bare overhead conductors
-following CIGRE Technical Brochure 601. Supports four analysis modes:
+following CIGRE Technical Brochure TB 601. Supports four analysis modes:
 steady-state conductor temperature (NSELECT = 1), steady-state ampacity
 (NSELECT = 2), transient conductor temperature (NSELECT = 3), and transient
 thermal rating (NSELECT = 4). Inputs are provided through a
