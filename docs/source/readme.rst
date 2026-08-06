@@ -44,7 +44,7 @@ Installation
    cd pypacity
    pip install .
 
-o bien    
+or    
 
 .. code-block:: console
 
