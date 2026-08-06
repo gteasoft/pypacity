@@ -1,7 +1,7 @@
 PyPacity
 ========
 
-.. image:: ./_images/pypacity_logo.png
+.. image:: https://github.com/gteasoft/pypacity/blob/master/docs/source/_images/pypacity_logo.png
    :alt: pypacity logo
    :align: center
    :width: 400px

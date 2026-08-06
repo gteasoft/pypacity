@@ -5,6 +5,7 @@ on:
     branches:
       - master
     paths:
+      - "README.rst"
       - "docs/**"
       - "src/**"
       - "pyproject.toml"

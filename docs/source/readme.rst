@@ -1,5 +1,5 @@
 
-.. image:: https://raw.githubusercontent.com/gteasoft/pypacity/master/docs/images/pypacity_logo.png
+.. image:: https://github.com/gteasoft/pypacity/blob/master/docs/source/_images/pypacity_logo.png
    :alt: PyPacity
    :width: 300px
    :align: center
@@ -65,7 +65,7 @@ input and output parameters, and application examples.
    quickstart
 
 
-.. image:: https://raw.githubusercontent.com/gteasoft/pypacity/master/docs/images/UC_logo.png
+.. image:: https://github.com/gteasoft/pypacity/blob/master/docs/source/_images/UC_logo.png
    :alt: Universidad de Cantabria
    :width: 200px
    :align: center
