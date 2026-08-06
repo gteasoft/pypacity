@@ -14,7 +14,7 @@ import sys
 project = 'pypacity'
 copyright = 'Copyright (c) 2026 Group of Advanced Electro-Technologies (GTEA). Universidad de Cantabria. All rights reserved'
 author = 'Group of Advanced Electro-Technologies (GTEA). Universidad de Cantabria'
-release = '0.1.0'
+release = '0.1.1'
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration

@@ -1,10 +1,10 @@
 PyPacity
 ========
 
-.. image:: https://github.com/gteasoft/pypacity/blob/master/docs/source/_images/pypacity_logo.png
-   :alt: pypacity logo
+.. image:: https://raw.githubusercontent.com/gteasoft/pypacity/master/docs/source/_images/pypacity_logo.png
+   :alt: PyPacity
+   :width: 300px
    :align: center
-   :width: 400px
 
 
 .. raw::html
