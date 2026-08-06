@@ -1,4 +1,4 @@
-.. image:: docs/source/_images/pypacity_logo.png
+.. image:: https://raw.githubusercontent.com/gteasoft/pypacity/master/docs/source/_images/pypacity_logo.png
    :alt: PyPacity
    :width: 300px
    :align: center
@@ -7,22 +7,27 @@
 PyPacity
 ========
 
-.. image:: https://github.com/gteasoft/pypacity/actions/workflows/docs.yml/badge.svg?branch=master
-   :target: https://github.com/gteasoft/pypacity/actions/workflows/docs.yml
-   :alt: Documentation build
+|docs-status| |pypi-version| |python-versions| |project-status| |license|
 
-.. image:: https://img.shields.io/badge/status-development-orange.svg
-   :target: https://github.com/gteasoft/pypacity
-   :alt: Development status
+.. |docs-status| image:: https://github.com/gteasoft/pypacity/actions/workflows/docs.yml/badge.svg?branch=master
+   :target: https://github.com/gteasoft/pypacity/actions/workflows/docs.yml?query=branch%3Amaster
+   :alt: Documentation build status
 
-.. image:: https://img.shields.io/badge/license-BSD--3--Clause-blue.svg
-   :target: https://github.com/gteasoft/pypacity/blob/master/LICENSE
-   :alt: BSD 3-Clause License
+.. |pypi-version| image:: https://img.shields.io/pypi/v/pypacity.svg
+   :target: https://pypi.org/project/pypacity/
+   :alt: PyPI version
 
-.. |nbsp| unicode:: 0xA0
-   :trim:
+.. |python-versions| image:: https://img.shields.io/pypi/pyversions/pypacity.svg
+   :target: https://pypi.org/project/pypacity/
+   :alt: Supported Python versions
 
-|nbsp|
+.. |project-status| image:: https://img.shields.io/pypi/status/pypacity.svg
+   :target: https://pypi.org/project/pypacity/
+   :alt: PyPI development status
+
+.. |license| image:: https://img.shields.io/pypi/l/pypacity.svg
+   :target: https://pypi.org/project/pypacity/
+   :alt: Project license
 
 **PyPacity** is a Python library for computing the ampacity of
 overhead electrical conductors.
@@ -38,19 +43,28 @@ PyPacity requires Python 3.9 or newer.
 Installation
 ------------
 
+Install the latest release from PyPI:
+
 .. code-block:: console
 
-   git clone https://github.com/mmanana/pypacity.git
+   python -m pip install pypacity
+
+Alternatively, install the current development version from GitHub:
+
+.. code-block:: console
+
+   git clone https://github.com/gteasoft/pypacity.git
    cd pypacity
-   pip install .
+   python -m pip install .
 
 Documentation
 -------------
 
-The complete documentation includes the theoretical formulation,
-input and output parameters, and application examples.
+The `complete documentation <https://gteasoft.github.io/pypacity/>`_
+includes the theoretical formulation, input and output parameters, and
+application examples.
 
-.. image:: docs/source/_images/UC_logo.png
+.. image:: https://raw.githubusercontent.com/gteasoft/pypacity/master/docs/source/_images/UC_logo.png
    :alt: Universidad de Cantabria
    :width: 200px
    :align: center
