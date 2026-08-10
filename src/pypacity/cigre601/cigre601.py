@@ -5,23 +5,19 @@ Module: cigre601.py
 Description
 -----------
 Steady-state and transient thermal rating solver for bare overhead conductors
-following CIGRE Technical Brochure 601. Supports four analysis modes:
+following CIGRE Technical Brochure TB 601. Supports four analysis modes:
 steady-state conductor temperature (NSELECT = 1), steady-state ampacity
 (NSELECT = 2), transient conductor temperature (NSELECT = 3), and transient
 thermal rating (NSELECT = 4). Inputs are provided through a
 :class:`cable.Cable` object and a :class:`case.Case` object.
 
-Author
-------
-Mario Mañana
-
 Copyright
 ---------
-Copyright (c) 2026 Mario Mañana
+Copyright (c) 2026 Group of Advanced Electro-Technologies (GTEA). Universidad de Cantabria. All rights reserved.
 
 License
 -------
-MIT License
+SPDX-License-Identifier: GPL-3.0-only
 
 Notes
 -----
@@ -35,11 +31,11 @@ References
 
 import numpy as np
 import sys
-from cable import cable
-from case import case
+from pypacity.cable import cable
+from pypacity.case import case
 from importlib import reload
-reload( cable)
-reload( case)
+#reload( cable)
+#reload( case)
 
 class CIGRE601():
     """Thermal rating solver implementing CIGRE Technical Brochure 601.
@@ -744,7 +740,9 @@ class CIGRE601():
             tend = self.Case1.TT
             
         steps = int(tend/self.Case1.DELTIME)
-        print("steps: ", steps)
+        if self.Debug == 1:
+            print("steps: ", steps)
+            
         for _ in range(steps):
             
             
@@ -752,7 +750,7 @@ class CIGRE601():
             
             # Compute the heat balance power terms 
             Pj = self.joule() 
-            Ps = self.solar()
+            Ps = self.solarx()
             Pr = self.radiation()
             Pc = self.convection()
             
@@ -765,7 +763,8 @@ class CIGRE601():
             deltaT = (Pj + Ps - Pr - Pc)*deltaTime/(mc)
             
             # Update time and conductor temperature for the transient step
-            print(f"Tinitial: {Tc:6.3f}°C  dT:{deltaT:0.3f}") 
+            if self.Debug == 1:
+                print(f"Tinitial: {Tc:6.3f}°C  dT:{deltaT:0.3f}") 
 
 
             t += deltaTime
@@ -859,7 +858,7 @@ class CIGRE601():
         print("CIGRE TB601 ")
         print("*******************************************************************") 
         
-        print("+The angle between wind and conductor is = ", self.Case1.WINDANG_DEG, " DEG")
+        print("The angle between wind and conductor is = ", self.Case1.WINDANG_DEG, " DEG")
      
 
         if self.Case1.NSELECT == 1:

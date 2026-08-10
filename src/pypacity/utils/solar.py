@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Module: pvsystems.py
+Module: solar
 
 Description
 -----------
@@ -11,17 +11,13 @@ standard clock time and solar time. Designed to support the solar
 heat-gain calculations required by CIGRE TB 601 and CIGRE TB 207 overhead
 line ampacity models.
 
-Author
-------
-Mario Mañana
-
 Copyright
 ---------
-Copyright (c) 2026 Mario Mañana
+Copyright (c) 2026 Group of Advanced Electro-Technologies (GTEA). Universidad de Cantabria. All rights reserved.
 
 License
 -------
-MIT License
+SPDX-License-Identifier: GPL-3.0-only
 
 Notes
 -----
@@ -39,7 +35,7 @@ import math
 import numpy as np
 
 
-class PVSystems():
+class SolarGeometry():
     """Solar geometry and time-conversion toolkit.
 
     Computes solar declination, hour angle, azimuth, extraterrestrial
@@ -447,7 +443,7 @@ class PVSystems():
         :return: Module name, version, and last update date.
         :rtype: str
         """
-        ver = "PVSystems module. Version: " + str(self.version) + ". Last update: " + str(self.vdate)
+        ver = "solar module. Version: " + str(self.version) + ". Last update: " + str(self.vdate)
         print(ver)
         return ver
         

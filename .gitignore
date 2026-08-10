@@ -8,7 +8,10 @@ __pycache__/
 # Sphinx
 docs/build/
 
-# Entornos virtuales
+# Installation
+*.egg-info/
+
+# Virtual environment
 .venv/
 venv/
 env/
@@ -18,4 +21,4 @@ env/
 
 # Windows
 Thumbs.db
-Desktop.inidocs/build/
+Desktop.ini

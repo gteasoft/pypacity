@@ -1,0 +1,86 @@
+[build-system]
+requires = ["setuptools>=77", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pypacity"
+version = "0.1.1"
+description = "Ampacity calculations for overhead electrical conductors"
+readme = { file = "README.rst", content-type = "text/x-rst" }
+requires-python = ">=3.9"
+license = "GPL-3.0-only"
+authors = [
+    { name = "GTEA - Universidad de Cantabria" },
+]
+keywords = [
+    "ampacity",
+    "dynamic line rating",
+    "overhead lines",
+    "power systems",
+    "IEEE 738",
+    "CIGRE TB 601",
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Education",
+    "Intended Audience :: Science/Research",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Scientific/Engineering",
+]
+dependencies = [
+    "numpy>=1.23",
+    "pandas>=1.5",
+    "matplotlib",
+    "ipympl",
+    "ipykernel"
+]
+
+[project.optional-dependencies]
+test = [
+    "pytest>=8",
+    "pytest-cov>=5",
+]
+docs = [
+    "sphinx>=7",
+    "sphinx-rtd-theme>=2",
+    "sphinx-rtd-size",
+]
+dev = [
+    "build>=1.2",
+    "twine>=5",
+    "ruff>=0.9",
+    "pytest>=8",
+    "pytest-cov>=5",
+    "sphinx>=7",
+    "sphinx-rtd-theme>=2",
+]
+
+[project.urls]
+Homepage = "https://github.com/gteasoft/pypacity"
+Documentation = "https://gteasoft.github.io/pypacity"
+Repository = "https://github.com/gteasoft/pypacity"
+Issues = "https://github.com/gteasoft/pypacity/issues"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["pypacity*"]
+
+[tool.setuptools.package-data]
+"pypacity.cable" = ["cable_db.csv"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = ["-ra", "--strict-config", "--strict-markers"]
+
+[tool.ruff]
+line-length = 88
+target-version = "py39"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "W", "B"]

@@ -7,17 +7,13 @@ Description
 Cable data structures and cable database loading helpers for PyPacity
 ampacity studies.
 
-Author
-------
-Mario Mañana
-
 Copyright
 ---------
-Copyright (c) 2026 Mario Mañana
+Copyright (c) 2026 Group of Advanced Electro-Technologies (GTEA). Universidad de Cantabria. All rights reserved.
 
 License
 -------
-MIT License
+SPDX-License-Identifier: GPL-3.0-only
 
 Notes
 -----

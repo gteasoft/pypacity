@@ -7,17 +7,13 @@ Description
 Thermal rating calculations for overhead transmission lines performed in accordance with the IEEE 
 Standard for Calculating the Current-Temperature Relationship of Bare Overhead Conductors.
 
-Author
-------
-Mario Mañana
-
 Copyright
 ---------
-Copyright (c) 2026 Mario Mañana
+Copyright (c) 2026 Group of Advanced Electro-Technologies (GTEA). Universidad de Cantabria. All rights reserved.
 
 License
 -------
-GPL-3.0 License
+SPDX-License-Identifier: GPL-3.0-only
 
 Notes
 -----
@@ -32,14 +28,14 @@ References
 
 import numpy as np
 import sys
-from cable import cable
-from case import case
-from importlib import reload
-reload( cable)
-reload( case)
+from pypacity.cable import cable
+from pypacity.case import case
+#from importlib import reload
+#reload( cable)
+#reload( case)
 
 class IEEE738():
-    """Implementation of the IEEE 738:2012 standard.
+    """Implementation of the IEEE 738 standard.
 
     Implements the thermal rating calculations for bare overhead conductors
     as defined in the IEEE Standard for Calculating the Current-Temperature
@@ -105,8 +101,8 @@ class IEEE738():
      
        
     
-    def ieee_738_2013( self, out = False):
-        """Execute the IEEE 738-2013 thermal rating calculation.
+    def ieee_738( self, out = False):
+        """Execute the IEEE 738 thermal rating calculation.
 
         Main entry point of the module. Computes the solar heat gain and the
         thermal resistance coefficients, then performs the selected analysis

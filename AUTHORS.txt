@@ -1,0 +1,19 @@
+Copyright (c) 2013-2026 by GTEA Universidad de Cantabria. All rights reserved.
+
+Pypacity is maintained and developed by a community on `GitHub <https://github.com/gteasoft/pypacity>`_. Lists of maintainers and contributors can be found here:
+ - `All Contributors <https://github.com/gteasoft/pypacity/graphs/contributors>`_
+
+List of Contributors (alphabetic order):
+	- Arroyo Gutierrez, Alberto
+	- Benavente Rico, Pablo
+	- Bunu Bunu, Alexandru
+	- Bustamante Sánchez, Sergio
+	- Castro Alonso, Pablo
+	- Lecuna Tolosa, Ramón
+	- Mañana Canteli, Mario
+	- Martínez Torre, Raquel
+	- Laso Pérez, Alberto
+	- Sáinz Ortiz Eugenio
+	- Vejo Fernández, Luis
+	
+
