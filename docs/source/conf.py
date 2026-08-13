@@ -14,7 +14,7 @@ import sys
 project = 'pypacity'
 copyright = 'Copyright (c) 2026 Group of Advanced Electro-Technologies (GTEA). Universidad de Cantabria. All rights reserved'
 author = 'Group of Advanced Electro-Technologies (GTEA). Universidad de Cantabria'
-release = '0.1.2'
+release = '0.1.3'
 version = release
 
 # -- General configuration ---------------------------------------------------
