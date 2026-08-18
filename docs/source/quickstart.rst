@@ -86,7 +86,7 @@ and CIGRE TB 601.
    Case1IEEE738.Debug = 0
    Case1IEEE738.set_cable( Cable1)
    Case1IEEE738.set_case( Case1)
-   Case1IEEE738.ieee_738_2013()
+   Case1IEEE738.ieee_738()
    Case1IEEE738.output()
 
    print(" ")
@@ -138,7 +138,7 @@ and CIGRE TB 601.
    Case2IEEE738.Debug = 0
    Case2IEEE738.set_cable( Cable2)
    Case2IEEE738.set_case( Case2)
-   Case2IEEE738.ieee_738_2013()
+   Case2IEEE738.ieee_738()
    Case2IEEE738.output()
 
 

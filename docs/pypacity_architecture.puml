@@ -1,97 +1,238 @@
 @startuml
+title PyPacity — source-code architecture
+
+top to bottom direction
 skinparam classAttributeIconSize 0
+skinparam packageStyle rectangle
+skinparam linetype ortho
+hide circle
 
-class Cable {
-  +Cstring: str
-  +D: float
-  +D1: float
-  +d: float
-  +TLO: float
-  +THI: float
-  +TCDRMAX: float
-  +RLO: float
-  +RHI: float
-  +EMISS: float
-  +ABSORP: float
-  +HNH: int
-  +lambda_ertc: float
-  +load_cable_db()
-  +set_cable(NSELECT, conductor)
+package "pypacity" {
+  class "__init__.py" as PypacityInit <<module>> {
+    +__version__: str
+  }
+
+  package "pypacity.cable" {
+    class Cable {
+      +ID: str
+      +D: float
+      +D1: float
+      +d: float
+      +TLO: float
+      +THI: float
+      +TCDRMAX: float
+      +RLO: float
+      +RHI: float
+      +EMISS: float
+      +ABSORP: float
+      +HNH: int
+      +HEATOUT: float
+      +HEATCORE: float
+      +Stranded: int
+      +CrossSection: float
+      +MASSCORE: float
+      +MASSOUT: float
+      +CSteel20: float
+      +CAlum20: float
+      +BetaSteel20: float
+      +BetaAlum20: float
+      +mSteel: float
+      +mAlum: float
+      +lambda_ertc: float
+      --
+      +__init__()
+      +load_cable_db()
+      +set_cable(NSELECT, conductor = "DRAKE")
+      -_get_cable_data(conductor)
+      -_apply_cable_data(data)
+      -_set_common_properties()
+      -_apply_analysis_mode_overrides(NSELECT)
+      +print_ver()
+    }
+
+    class "cable_db.csv" as CableDB <<data file>>
+  }
+
+  package "pypacity.case" {
+    class Case {
+      +NCIRCUITS: int
+      +NSELECT: int
+      +IORTPRELOAD: int
+      +SORM: int
+      +TT: int
+      +DELTIME: int
+      +TCDRPRELOAD: float
+      +XIPRELOAD: float
+      +XISTEP: float
+      +TAMB: float
+      +VWIND: float
+      +DWIND_DEG: float
+      +WINDANG_DEG: float
+      +CDR_ELEV: float
+      +Z1_DEG: float
+      +CDR_LAT_DEG: float
+      +SUN_TIME: float
+      +NDAY: int
+      +A3: int
+      +Ns: float
+      +SolarRadiation: float
+      +ALBEDO: float
+      +SOLAR: int
+      +beta: float
+      +TTfromST: int
+      +TCDRinitial: float
+      .. results ..
+      +TR: float
+      +ATCDR: list
+      +TIME: list
+      +QS: float
+      +QR: float
+      +QC: float
+      +QJ: float
+      +RAC: float
+      +KTIMEMAX: int
+      --
+      +__init__()
+      +demo(NSELECT)
+      +print_ver()
+    }
+  }
+
+  package "pypacity.ieee738" {
+    class IEEE738 {
+      +Cable1: Cable
+      +Case1: Case
+      +Debug: int
+      +Debug_Dec: int
+      --
+      +__init__()
+      +set_cable(Cable)
+      +set_case(Case)
+      +ieee_738(out = False)
+      -_solar()
+      -_thermal()
+      -_mueller()
+      -_initial_bounds()
+      -_find_TCDR()
+      -_thermal_rating()
+      -_TCDR_vs_TIME()
+      -_starting_ci()
+      +outputs()
+      -_str_round(valuex)
+      +output()
+      +ampacidad()
+      +print_ver()
+    }
+  }
+
+  package "pypacity.cigre601" {
+    class CIGRE601 {
+      +Cable1: Cable
+      +Case1: Case
+      +Debug: int
+      +Debug_Dec: int
+      +Tolerance: float
+      +MaxIterations: int
+      +error: int
+      --
+      +__init__()
+      +set_error(error)
+      +get_error()
+      +set_cable(Cable)
+      +set_case(Case)
+      +sind(angle)
+      +cosd(angle)
+      +solar()
+      +solarx()
+      +radiation()
+      +joule()
+      +convection()
+      +Rac()
+      +cigre601()
+      +conductor_temperature()
+      +TCDR_vs_time()
+      +thermal_rating()
+      +str_round(valuex)
+      +output()
+      +print_ver()
+      +deltaTcTs()
+    }
+  }
+
+  package "pypacity.utils" {
+    class SolarGeometry {
+      +version: str
+      +vdate: str
+      +Gsc: float
+      +SolarDistance: float
+      +EarthDiameter: float
+      +SunDiameter: float
+      +Location: str
+      +Country: str
+      +Lat: float
+      +Lon: float
+      --
+      +__init__(Location = "Santander", Country = "Spain", Latitude = 43.46, Longitude = -3.8)
+      +Gon(day)
+      +DayOfYear(day, month)
+      +Declination(day)
+      +LongStd()
+      +ET(dayofyear)
+      +HMtoStandardTime(day, month, hour, minutes)
+      +StandardTimetoSolarTime(day, month, hour, minutes)
+      +SolarTimetoStandardTime(day, month, solartime)
+      +SolarTimetoHourAngle(SolarTime)
+      +StandardTimetoHM(standardtime, day, month)
+      +HourAngletoSolarTime(HourAngle)
+      +Theta(day, month, hour, minutes, Azimuth, beta)
+      +Azimuth(day, month, hour, minutes)
+      +SunsetHourAngle(declination)
+      +GetLocation()
+      +GetLatitude()
+      +GetLongitude()
+      +print_ver()
+      +DatetimetoDayOfYearNative(dt)
+      +DatetimetoSolarTime(dt)
+      +DatetimetoSolarHour(dt)
+      +DatetimetoDayOfYear(dt)
+    }
+  }
 }
 
-class Case {
-  +NSELECT: int
-  +TT: int
-  +DELTIME: int
-  +TCDRPRELOAD: float
-  +XIPRELOAD: float
-  +XISTEP: float
-  +TAMB: float
-  +VWIND: float
-  +WINDANG_DEG: float
-  +CDR_ELEV: float
-  +CDR_LAT_DEG: float
-  +NDAY: int
-  +SUN_TIME: float
-  +SOLAR: int
-  +SolarRadiation: float
+package "direct external dependencies" {
+  class NumPy <<external>>
+  class pandas <<external>>
 }
 
-class IEEE738 {
-  +Cable1: Cable
-  +Case1: Case
-  +Debug: int
-  +Debug_Dec: int
-  +set_cable(Cable)
-  +set_case(Case)
-  +ieee_738_2013()
-  +solar()
-  +thermal()
-  +thermal_rating()
-  +TCDR_vs_TIME()
-}
+IEEE738 "1" o-- "1" Cable : Cable1
+IEEE738 "1" o-- "1" Case : Case1
+CIGRE601 "1" o-- "1" Cable : Cable1
+CIGRE601 "1" o-- "1" Case : Case1
 
-class CIGRE601 {
-  +Cable1: Cable
-  +Case1: Case
-  +Debug: int
-  +Tolerance: float
-  +MaxIterations: int
-  +error: int
-  +set_cable(Cable)
-  +set_case(Case)
-  +set_error(error)
-  +get_error()
-  +solar()
-  +sind(angle)
-  +cosd(angle)
-}
+Cable ..> CableDB : load_cable_db()
+Cable ..> pandas : imports
+IEEE738 ..> NumPy : imports
+CIGRE601 ..> NumPy : imports
+SolarGeometry ..> NumPy : imports
 
-class SolarGeometry {
-  +version: str
-  +vdate: str
-  +Gsc: float
-  +Location: str
-  +Country: str
-  +Lat: float
-  +Lon: float
-  +Gon(day)
-  +DayOfYear(day, month)
-  +Declination(day)
-  +LongStd()
-  +ET(dayofyear)
-  +HMtoStandardTime(...)
-}
+' note right of IEEE738
+  ' IEEE Std 738 solver.
+' end note
 
-Cable "1" <-- "1" IEEE738 : usa
-Case  "1" <-- "1" IEEE738 : usa
+' note right of CIGRE601
+  ' CIGRE TB 601/207 solver.
+' end note
 
-Cable "1" <-- "1" CIGRE601 : usa
-Case  "1" <-- "1" CIGRE601 : usa
+' note right of SolarGeometry
+  ' Independent utility in the current source tree;
+  ' it is not imported by Case, IEEE738 or CIGRE601.
+' end note
 
-SolarGeometry ..> Case : aporta cálculos solares
-
-IEEE738 ..> "IEEE Std 738" : implementa
-CIGRE601 ..> "CIGRE TB601" : implementa
+legend bottom
+  + public member
+  - private member (leading underscore in Python)
+  Only domain inputs/results are shown for Case;
+  legacy iterative working variables are omitted.
+endlegend
 
 @enduml

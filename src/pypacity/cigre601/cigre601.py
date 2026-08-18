@@ -283,77 +283,95 @@ class CIGRE601():
         
         DEG_TO_RAD = np.pi/180.0
         RAD_TO_DEG = 180.0/np.pi
-             
-        # 3.3 Pag. 18. Eq (8)
-        if self.Case1.SolarRadiation != None:
-            Psm = self.Cable1.ABSORP*self.Case1.SolarRadiation*self.Cable1.D/1000.0 
+
+
+        # SOLAR == 0 => Measured solar heating
+        if self.Case1.SOLAR == 0:
+            # 3.3 Pag. 18. Eq (8)
+            if self.Case1.SolarRadiation != None:
+                Psm = self.Cable1.ABSORP*self.Case1.SolarRadiation*self.Cable1.D/1000.0 
+            else:
+                Psm = 0.0
+                
             if self.Debug == 1:
                 print("Measured solar heating: " + self.str_round(Psm) + " W/m")
-    
-        # Z Hour angle of the Sun
-        Z = 15*(12-self.Case1.SUN_TIME)
-        if self.Debug == 1:
-            print("Hour angle Z: " + self.str_round(Z) + " deg")
-       
-        # Declination
-        deltas = 23.3*np.sin((2*np.pi*(284+self.Case1.NDAY))/365)
-        if self.Debug == 1:
-            print("Declination: " + self.str_round(deltas) + " deg")
-       
-        # Solar Altitude
-        Hs = RAD_TO_DEG*np.arcsin( self.sind(self.Case1.CDR_LAT_DEG)*self.sind(deltas)+
-                                  self.cosd(self.Case1.CDR_LAT_DEG)*self.cosd(deltas)*self.cosd(Z))
-        if self.Debug == 1:
-            print("Solar Altitude Hs: " + self.str_round(Hs) + " deg")
-        
-        # Azimuth of the Sun
-        gammas = -RAD_TO_DEG*np.arcsin((self.cosd(deltas)*self.sind(Z))/(self.cosd(Hs)))
-        if self.Debug == 1:
-            print("gammas: " + self.str_round(gammas) + " deg")
             
-        # Albedo
-        if self.Debug == 1:
-            print("Albedo F: " + self.str_round( self.Case1.ALBEDO))
-
-        # IB(0) Pag. 19. Eq (10)
-        IB0 = self.Case1.Ns*(1280*self.sind(Hs))/(self.sind(Hs)+0.314) 
-        if self.Debug == 1:
-            print("IB0: " + self.str_round(IB0) + " W/m^2")
-        
-        # IB(y) Pag. 19. Eq (11)
-        IBy = IB0*(1 + 1.4e-4*self.Case1.CDR_ELEV*((1367/IB0)-1))
-        if self.Debug == 1:
-            print("CDR_ELEV: " + self.str_round(self.Case1.CDR_ELEV) + " m")
-            print("IBy: " + self.str_round(IBy) + " W/m^2")
-        
-        # Id Difuse solar radiation Pag. 20. Eq (13)
-        Id = (430.5 - 0.3288*IBy)*self.sind(Hs)
-        if self.Debug == 1:
-            print("Id: " + self.str_round(Id) + " W/m^2")
-        
-        # eta Pag. 20. Eq (14)
-        eta = RAD_TO_DEG*np.arccos(self.cosd(Hs)*self.cosd(gammas - self.Case1.Z1_DEG))
-        if self.Debug == 1:
-            print("eta: " + self.str_round(eta) + " deg")
-        
-        # Computed solar heating. Pag. 18. Eq (9)
-        # Global solar radiation
-        IT = (IBy*(self.sind(eta) + (np.pi/2)*self.Case1.ALBEDO*self.sind(Hs)) + Id*(1+(np.pi/2*self.Case1.ALBEDO)))
-        if self.Debug == 1:
-            print("Global solar radiation IT: " + self.str_round(IT) + " W/m^2")
-        Psc = self.Cable1.ABSORP*(self.Cable1.D/1000)*IT
-        if self.Debug == 1:
-            print("Computed solar heating: " + self.str_round(Psc) + " W/m")
-           
-        if self.Case1.SOLAR == 0:
             Ps = Psm
-        else:
+            return Ps
+    
+        # SOLAR == 1 => Computed solar heating
+        if self.Case1.SOLAR == 1:
+            # Z Hour angle of the Sun
+            Z = 15*(12-self.Case1.SUN_TIME)
+            if self.Debug == 1:
+                print("Hour angle Z: " + self.str_round(Z) + " deg")
+       
+            # Declination
+            deltas = 23.3*np.sin((2*np.pi*(284+self.Case1.NDAY))/365)
+            if self.Debug == 1:
+                print("Declination: " + self.str_round(deltas) + " deg")
+       
+            # Solar Altitude
+            Hs = RAD_TO_DEG*np.arcsin( self.sind(self.Case1.CDR_LAT_DEG)*self.sind(deltas)+
+                                  self.cosd(self.Case1.CDR_LAT_DEG)*self.cosd(deltas)*self.cosd(Z))
+            if self.Debug == 1:
+                print("Solar Altitude Hs: " + self.str_round(Hs) + " deg")
+        
+            # If Hs < 0 (night) then Ps = 0
+            if Hs < 0:
+                Ps = 0.0
+                if self.Debug == 1:
+                    print("Night time, no solar heating")
+                return Ps
+        
+        
+            # Azimuth of the Sun
+            gammas = -RAD_TO_DEG*np.arcsin((self.cosd(deltas)*self.sind(Z))/(self.cosd(Hs)))
+            if self.Debug == 1:
+                print("gammas: " + self.str_round(gammas) + " deg")
+            
+            # Albedo
+            if self.Debug == 1:
+                print("Albedo F: " + self.str_round( self.Case1.ALBEDO))
+
+            # IB(0) Pag. 19. Eq (10)
+            IB0 = self.Case1.Ns*(1280*self.sind(Hs))/(self.sind(Hs)+0.314) 
+            if self.Debug == 1:
+                print("IB0: " + self.str_round(IB0) + " W/m^2")
+        
+            # IB(y) Pag. 19. Eq (11)
+            IBy = IB0*(1 + 1.4e-4*self.Case1.CDR_ELEV*((1367/IB0)-1))
+            if self.Debug == 1:
+                print("CDR_ELEV: " + self.str_round(self.Case1.CDR_ELEV) + " m")
+                print("IBy: " + self.str_round(IBy) + " W/m^2")
+        
+            # Id Difuse solar radiation Pag. 20. Eq (13)
+            Id = (430.5 - 0.3288*IBy)*self.sind(Hs)
+            if self.Debug == 1:
+                print("Id: " + self.str_round(Id) + " W/m^2")
+        
+            # eta Pag. 20. Eq (14)
+            eta = RAD_TO_DEG*np.arccos(self.cosd(Hs)*self.cosd(gammas - self.Case1.Z1_DEG))
+            if self.Debug == 1:
+                print("eta: " + self.str_round(eta) + " deg")
+        
+            # Computed solar heating. Pag. 18. Eq (9)
+            # Global solar radiation
+            IT = (IBy*(self.sind(eta) + (np.pi/2)*self.Case1.ALBEDO*self.sind(Hs)) + Id*(1+(np.pi/2*self.Case1.ALBEDO)))
+            if self.Debug == 1:
+                print("Global solar radiation IT: " + self.str_round(IT) + " W/m^2")
+
+            Psc = self.Cable1.ABSORP*(self.Cable1.D/1000)*IT
+            if self.Debug == 1:
+                print("Computed solar heating: " + self.str_round(Psc) + " W/m")
+
             Ps = Psc
 
-        if self.Debug == 1:
-            print("Ps: " + self.str_round(Ps) + " W/m")
-        
-        return Ps
+            return Ps
+        else:
+            print("Error: Case1.SOLAR must be 0 or 1")
+            Ps = 0.0
+            return Ps
 
 
 
@@ -879,7 +897,7 @@ class CIGRE601():
     
     def print_ver(self):
         """Print the module name and release date to standard output."""
-        print("CIGRE TB601. 2/5/2026. 15:35")
+        print("CIGRE TB601. 13/08/2026. 10:55")
         
     
     def deltaTcTs(self):
