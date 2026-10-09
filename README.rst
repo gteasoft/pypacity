@@ -68,3 +68,13 @@ application examples.
    :alt: Universidad de Cantabria
    :width: 200px
    :align: center
+
+Acknowledgements
+----------------
+
+This work was supported by Spanish Government Grant PID2023-151457OB-I00 funded by MICIU/AEI/10.13039/501100011033 and by European Union ERDF/EU
+
+.. image:: https://raw.githubusercontent.com/gteasoft/pypacity/master/docs/source/_images/MICIU_Cofinanciado_AEI.jpg
+   :alt: Project funded by Spanish Government Grant PID2023-151457OB-I00
+   :width: 200px
+   :align: center
